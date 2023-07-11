@@ -48,7 +48,7 @@
     <string name="recently_saved_menu_item_remove">Skasuj</string>
 
     <!-- About content. The first parameter is the name of the application. (For example: Fenix) -->
-    <string name="about_content">%1$s produkuje Mozilla.</string>
+    <string name="about_content">%1$s produkuje Asil Browser.</string>
 
     <!-- Private Browsing -->
     <!-- Explanation for private browsing displayed to users on home view when they first enable private mode
@@ -312,14 +312,14 @@
     <string name="errorpage_httpsonly_message_summary">Może ale tyż sie rozchodzić ô jaki atak. Jak przyńdziesz na strōna, to niy ôstawiej na nij żodnych prywatnych informacyji. Jak na nia pudziesz, tryb &quot;Ino HTTPS&quot; czasowo sie wyłōnczy do tyj strōny. </string>
     <!-- Preference for accessibility -->
     <string name="preferences_accessibility">Dostympność</string>
-    <!-- Preference to override the Firefox Account server -->
-    <string name="preferences_override_fxa_server">Włosny serwer kōnta Firefox</string>
+    <!-- Preference to override the Asil Browser Account server -->
+    <string name="preferences_override_fxa_server">Włosny serwer kōnta Asil Browser</string>
     <!-- Preference to override the Sync token server -->
     <string name="preferences_override_sync_tokenserver">Włosny serwer do synchrōnizacyje</string>
 
 
     <!-- Toast shown after updating the FxA/Sync server override preferences -->
-    <string name="toast_override_fxa_sync_server_done">Serwer kōnta Firefox/synchrōnizacyje je zmiyniōny. Zawiyranie aplikacyje, coby przidać zmiany…</string>
+    <string name="toast_override_fxa_sync_server_done">Serwer kōnta Asil Browser/synchrōnizacyje je zmiyniōny. Zawiyranie aplikacyje, coby przidać zmiany…</string>
     <!-- Preference category for account information -->
     <string name="preferences_category_account">Kōnto</string>
     <!-- Preference for changing where the toolbar is positioned -->
@@ -333,7 +333,7 @@
     <!-- Preference for settings related to visual options -->
     <string name="preferences_customize">Przipasuj</string>
     <!-- Preference shown instead of account display name while account profile information isn't available yet. -->
-    <string name="preferences_account_default_name">Kōnto Firefox</string>
+    <string name="preferences_account_default_name">Kōnto Asil Browser</string>
     <!-- Preference text for account title when there was an error syncing FxA -->
     <string name="preferences_account_sync_error">Połōncz sie zaś, coby durch synchrōnizować</string>
     <!-- Preference for language -->
@@ -466,7 +466,7 @@
     <!-- Name of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
     <string name="fxa_received_tab_channel_name">Przijynte karty</string>
     <!-- Description of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
-    <string name="fxa_received_tab_channel_description">Powiadōmiynia ô kartach przijyntych z inkszych maszin z aplikacyjōm Firefox.</string>
+    <string name="fxa_received_tab_channel_description">Powiadōmiynia ô kartach przijyntych z inkszych maszin z aplikacyjōm Asil Browser.</string>
     <!--  The body for these is the URL of the tab received  -->
     <string name="fxa_tab_received_notification_name">Karta je przijynto</string>
     <!-- %s is the device name -->
@@ -629,7 +629,7 @@
     <string name="studies_remove">Skasuj</string>
     <!-- Title of the active section on the studies list -->
     <string name="studies_active">Aktywne</string>
-    <!-- Description for studies, it indicates why Firefox use studies. The first parameter is the name of the application. -->
+    <!-- Description for studies, it indicates why Asil Browser use studies. The first parameter is the name of the application. -->
     <string name="studies_description_2">%1$s może roz za czas insztalować i kludzić podszukōnki.</string>
     <!-- Learn more link for studies, links to an article for more information about studies. -->
     <string name="studies_learn_more">Przewiydz sie wiyncyj</string>
@@ -1169,10 +1169,10 @@
     <string name="sign_in_with_camera">Zaloguj sie z kamerōm</string>
     <!-- Text shown for settings option for sign with email -->
     <string name="sign_in_with_email">Użyj lepij emaila</string>
-    <!-- Text shown for settings option for create new account text.'Firefox' intentionally hardcoded here.-->
+    <!-- Text shown for settings option for create new account text.'Asil Browser' intentionally hardcoded here.-->
     <string name="sign_in_create_account_text"><![CDATA[Niy mosz kōnta? <u>Zrychtuj je</u>, coby synchrōnizować Firefoxa miyndzy maszinami.]]></string>
 
-    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Firefox Preview) -->
+    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Asil Browser Preview) -->
     <string name="sign_out_confirmation_message_2">%s skōńczy sie synchrōnizować ze twojim kōntym, ale niy skasuje żodnych danych przeglōndanio na tyj maszinie.</string>
     <!-- Option to continue signing out of account shown in confirmation dialog to sign out of account -->
     <string name="sign_out_disconnect">Rozłōncz</string>
