@@ -63,6 +63,7 @@ class PrivateBrowsingDescriptionViewHolder(
                 onLearnMoreClick = interactor::onLearnMoreClicked,
             )
         }
+
     }
 
     companion object {

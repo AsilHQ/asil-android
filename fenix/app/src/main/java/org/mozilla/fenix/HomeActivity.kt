@@ -455,7 +455,6 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
                 return
             }
         }
-
         if (FxNimbus.features.splashScreen.value().enabled) {
             val splashScreen = installSplashScreen()
             var maxDurationReached = false
