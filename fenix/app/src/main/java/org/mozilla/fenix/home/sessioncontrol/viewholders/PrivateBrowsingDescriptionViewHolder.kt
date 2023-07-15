@@ -51,9 +51,7 @@ class PrivateBrowsingDescriptionViewHolder(
 
     @Composable
     override fun Content() {
-        PrivateBrowsingDescription(
-            onLearnMoreClick = interactor::onLearnMoreClicked,
-        )
+
     }
 
     companion object {
@@ -67,10 +65,7 @@ class PrivateBrowsingDescriptionViewHolder(
  * @param onLearnMoreClick Invoked when the user clicks on the learn more link.
  */
 @Composable
-fun PrivateBrowsingDescription(
-    onLearnMoreClick: () -> Unit,
-) {
-    val interactionSource = remember { MutableInteractionSource() }
+fun PrivateBrowsingDescription() {
 
     Column(
         modifier = Modifier.padding(horizontal = 4.dp),
@@ -85,30 +80,6 @@ fun PrivateBrowsingDescription(
             fontSize = 14.sp,
             lineHeight = 20.sp,
         )
-
-        // The text is wrapped in a box to increase the tap area.
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    onClickLabel = stringResource(R.string.a11y_action_label_read_article),
-                    onClick = onLearnMoreClick,
-                ),
-        ) {
-            Text(
-                text = stringResource(R.string.private_browsing_common_myths),
-                modifier = Modifier.padding(top = 10.dp),
-                style = TextStyle(
-                    color = FirefoxTheme.colors.textPrimary,
-                    fontSize = 14.sp,
-                    textDecoration = TextDecoration.Underline,
-                    textDirection = TextDirection.Content,
-                ),
-            )
-        }
     }
 }
 
@@ -116,8 +87,6 @@ fun PrivateBrowsingDescription(
 @Preview
 private fun PrivateBrowsingDescriptionPreview() {
     FirefoxTheme {
-        PrivateBrowsingDescription(
-            onLearnMoreClick = {},
-        )
+
     }
 }

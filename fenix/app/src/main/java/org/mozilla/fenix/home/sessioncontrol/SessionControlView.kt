@@ -48,10 +48,10 @@ internal fun normalModeAdapterItems(
     var shouldShowCustomizeHome = false
 
     // Add a synchronous, unconditional and invisible placeholder so home is anchored to the top when created.
-    items.add(AdapterItem.TopPlaceholderItem)
+    //items.add(AdapterItem.TopPlaceholderItem)
 
     nimbusMessageCard?.let {
-        items.add(AdapterItem.NimbusMessageCard(it))
+        //items.add(AdapterItem.NimbusMessageCard(it))
     }
 
     if (settings.showTopSitesFeature && topSites.isNotEmpty()) {
@@ -64,28 +64,28 @@ internal fun normalModeAdapterItems(
 
     if (showRecentTab) {
         shouldShowCustomizeHome = true
-        items.add(AdapterItem.RecentTabsHeader)
-        items.add(AdapterItem.RecentTabItem)
+        //items.add(AdapterItem.RecentTabsHeader)
+        //items.add(AdapterItem.RecentTabItem)
         if (showRecentSyncedTab) {
-            items.add(AdapterItem.RecentSyncedTabItem)
+            //items.add(AdapterItem.RecentSyncedTabItem)
         }
     }
 
     if (settings.showRecentBookmarksFeature && recentBookmarks.isNotEmpty()) {
         shouldShowCustomizeHome = true
-        items.add(AdapterItem.RecentBookmarksHeader)
-        items.add(AdapterItem.RecentBookmarks)
+//        items.add(AdapterItem.RecentBookmarksHeader)
+//        items.add(AdapterItem.RecentBookmarks)
     }
 
     if (settings.historyMetadataUIFeature && recentVisits.isNotEmpty()) {
         shouldShowCustomizeHome = true
-        items.add(AdapterItem.RecentVisitsHeader)
-        items.add(AdapterItem.RecentVisitsItems)
+//        items.add(AdapterItem.RecentVisitsHeader)
+//        items.add(AdapterItem.RecentVisitsItems)
     }
 
     if (collections.isEmpty()) {
         if (showCollectionsPlaceholder) {
-            items.add(AdapterItem.NoCollectionsMessage)
+            //items.add(AdapterItem.NoCollectionsMessage)
         }
     } else {
         showCollections(collections, expandedCollections, items)
@@ -97,9 +97,9 @@ internal fun normalModeAdapterItems(
     // when we switch to a Compose-only home screen.
     if (firstFrameDrawn && settings.showPocketRecommendationsFeature && pocketStories.isNotEmpty()) {
         shouldShowCustomizeHome = true
-        items.add(AdapterItem.PocketStoriesItem)
-        items.add(AdapterItem.PocketCategoriesItem)
-        items.add(AdapterItem.PocketRecommendationsFooterItem)
+//        items.add(AdapterItem.PocketStoriesItem)
+//        items.add(AdapterItem.PocketCategoriesItem)
+//        items.add(AdapterItem.PocketRecommendationsFooterItem)
     }
 
     if (shouldShowCustomizeHome) {
