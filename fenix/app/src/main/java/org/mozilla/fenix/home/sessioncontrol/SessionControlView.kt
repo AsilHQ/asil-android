@@ -103,7 +103,7 @@ internal fun normalModeAdapterItems(
     }
 
     if (shouldShowCustomizeHome) {
-        items.add(AdapterItem.CustomizeHomeButton)
+        //items.add(AdapterItem.CustomizeHomeButton)
     }
 
     items.add(AdapterItem.BottomSpacer)
