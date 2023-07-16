@@ -279,21 +279,20 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
                 dialog?.window?.decorView?.setOnTouchListener { _, event ->
                     when (event?.action) {
                         MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                            isPrivateButtonClicked = isTouchingPrivateButton(event.x, event.y)
                             // Immediately drop Search Bar focus when the touch is not on the private button.
                             if (!isPrivateButtonClicked) {
                                 toolbarView.view.clearFocus()
                             }
                         }
                         MotionEvent.ACTION_UP -> {
-                            if (!isTouchingPrivateButton(
-                                    event.x,
-                                    event.y,
-                                ) && !isPrivateButtonClicked
-                            ) {
-                                findNavController().popBackStack()
-                                isPrivateButtonClicked = false
-                            }
+//                            if (!isTouchingPrivateButton(
+//                                    event.x,
+//                                    event.y,
+//                                ) && !isPrivateButtonClicked
+//                            ) {
+//                                findNavController().popBackStack()
+//                                isPrivateButtonClicked = false
+//                            }
                         }
                         else -> isPrivateButtonClicked = false
                     }
@@ -528,12 +527,6 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
         }
     }
 
-    private fun isTouchingPrivateButton(x: Float, y: Float): Boolean {
-        val view = parentFragmentManager.primaryNavigationFragment?.view?.findViewInHierarchy {
-            it.id == R.id.privateBrowsingButton
-        } ?: return false
-        return view.getRectWithScreenLocation().contains(x.toInt(), y.toInt())
-    }
 
     private fun hideClipboardSection() {
         binding.fillLinkFromClipboard.isVisible = false

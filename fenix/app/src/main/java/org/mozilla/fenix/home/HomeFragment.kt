@@ -5,22 +5,18 @@
 package org.mozilla.fenix.home
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import androidx.annotation.VisibleForTesting
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import android.view.WindowManager
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -30,7 +26,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView.SmoothScroller
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers.IO
@@ -62,13 +57,10 @@ import mozilla.components.lib.state.ext.consumeFrom
 import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import org.mozilla.fenix.GleanMetrics.HomeScreen
-import org.mozilla.fenix.GleanMetrics.PrivateBrowsingShortcutCfr
 import org.mozilla.fenix.HomeActivity
 import org.mozilla.fenix.R
-import org.mozilla.fenix.addons.showSnackBar
 import org.mozilla.fenix.browser.browsingmode.BrowsingMode
 import org.mozilla.fenix.components.FenixSnackbar
-import org.mozilla.fenix.components.PrivateShortcutCreateManager
 import org.mozilla.fenix.components.TabCollectionStorage
 import org.mozilla.fenix.components.appstate.AppAction
 import org.mozilla.fenix.components.toolbar.ToolbarPosition
@@ -76,11 +68,8 @@ import org.mozilla.fenix.databinding.FragmentHomeBinding
 import org.mozilla.fenix.ext.components
 import org.mozilla.fenix.ext.containsQueryParameters
 import org.mozilla.fenix.ext.hideToolbar
-import org.mozilla.fenix.ext.increaseTapArea
 import org.mozilla.fenix.ext.nav
 import org.mozilla.fenix.ext.requireComponents
-import org.mozilla.fenix.ext.runIfFragmentIsAttached
-import org.mozilla.fenix.ext.scaleToBottomOfView
 import org.mozilla.fenix.ext.settings
 import org.mozilla.fenix.home.pocket.DefaultPocketStoriesController
 import org.mozilla.fenix.home.pocket.PocketRecommendedStoriesCategory
@@ -106,15 +95,12 @@ import org.mozilla.fenix.messaging.FenixNimbusMessagingController
 import org.mozilla.fenix.messaging.MessagingFeature
 import org.mozilla.fenix.nimbus.FxNimbus
 import org.mozilla.fenix.perf.MarkersFragmentLifecycleCallbacks
-import org.mozilla.fenix.perf.runBlockingIncrement
 import org.mozilla.fenix.search.toolbar.DefaultSearchSelectorController
 import org.mozilla.fenix.search.toolbar.SearchSelectorMenu
 import org.mozilla.fenix.tabstray.TabsTrayAccessPoint
 import org.mozilla.fenix.utils.Settings.Companion.TOP_SITES_PROVIDER_MAX_THRESHOLD
 import org.mozilla.fenix.utils.allowUndo
-import org.mozilla.fenix.wallpapers.Wallpaper
 import java.lang.ref.WeakReference
-import kotlin.math.min
 
 @Suppress("TooManyFunctions", "LargeClass")
 class HomeFragment : Fragment() {
@@ -187,7 +173,6 @@ class HomeFragment : Fragment() {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal var homeMenuView: HomeMenuView? = null
 
-    private var lastAppliedWallpaperName: String = Wallpaper.defaultName
 
     private val topSitesFeature = ViewBoundFeatureWrapper<TopSitesFeature>()
     private val messagingFeature = ViewBoundFeatureWrapper<MessagingFeature>()
@@ -201,9 +186,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // DO NOT ADD ANYTHING ABOVE THIS getProfilerTime CALL!
         val profilerStartTime = requireComponents.core.engine.profiler?.getProfilerTime()
-
         super.onCreate(savedInstanceState)
-
         bundleArgs = args.toBundle()
 
         // DO NOT MOVE ANYTHING BELOW THIS addMarker CALL!
@@ -226,9 +209,6 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val activity = activity as HomeActivity
         val components = requireComponents
-
-        val currentWallpaperName = requireContext().settings().currentWallpaperName
-        applyWallpaper(wallpaperName = currentWallpaperName, orientationChange = false)
 
         components.appStore.dispatch(AppAction.ModeChange(Mode.fromBrowsingMode(browsingModeManager.mode)))
 
@@ -413,8 +393,6 @@ class HomeFragment : Fragment() {
 
         updateSessionControlView()
 
-        disableAppBarDragging()
-
         activity.themeManager.applyStatusBarTheme(activity)
 
         FxNimbus.features.homescreen.recordExposure()
@@ -433,8 +411,6 @@ class HomeFragment : Fragment() {
 
         homeMenuView?.dismissMenu()
 
-        val currentWallpaperName = requireContext().settings().currentWallpaperName
-        applyWallpaper(wallpaperName = currentWallpaperName, orientationChange = true)
     }
 
     /**
@@ -501,22 +477,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun disableAppBarDragging() {
-        if (binding.homeAppBar.layoutParams != null) {
-            val appBarLayoutParams = binding.homeAppBar.layoutParams as CoordinatorLayout.LayoutParams
-            val appBarBehavior = AppBarLayout.Behavior()
-            appBarBehavior.setDragCallback(
-                object : AppBarLayout.Behavior.DragCallback() {
-                    override fun canDrag(appBarLayout: AppBarLayout): Boolean {
-                        return false
-                    }
-                },
-            )
-            appBarLayoutParams.behavior = appBarBehavior
-        }
-        binding.homeAppBar.setExpanded(true)
-    }
-
     @Suppress("LongMethod", "ComplexMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // DO NOT ADD ANYTHING ABOVE THIS getProfilerTime CALL!
@@ -527,7 +487,6 @@ class HomeFragment : Fragment() {
         HomeScreen.homeScreenViewCount.add()
 
         observeSearchEngineNameChanges()
-        observeWallpaperUpdates()
 
         homeMenuView = HomeMenuView(
             view = view,
@@ -546,13 +505,6 @@ class HomeFragment : Fragment() {
         )
 
         toolbarView?.build()
-
-        PrivateBrowsingButtonView(binding.privateBrowsingButton, browsingModeManager) { newMode ->
-            sessionControlInteractor.onPrivateModeButtonClicked(
-                newMode,
-                userHasBeenOnboarded = true,
-            )
-        }
 
         consumeFrom(requireComponents.core.store) {
             tabCounterView?.update(it)
@@ -708,15 +660,14 @@ class HomeFragment : Fragment() {
         _binding = null
 
         bundleArgs.clear()
-        lastAppliedWallpaperName = Wallpaper.defaultName
     }
 
     override fun onStart() {
         super.onStart()
-
+        binding.apply{
+            wallpaperImageView.setImageResource(R.drawable.ayse_bek_mescid_i_nebevi)
+        }
         subscribeToTabCollections()
-
-        val context = requireContext()
 
         requireComponents.backgroundServices.accountManagerAvailableQueue.runIfReadyOrQueue {
             // By the time this code runs, we may not be attached to a context or have a view lifecycle owner.
@@ -743,14 +694,6 @@ class HomeFragment : Fragment() {
                 },
                 owner = this@HomeFragment.viewLifecycleOwner,
             )
-        }
-
-        if (browsingModeManager.mode.isPrivate &&
-            // We will be showing the search dialog and don't want to show the CFR while the dialog shows
-            !bundleArgs.getBoolean(FOCUS_ON_ADDRESS_BAR) &&
-            context.settings().shouldShowPrivateModeCfr
-        ) {
-            recommendPrivateBrowsingShortcut()
         }
 
         // We only want this observer live just before we navigate away to the collection creation screen
@@ -816,52 +759,6 @@ class HomeFragment : Fragment() {
         requireComponents.useCases.sessionUseCases.updateLastAccess()
     }
 
-    @SuppressLint("InflateParams")
-    private fun recommendPrivateBrowsingShortcut() {
-        context?.let { context ->
-            val layout = LayoutInflater.from(context)
-                .inflate(R.layout.pbm_shortcut_popup, null)
-            val privateBrowsingRecommend =
-                PopupWindow(
-                    layout,
-                    min(
-                        (resources.displayMetrics.widthPixels / CFR_WIDTH_DIVIDER).toInt(),
-                        (resources.displayMetrics.heightPixels / CFR_WIDTH_DIVIDER).toInt(),
-                    ),
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    true,
-                )
-            layout.findViewById<Button>(R.id.cfr_pos_button).apply {
-                this.increaseTapArea(CFR_TAP_INCREASE_DPS)
-
-                setOnClickListener {
-                    PrivateBrowsingShortcutCfr.addShortcut.record(NoExtras())
-                    PrivateShortcutCreateManager.createPrivateShortcut(context)
-                    privateBrowsingRecommend.dismiss()
-                }
-            }
-            layout.findViewById<Button>(R.id.cfr_neg_button).apply {
-                setOnClickListener {
-                    PrivateBrowsingShortcutCfr.cancel.record()
-                    privateBrowsingRecommend.dismiss()
-                }
-            }
-            // We want to show the popup only after privateBrowsingButton is available.
-            // Otherwise, we will encounter an activity token error.
-            binding.privateBrowsingButton.post {
-                runIfFragmentIsAttached {
-                    context.settings().showedPrivateModeContextualFeatureRecommender = true
-                    context.settings().lastCfrShownTimeInMillis = System.currentTimeMillis()
-                    privateBrowsingRecommend.showAsDropDown(
-                        binding.privateBrowsingButton,
-                        0,
-                        CFR_Y_OFFSET,
-                        Gravity.TOP or Gravity.END,
-                    )
-                }
-            }
-        }
-    }
 
     private fun subscribeToTabCollections(): Observer<List<TabCollection>> {
         return Observer<List<TabCollection>> {
@@ -909,69 +806,8 @@ class HomeFragment : Fragment() {
             ?.isVisible = tabCount > 0
     }
 
-    @VisibleForTesting
-    internal fun shouldEnableWallpaper() =
-        (activity as? HomeActivity)?.themeManager?.currentTheme?.isPrivate?.not() ?: false
 
-    private fun applyWallpaper(wallpaperName: String, orientationChange: Boolean) {
-        when {
-            !shouldEnableWallpaper() ||
-                (wallpaperName == lastAppliedWallpaperName && !orientationChange) -> return
-            Wallpaper.nameIsDefault(wallpaperName) -> {
-                binding.wallpaperImageView.isVisible = false
-                lastAppliedWallpaperName = wallpaperName
-            }
-            else -> {
-                runBlockingIncrement {
-                    // loadBitmap does file lookups based on name, so we don't need a fully
-                    // qualified type to load the image
-                    val wallpaper = Wallpaper.Default.copy(name = wallpaperName)
-                    val wallpaperImage =
-                        requireComponents.useCases.wallpaperUseCases.loadBitmap(wallpaper)
-                    wallpaperImage?.let {
-                        it.scaleToBottomOfView(binding.wallpaperImageView)
-                        binding.wallpaperImageView.isVisible = true
-                        lastAppliedWallpaperName = wallpaperName
-                    } ?: run {
-                        with(binding.wallpaperImageView) {
-                            isVisible = false
-                            showSnackBar(
-                                view = this,
-                                text = resources.getString(R.string.wallpaper_select_error_snackbar_message),
-                            )
-                        }
-                        // If setting a wallpaper failed reset also the contrasting text color.
-                        requireContext().settings().currentWallpaperTextColor = 0L
-                        lastAppliedWallpaperName = Wallpaper.defaultName
-                    }
-                }
-            }
-        }
-        // Logo color should be updated in all cases.
-        applyWallpaperTextColor()
-    }
 
-    /**
-     * Apply a color better contrasting with the current wallpaper to the Fenix logo and private mode switcher.
-     */
-    @VisibleForTesting
-    internal fun applyWallpaperTextColor() {
-        val tintColor = when (val color = requireContext().settings().currentWallpaperTextColor.toInt()) {
-            0 -> null // a null ColorStateList will clear the current tint
-            else -> ColorStateList.valueOf(color)
-        }
-
-        binding.privateBrowsingButton.imageTintList = tintColor
-    }
-
-    private fun observeWallpaperUpdates() {
-        consumeFrom(requireComponents.appStore) {
-            val currentWallpaper = it.wallpaperState.currentWallpaper
-            if (currentWallpaper.name != lastAppliedWallpaperName) {
-                applyWallpaper(wallpaperName = currentWallpaper.name, orientationChange = false)
-            }
-        }
-    }
 
     companion object {
         const val ALL_NORMAL_TABS = "all_normal"
