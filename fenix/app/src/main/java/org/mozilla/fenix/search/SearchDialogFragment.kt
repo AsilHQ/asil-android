@@ -67,7 +67,6 @@ import mozilla.components.support.ktx.android.content.hasCamera
 import mozilla.components.support.ktx.android.content.isPermissionGranted
 import mozilla.components.support.ktx.android.content.res.getSpanned
 import mozilla.components.support.ktx.android.net.isHttpOrHttps
-import mozilla.components.support.ktx.android.view.findViewInHierarchy
 import mozilla.components.support.ktx.android.view.hideKeyboard
 import mozilla.components.support.ktx.kotlin.toNormalizedUrl
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
@@ -84,7 +83,6 @@ import org.mozilla.fenix.components.toolbar.ToolbarPosition
 import org.mozilla.fenix.databinding.FragmentSearchDialogBinding
 import org.mozilla.fenix.databinding.SearchSuggestionsHintBinding
 import org.mozilla.fenix.ext.components
-import org.mozilla.fenix.ext.getRectWithScreenLocation
 import org.mozilla.fenix.ext.increaseTapArea
 import org.mozilla.fenix.ext.registerForActivityResult
 import org.mozilla.fenix.ext.requireComponents
@@ -277,21 +275,20 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
                 dialog?.window?.decorView?.setOnTouchListener { _, event ->
                     when (event?.action) {
                         MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                            isPrivateButtonClicked = isTouchingPrivateButton(event.x, event.y)
                             // Immediately drop Search Bar focus when the touch is not on the private button.
                             if (!isPrivateButtonClicked) {
                                 toolbarView.view.clearFocus()
                             }
                         }
                         MotionEvent.ACTION_UP -> {
-                            if (!isTouchingPrivateButton(
-                                    event.x,
-                                    event.y,
-                                ) && !isPrivateButtonClicked
-                            ) {
-                                findNavController().popBackStack()
-                                isPrivateButtonClicked = false
-                            }
+//                            if (!isTouchingPrivateButton(
+//                                    event.x,
+//                                    event.y,
+//                                ) && !isPrivateButtonClicked
+//                            ) {
+//                                findNavController().popBackStack()
+//                                isPrivateButtonClicked = false
+//                            }
                         }
                         else -> isPrivateButtonClicked = false
                     }
@@ -481,12 +478,6 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
         }
     }
 
-    private fun isTouchingPrivateButton(x: Float, y: Float): Boolean {
-        val view = parentFragmentManager.primaryNavigationFragment?.view?.findViewInHierarchy {
-            it.id == R.id.privateBrowsingButton
-        } ?: return false
-        return view.getRectWithScreenLocation().contains(x.toInt(), y.toInt())
-    }
 
     private fun hideClipboardSection() {
         binding.fillLinkFromClipboard.isVisible = false

@@ -150,9 +150,11 @@
         </activity>
 
         <activity android:name=".MozillaOnlineHomeActivity"
+            android:windowSoftInputMode="adjustResize"
                 android:exported="false"/>
 
         <activity android:name=".home.mozonline.PrivacyContentDisplayActivity"
+            android:windowSoftInputMode="adjustResize"
                 android:exported="false"/>
 
         <activity
@@ -172,6 +174,7 @@
             android:theme="@style/Theme.Transparent"
             android:relinquishTaskIdentity="true"
             android:taskAffinity=""
+            android:windowSoftInputMode="adjustResize"
             android:exported="true"
             android:excludeFromRecents="true" >
 
@@ -260,10 +263,12 @@
 
         <activity
             android:name=".crashes.CrashListActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 
         <activity android:name=".widget.VoiceSearchActivity"
             android:theme="@style/Theme.AppCompat.Translucent"
+            android:windowSoftInputMode="adjustResize"
             android:taskAffinity=""
             android:excludeFromRecents="true"
             />
@@ -277,22 +282,27 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
         <activity android:name=".settings.account.AuthIntentReceiverActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 
         <activity android:name=".autofill.AutofillUnlockActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
         <activity android:name=".autofill.AutofillConfirmActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
         <activity android:name=".autofill.AutofillSearchActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/DialogActivityTheme" />
 
         <activity
             android:name=".messaging.NotificationClickedReceiverActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 
         <service

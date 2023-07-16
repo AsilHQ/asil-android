@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mozilla.components.feature.top.sites.TopSite
 import mozilla.components.lib.state.ext.flowScoped
-import mozilla.components.support.ktx.android.content.getColorFromAttr
 import org.mozilla.fenix.GleanMetrics.Pings
 import org.mozilla.fenix.GleanMetrics.TopSites
 import org.mozilla.fenix.R
@@ -101,9 +100,9 @@ class TopSiteItemViewHolder(
                 .collect { currentState ->
                     var backgroundColor = ContextCompat.getColor(view.context, R.color.fx_mobile_layer_color_2)
 
-                    currentState.runIfWallpaperCardColorsAreAvailable { cardColorLight, cardColorDark ->
+                    currentState.runIfWallpaperCardColorsAreAvailable { cardColorLight, _ ->
                         backgroundColor = if (view.context.isSystemInDarkTheme()) {
-                            cardColorDark
+                            cardColorLight
                         } else {
                             cardColorLight
                         }
@@ -115,16 +114,16 @@ class TopSiteItemViewHolder(
                     if (textColor != null) {
                         val color = Color(textColor).toArgb()
                         val colorList = ColorStateList.valueOf(color)
-                        binding.topSiteTitle.setTextColor(color)
-                        binding.topSiteSubtitle.setTextColor(color)
+//                        binding.topSiteTitle.setTextColor(color)
+//                        binding.topSiteSubtitle.setTextColor(color)
                         TextViewCompat.setCompoundDrawableTintList(binding.topSiteTitle, colorList)
                     } else {
-                        binding.topSiteTitle.setTextColor(
-                            view.context.getColorFromAttr(R.attr.textPrimary),
-                        )
-                        binding.topSiteSubtitle.setTextColor(
-                            view.context.getColorFromAttr(R.attr.textSecondary),
-                        )
+//                        binding.topSiteTitle.setTextColor(
+//                            view.context.getColorFromAttr(R.attr.textPrimary),
+//                        )
+//                        binding.topSiteSubtitle.setTextColor(
+//                            view.context.getColorFromAttr(R.attr.textSecondary),
+//                        )
                         TextViewCompat.setCompoundDrawableTintList(binding.topSiteTitle, null)
                     }
                 }

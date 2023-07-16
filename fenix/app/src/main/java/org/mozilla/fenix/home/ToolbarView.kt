@@ -7,12 +7,10 @@ package org.mozilla.fenix.home
 import android.content.Context
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.updateLayoutParams
 import mozilla.components.support.ktx.android.content.res.resolveAttribute
 import org.mozilla.fenix.R
 import org.mozilla.fenix.components.toolbar.ToolbarPosition
@@ -96,10 +94,6 @@ class ToolbarView(
                     view.context.theme.resolveAttribute(R.attr.bottomBarBackgroundTop),
                 )
 
-                binding.homeAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin =
-                        context.resources.getDimensionPixelSize(R.dimen.home_fragment_top_toolbar_header_margin)
-                }
             }
 
             ToolbarPosition.BOTTOM -> {}
