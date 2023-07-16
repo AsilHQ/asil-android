@@ -36,7 +36,7 @@
 
     <style name="BottomSheetPrivate" parent="BottomSheetBasePrivate">
         <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">#171720</item>
         <item name="android:navigationBarColor">?attr/layer1</item>
         <item name="android:colorBackground">?attr/layer1</item>
         <!-- Style the navigation bar -->
@@ -46,7 +46,7 @@
 
     <style name="BottomSheet" parent="BottomSheetBase">
         <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/asil_status_bar_color</item>
         <item name="android:navigationBarColor">?attr/layer1</item>
         <item name="android:colorBackground">?attr/layer1</item>
         <!-- Style the navigation bar -->

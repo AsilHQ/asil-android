@@ -32,6 +32,8 @@
     <!-- Info background -->
     <color name="fx_mobile_layer_color_info" tools:ignore="UnusedResources">@color/photonBlue50A44</color>
 
+    <color name="asil_status_bar_color">#171720</color>
+
     <!-- Action -->
     <!-- Primary button, Snackbar, Floating action button, Chip selected -->
     <color name="fx_mobile_action_color_primary">@color/photonInk20</color>
