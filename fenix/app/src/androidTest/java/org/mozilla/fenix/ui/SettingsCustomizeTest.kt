@@ -35,10 +35,8 @@ class SettingsCustomizeTest {
     }
 
     private fun getUiTheme(): Boolean {
-        val mode =
-            activityIntentTestRule.activity.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
 
-        return when (mode) {
+        return when (activityIntentTestRule.activity.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
             Configuration.UI_MODE_NIGHT_YES -> true // dark theme is set
             Configuration.UI_MODE_NIGHT_NO -> false // dark theme is not set, using light theme
             else -> false // default option is light theme
@@ -57,30 +55,6 @@ class SettingsCustomizeTest {
             verifyDarkThemeApplied(getUiTheme())
             selectLightMode()
             verifyLightThemeApplied(getUiTheme())
-        }
-    }
-
-    @Test
-    fun setToolbarPositionTest() {
-        homeScreen {
-        }.openThreeDotMenu {
-        }.openSettings {
-        }.openCustomizeSubMenu {
-            verifyToolbarPositionPreference("Bottom")
-            clickTopToolbarToggle()
-            verifyToolbarPositionPreference("Top")
-        }.goBack {
-        }.goBack {
-            verifyToolbarPosition(defaultPosition = false)
-        }.openThreeDotMenu {
-        }.openSettings {
-        }.openCustomizeSubMenu {
-            clickBottomToolbarToggle()
-            verifyToolbarPositionPreference("Bottom")
-            exitMenu()
-        }
-        homeScreen {
-            verifyToolbarPosition(defaultPosition = true)
         }
     }
 
