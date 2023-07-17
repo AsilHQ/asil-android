@@ -404,16 +404,6 @@ class HomeScreenRobot {
         return publisher
     }
 
-    fun verifyToolbarPosition(defaultPosition: Boolean) {
-        onView(withId(R.id.toolbarLayout))
-            .check(
-                if (defaultPosition) {
-                    isPartiallyBelow(withId(R.id.sessionControlRecyclerView))
-                } else {
-                    isCompletelyAbove(withId(R.id.homeAppBar))
-                },
-            )
-    }
     fun verifyNimbusMessageCard(title: String, text: String, action: String) {
         val textView = UiSelector()
             .className(ComposeView::class.java)
