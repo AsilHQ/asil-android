@@ -31,7 +31,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.mozilla"
+        applicationId "org.halalz"
         minSdkVersion config.minSdkVersion
         compileSdk config.compileSdkVersion
         targetSdkVersion config.targetSdkVersion
@@ -141,7 +141,7 @@ android {
         }
         release releaseTemplate >> {
             buildConfigField "boolean", "USE_RELEASE_VERSIONING", "true"
-            applicationIdSuffix ".firefox"
+            applicationIdSuffix ".asil"
             def deepLinkSchemeValue = "fenix"
             buildConfigField "String", "DEEP_LINK_SCHEME", "\"$deepLinkSchemeValue\""
             manifestPlaceholders.putAll([

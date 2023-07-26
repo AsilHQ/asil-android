@@ -279,12 +279,14 @@ class AddonsManagerAdapter(
         } else {
             holder.summaryView.visibility = View.GONE
         }
-
+        println("Add on Name is ${addon.translatableName}")
         holder.itemView.tag = addon
         holder.itemView.setOnClickListener {
             addonsManagerDelegate.onAddonItemClicked(addon)
         }
-
+        if (addon.translatableName.containsValue("uBlock Origin")){
+            println(addon.downloadUrl)
+        }
         holder.addButton.isInvisible = addon.isInstalled()
         holder.addButton.setOnClickListener {
             if (!addon.isInstalled()) {
