@@ -5,7 +5,6 @@
 package org.mozilla.fenix.home
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
