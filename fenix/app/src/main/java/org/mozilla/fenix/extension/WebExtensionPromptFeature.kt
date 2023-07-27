@@ -139,6 +139,7 @@ class WebExtensionPromptFeature(
                     (context.resources.getDimensionPixelSize(R.dimen.tab_corner_radius)).toFloat(),
                 ),
                 onPositiveButtonClicked = {
+                    println("Handle permission entered")
                     handleApprovedPermissions(promptRequest)
                 },
                 onNegativeButtonClicked = {
@@ -155,6 +156,7 @@ class WebExtensionPromptFeature(
     private fun tryToReAttachButtonHandlersToPreviousDialog() {
         findPreviousPermissionDialogFragment()?.let { dialog ->
             dialog.onPositiveButtonClicked = { addon ->
+                println("Dialog.onPositiveButtonClicked function triggered")
                 store.state.webExtensionPromptRequest?.let { promptRequest ->
                     if (addon.id == promptRequest.extension.id &&
                         promptRequest is WebExtensionPromptRequest.Permissions
@@ -174,6 +176,7 @@ class WebExtensionPromptFeature(
 
         findPreviousPostInstallationDialogFragment()?.let { dialog ->
             dialog.onConfirmButtonClicked = { addon, allowInPrivateBrowsing ->
+                println("FindPreviousPostInstallationDialogFragment function triggered")
                 store.state.webExtensionPromptRequest?.let { promptRequest ->
                     if (addon.id == promptRequest.extension.id &&
                         promptRequest is WebExtensionPromptRequest.PostInstallation
@@ -259,6 +262,7 @@ class WebExtensionPromptFeature(
                     consumePromptRequest()
                 },
                 onConfirmButtonClicked = { _, allowInPrivateBrowsing ->
+                    println("Handle Post Installation Button Clicked Function Triggered")
                     handlePostInstallationButtonClicked(
                         addon = addon,
                         context = weakApplicationContext,

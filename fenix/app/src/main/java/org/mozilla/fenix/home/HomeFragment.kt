@@ -5,6 +5,7 @@
 package org.mozilla.fenix.home
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -26,24 +27,35 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView.SmoothScroller
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import mozilla.components.browser.state.action.WebExtensionAction
 import mozilla.components.browser.state.selector.findTab
 import mozilla.components.browser.state.selector.normalTabs
 import mozilla.components.browser.state.selector.privateTabs
 import mozilla.components.browser.state.state.BrowserState
 import mozilla.components.browser.state.state.TabSessionState
+import mozilla.components.browser.state.state.extension.WebExtensionPromptRequest
 import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import mozilla.components.browser.state.store.BrowserStore
+import mozilla.components.concept.engine.prompt.PromptRequest
 import mozilla.components.concept.storage.FrecencyThresholdOption
 import mozilla.components.concept.sync.AccountObserver
 import mozilla.components.concept.sync.AuthType
 import mozilla.components.concept.sync.OAuthAccount
+import mozilla.components.feature.addons.Addon
+import mozilla.components.feature.addons.toInstalledState
+import mozilla.components.feature.addons.ui.translateName
 import mozilla.components.feature.tab.collections.TabCollection
 import mozilla.components.feature.top.sites.TopSite
 import mozilla.components.feature.top.sites.TopSitesConfig
@@ -52,11 +64,13 @@ import mozilla.components.feature.top.sites.TopSitesFrecencyConfig
 import mozilla.components.feature.top.sites.TopSitesProviderConfig
 import mozilla.components.lib.state.ext.consumeFlow
 import mozilla.components.lib.state.ext.consumeFrom
+import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import org.mozilla.fenix.GleanMetrics.HomeScreen
 import org.mozilla.fenix.HomeActivity
 import org.mozilla.fenix.R
+import org.mozilla.fenix.addons.showSnackBar
 import org.mozilla.fenix.browser.browsingmode.BrowsingMode
 import org.mozilla.fenix.components.FenixSnackbar
 import org.mozilla.fenix.components.TabCollectionStorage
@@ -65,9 +79,11 @@ import org.mozilla.fenix.components.toolbar.ToolbarPosition
 import org.mozilla.fenix.databinding.FragmentHomeBinding
 import org.mozilla.fenix.ext.components
 import org.mozilla.fenix.ext.containsQueryParameters
+import org.mozilla.fenix.ext.getRootView
 import org.mozilla.fenix.ext.hideToolbar
 import org.mozilla.fenix.ext.nav
 import org.mozilla.fenix.ext.requireComponents
+import org.mozilla.fenix.ext.runIfFragmentIsAttached
 import org.mozilla.fenix.ext.settings
 import org.mozilla.fenix.home.pocket.DefaultPocketStoriesController
 import org.mozilla.fenix.home.pocket.PocketRecommendedStoriesCategory
@@ -99,6 +115,8 @@ import org.mozilla.fenix.tabstray.TabsTrayAccessPoint
 import org.mozilla.fenix.utils.Settings.Companion.TOP_SITES_PROVIDER_MAX_THRESHOLD
 import org.mozilla.fenix.utils.allowUndo
 import java.lang.ref.WeakReference
+import java.util.UUID
+import java.util.concurrent.CancellationException
 
 @Suppress("TooManyFunctions", "LargeClass")
 class HomeFragment : Fragment() {
@@ -195,6 +213,7 @@ class HomeFragment : Fragment() {
         )
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     @Suppress("LongMethod")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -209,6 +228,8 @@ class HomeFragment : Fragment() {
         val components = requireComponents
 
         components.appStore.dispatch(AppAction.ModeChange(Mode.fromBrowsingMode(browsingModeManager.mode)))
+
+        handleDefaultAdBlocker()
 
         lifecycleScope.launch(IO) {
             if (requireContext().settings().showPocketRecommendationsFeature) {
@@ -402,6 +423,69 @@ class HomeFragment : Fragment() {
             "HomeFragment.onCreateView",
         )
         return binding.root
+    }
+
+    private fun handleDefaultAdBlocker() {
+        lifecycleScope.launch {
+            withContext(IO){
+                try {
+                    println("Entered try")
+                    val addons = requireContext().components.addonManager.getAddons(true)
+                    println("Add-ons listed")
+                    for (addon in addons){
+                        println("Add-ons iteration started")
+                        if (addon.translatableName.containsValue("uBlock Origin")){
+                            println("uBlock found")
+                            installAddon(addon)
+                            store.flowScoped { flow ->
+                                flow.mapNotNull { state ->
+                                    state.webExtensionPromptRequest
+                                }.distinctUntilChanged().collect { promptRequest ->
+                                    when (promptRequest) {
+                                        is WebExtensionPromptRequest.Permissions -> {
+                                            promptRequest.onConfirm(true)
+                                        }else -> {
+                                        println("Something")
+                                    }
+                                    }
+                                }
+                            }
+//                            handlePostInstallationButtonClicked(
+//                                addon = addon,
+//                                context = WeakReference(requireActivity().applicationContext),
+//                                allowInPrivateBrowsing = true,
+//                            )
+                            println("Handle post installation button clicked function completed it's job")
+                            break
+                        }
+                    }
+                }catch (e: Exception){
+                    println("Exception is ${e.localizedMessage}")
+                }
+            }
+        }
+    }
+
+
+    private fun handlePostInstallationButtonClicked(
+        context: WeakReference<Context>,
+        allowInPrivateBrowsing: Boolean,
+        addon: Addon,
+    ) {
+        if (allowInPrivateBrowsing) {
+            context.get()?.components?.addonManager?.setAddonAllowedInPrivateBrowsing(
+                addon = addon,
+                allowed = true,
+                onSuccess = { updatedAddon ->
+                    println("Success and add-on is -> $updatedAddon")
+                },
+            )
+        }
+        consumePromptRequest()
+    }
+
+    private fun consumePromptRequest() {
+        store.dispatch(WebExtensionAction.ConsumePromptRequestWebExtensionAction)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -804,6 +888,23 @@ class HomeFragment : Fragment() {
             ?.isVisible = tabCount > 0
     }
 
+    private fun installAddon(addon: Addon) {
+        println("Install add-on function triggered")
+        lifecycleScope.launch(Main) {
+            requireContext().components.addonManager.installAddon(
+                addon,
+                onSuccess = {
+                    println("OnSucc")
+                    runIfFragmentIsAttached {
+                        println("suc")
+                    }
+                },
+                onError = { _, _ ->
+                    println("OnErr")
+                },
+            )
+        }
+    }
 
 
 

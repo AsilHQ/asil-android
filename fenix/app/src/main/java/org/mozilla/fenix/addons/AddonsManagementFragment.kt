@@ -174,6 +174,7 @@ class AddonsManagementFragment : Fragment(R.layout.fragment_add_ons_management) 
             showErrorSnackBar(getString(R.string.addon_not_supported_error))
         } else {
             if (addonToInstall.isInstalled()) {
+                println("Installed add-on is -> ${addonToInstall.translatableName}")
                 showErrorSnackBar(getString(R.string.addon_already_installed))
             } else {
                 installAddon(addonToInstall)
@@ -211,12 +212,14 @@ class AddonsManagementFragment : Fragment(R.layout.fragment_add_ons_management) 
         requireContext().components.addonManager.installAddon(
             addon,
             onSuccess = {
+                println("UnSucc")
                 runIfFragmentIsAttached {
                     isInstallationInProgress = false
                     adapter?.updateAddon(it)
                 }
             },
             onError = { _, e ->
+                println("OnErr")
                 this@AddonsManagementFragment.view?.let { view ->
                     // No need to display an error message if installation was cancelled by the user.
                     if (e !is CancellationException) {
