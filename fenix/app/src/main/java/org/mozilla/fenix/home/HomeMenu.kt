@@ -15,9 +15,6 @@ import mozilla.components.browser.menu.BrowserMenuBuilder
 import mozilla.components.browser.menu.BrowserMenuHighlight
 import mozilla.components.browser.menu.BrowserMenuItem
 import mozilla.components.browser.menu.ext.getHighlight
-import mozilla.components.browser.menu.item.BrowserMenuDivider
-import mozilla.components.browser.menu.item.BrowserMenuHighlightableItem
-import mozilla.components.browser.menu.item.BrowserMenuImageSwitch
 import mozilla.components.browser.menu.item.BrowserMenuImageText
 import mozilla.components.browser.menu.item.SimpleBrowserMenuItem
 import mozilla.components.concept.sync.AccountObserver
@@ -27,13 +24,9 @@ import mozilla.components.support.ktx.android.content.getColorFromAttr
 import org.mozilla.fenix.Config
 import org.mozilla.fenix.R
 import org.mozilla.fenix.components.accounts.AccountState
-import org.mozilla.fenix.components.accounts.FenixAccountManager
-import org.mozilla.fenix.components.toolbar.BrowserMenuSignIn
 import org.mozilla.fenix.ext.components
-import org.mozilla.fenix.ext.settings
 import org.mozilla.fenix.nimbus.FxNimbus
 import org.mozilla.fenix.theme.ThemeManager
-import org.mozilla.fenix.whatsnew.WhatsNew
 
 @Suppress("LargeClass", "LongMethod")
 class HomeMenu(
@@ -140,13 +133,13 @@ class HomeMenu(
             onItemTapped.invoke(Item.Downloads)
         }
 
-        val extensionsItem = BrowserMenuImageText(
-            context.getString(R.string.browser_menu_add_ons),
-            R.drawable.ic_addons_extensions,
-            primaryTextColor,
-        ) {
-            onItemTapped.invoke(Item.Extensions)
-        }
+//        val extensionsItem = BrowserMenuImageText(
+//            context.getString(R.string.browser_menu_add_ons),
+//            R.drawable.ic_addons_extensions,
+//            primaryTextColor,
+//        ) {
+//            onItemTapped.invoke(Item.Extensions)
+//        }
 
         val manageAccountAndDevicesItem = SimpleBrowserMenuItem(
             context.getString(R.string.browser_menu_manage_account_and_devices),
@@ -208,7 +201,7 @@ class HomeMenu(
             bookmarksItem,
             historyItem,
             downloadsItem,
-            extensionsItem,
+//            extensionsItem,
 //            syncSignInMenuItem(),
 //            accountAuthItem,
             if (Config.channel.isMozillaOnline) manageAccountAndDevicesItem else null,
