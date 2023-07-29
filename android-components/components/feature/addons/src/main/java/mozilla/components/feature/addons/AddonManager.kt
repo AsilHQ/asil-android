@@ -58,7 +58,7 @@ class AddonManager(
      * @throws AddonManagerException in case of a problem reading from
      * the [addonsProvider] or querying web extension state from the engine / store.
      */
-    @Throws(AddonManagerException::class)
+
     @Suppress("TooGenericExceptionCaught")
     suspend fun getAddons(waitForPendingActions: Boolean = true, allowCache: Boolean = true): List<Addon> {
         try {
@@ -119,9 +119,10 @@ class AddonManager(
                 }
 
             return supportedAddons + unsupportedAddons
-        } catch (throwable: Throwable) {
-            throw AddonManagerException(throwable)
+        } catch (e: Exception) {
+            println("Getting Add-Ons exception is -> ${e.localizedMessage}")
         }
+        return listOf()
     }
 
     /**
