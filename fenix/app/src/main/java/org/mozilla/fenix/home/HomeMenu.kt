@@ -69,24 +69,24 @@ class HomeMenu(
     private val syncDisconnectedBackgroundColor =
         context.getColorFromAttr(R.attr.syncDisconnectedBackground)
 
-    private val accountManager = FenixAccountManager(context)
+//
 
     // 'Reconnect' and 'Quit' items aren't needed most of the time, so we'll only create the if necessary.
-    private val reconnectToSyncItem by lazy {
-        BrowserMenuHighlightableItem(
-            context.getString(R.string.sync_reconnect),
-            R.drawable.ic_sync_disconnected,
-            iconTintColorResource = syncDisconnectedColor,
-            textColorResource = primaryTextColor,
-            highlight = BrowserMenuHighlight.HighPriority(
-                backgroundTint = syncDisconnectedBackgroundColor,
-                canPropagate = false,
-            ),
-            isHighlighted = { true },
-        ) {
-            onItemTapped.invoke(Item.ReconnectSync)
-        }
-    }
+//    private val reconnectToSyncItem by lazy {
+//        BrowserMenuHighlightableItem(
+//            context.getString(R.string.sync_reconnect),
+//            R.drawable.ic_sync_disconnected,
+//            iconTintColorResource = syncDisconnectedColor,
+//            textColorResource = primaryTextColor,
+//            highlight = BrowserMenuHighlight.HighPriority(
+//                backgroundTint = syncDisconnectedBackgroundColor,
+//                canPropagate = false,
+//            ),
+//            isHighlighted = { true },
+//        ) {
+//            onItemTapped.invoke(Item.ReconnectSync)
+//        }
+//    }
 
     private val quitItem by lazy {
         BrowserMenuImageText(
@@ -98,19 +98,19 @@ class HomeMenu(
         }
     }
 
-    private fun syncSignInMenuItem(): BrowserMenuItem {
-        return BrowserMenuSignIn(primaryTextColor) {
-            onItemTapped.invoke(Item.SyncAccount(accountManager.accountState))
-        }
-    }
+//    private fun syncSignInMenuItem(): BrowserMenuItem {
+//        return BrowserMenuSignIn(primaryTextColor) {
+//            onItemTapped.invoke(Item.SyncAccount(accountManager.accountState))
+//        }
+//    }
 
-    val desktopItem = BrowserMenuImageSwitch(
-        imageResource = R.drawable.ic_desktop,
-        label = context.getString(R.string.browser_menu_desktop_site),
-        initialState = { context.settings().openNextTabInDesktopMode },
-    ) { checked ->
-        onItemTapped.invoke(Item.DesktopMode(checked))
-    }
+//    val desktopItem = BrowserMenuImageSwitch(
+//        imageResource = R.drawable.ic_desktop,
+//        label = context.getString(R.string.browser_menu_desktop_site),
+//        initialState = { context.settings().openNextTabInDesktopMode },
+//    ) { checked ->
+//        onItemTapped.invoke(Item.DesktopMode(checked))
+//    }
 
     @Suppress("ComplexMethod")
     private fun coreMenuItems(): List<BrowserMenuItem> {
@@ -155,25 +155,25 @@ class HomeMenu(
             onItemTapped.invoke(Item.ManageAccountAndDevices)
         }
 
-        val whatsNewItem = BrowserMenuHighlightableItem(
-            context.getString(R.string.browser_menu_whats_new),
-            R.drawable.ic_whats_new,
-            iconTintColorResource = primaryTextColor,
-            highlight = BrowserMenuHighlight.LowPriority(
-                notificationTint = getColor(context, R.color.fx_mobile_icon_color_information),
-            ),
-            isHighlighted = { WhatsNew.shouldHighlightWhatsNew(context) },
-        ) {
-            onItemTapped.invoke(Item.WhatsNew)
-        }
+//        val whatsNewItem = BrowserMenuHighlightableItem(
+//            context.getString(R.string.browser_menu_whats_new),
+//            R.drawable.ic_whats_new,
+//            iconTintColorResource = primaryTextColor,
+//            highlight = BrowserMenuHighlight.LowPriority(
+//                notificationTint = getColor(context, R.color.fx_mobile_icon_color_information),
+//            ),
+//            isHighlighted = { WhatsNew.shouldHighlightWhatsNew(context) },
+//        ) {
+//            onItemTapped.invoke(Item.WhatsNew)
+//        }
 
-        val helpItem = BrowserMenuImageText(
-            context.getString(R.string.browser_menu_help),
-            R.drawable.mozac_ic_help,
-            primaryTextColor,
-        ) {
-            onItemTapped.invoke(Item.Help)
-        }
+//        val helpItem = BrowserMenuImageText(
+//            context.getString(R.string.browser_menu_help),
+//            R.drawable.mozac_ic_help,
+//            primaryTextColor,
+//        ) {
+//            onItemTapped.invoke(Item.Help)
+//        }
 
         val customizeHomeItem = BrowserMenuImageText(
             context.getString(R.string.browser_menu_customize_home_1),
@@ -195,28 +195,28 @@ class HomeMenu(
 
         // Only query account manager if it has been initialized.
         // We don't want to cause its initialization just for this check.
-        val accountAuthItem =
-            if (context.components.backgroundServices.accountManagerAvailableQueue.isReady() &&
-                context.components.backgroundServices.accountManager.accountNeedsReauth()
-            ) {
-                reconnectToSyncItem
-            } else {
-                null
-            }
+//        val accountAuthItem =
+//            if (context.components.backgroundServices.accountManagerAvailableQueue.isReady() &&
+//                context.components.backgroundServices.accountManager.accountNeedsReauth()
+//            ) {
+//                reconnectToSyncItem
+//            } else {
+//                null
+//            }
 
         val menuItems = listOfNotNull(
             bookmarksItem,
             historyItem,
             downloadsItem,
             extensionsItem,
-            syncSignInMenuItem(),
-            accountAuthItem,
+//            syncSignInMenuItem(),
+//            accountAuthItem,
             if (Config.channel.isMozillaOnline) manageAccountAndDevicesItem else null,
-            BrowserMenuDivider(),
-            desktopItem,
-            BrowserMenuDivider(),
-            whatsNewItem,
-            helpItem,
+//            BrowserMenuDivider(),
+//            desktopItem,
+//            BrowserMenuDivider(),
+//            whatsNewItem,
+            //helpItem,
             customizeHomeItem,
             settingsItem,
             if (settings.shouldDeleteBrowsingDataOnQuit) quitItem else null,

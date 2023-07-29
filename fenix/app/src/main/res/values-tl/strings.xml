@@ -50,7 +50,7 @@
     <string name="recently_saved_menu_item_remove">Alisin</string>
 
     <!-- About content. The first parameter is the name of the application. (For example: Fenix) -->
-    <string name="about_content">Ang %1$s ay gawa ng Mozilla.</string>
+    <string name="about_content">Ang %1$s ay gawa ng Asil Browser.</string>
 
     <!-- Private Browsing -->
     <!-- Explanation for private browsing displayed to users on home view when they first enable private mode
@@ -310,12 +310,12 @@
     <string name="errorpage_httpsonly_message_title">Malamang sa malamang, ang website ay sadyang hindi suportado ang HTTPS.</string>
     <!-- Preference for accessibility -->
     <string name="preferences_accessibility">Accessibility</string>
-    <!-- Preference to override the Firefox Account server -->
-    <string name="preferences_override_fxa_server">Pasadya na Firefox Account server</string>
+    <!-- Preference to override the Asil Browser Account server -->
+    <string name="preferences_override_fxa_server">Pasadya na Asil Browser Account server</string>
     <!-- Preference to override the Sync token server -->
     <string name="preferences_override_sync_tokenserver">Pasadya na Sync server</string>
     <!-- Toast shown after updating the FxA/Sync server override preferences -->
-    <string name="toast_override_fxa_sync_server_done">Nabago ang Firefox Account/Sync server. Magsasara na ang application para mailapat ang mga pagbabago…</string>
+    <string name="toast_override_fxa_sync_server_done">Nabago ang Asil Browser Account/Sync server. Magsasara na ang application para mailapat ang mga pagbabago…</string>
     <!-- Preference category for account information -->
     <string name="preferences_category_account">Account</string>
     <!-- Preference for changing where the toolbar is positioned -->
@@ -331,7 +331,7 @@
     <!-- Preference description for banner about signing in -->
     <string name="preferences_sign_in_description_2">Mag sign-in para i-sync ang mga tabs, bookmarks, passwords at iba pa.</string>
     <!-- Preference shown instead of account display name while account profile information isn't available yet. -->
-    <string name="preferences_account_default_name">Firefox Account</string>
+    <string name="preferences_account_default_name">Asil Browser Account</string>
     <!-- Preference text for account title when there was an error syncing FxA -->
     <string name="preferences_account_sync_error">Muling kumonekta para maipagpatuloy ang pag-sync</string>
     <!-- Preference for language -->
@@ -474,7 +474,7 @@
     <!-- Name of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
     <string name="fxa_received_tab_channel_name">Mga natanggap na tab</string>
     <!-- Description of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
-    <string name="fxa_received_tab_channel_description">Mga abiso para sa mga tab na natanggap mula sa ibang mga Firefox device.</string>
+    <string name="fxa_received_tab_channel_description">Mga abiso para sa mga tab na natanggap mula sa ibang mga Asil Browser device.</string>
     <!--  The body for these is the URL of the tab received  -->
     <string name="fxa_tab_received_notification_name">May natanggap na tab</string>
     <!-- %s is the device name -->
@@ -493,7 +493,7 @@
     <!-- Preference switch for usage and technical data collection -->
     <string name="preference_usage_data">Usage at technical data</string>
     <!-- Preference description for usage and technical data collection -->
-    <string name="preferences_usage_data_description">Ibinabahagi sa Mozilla ang datos patungkol sa performance, paggamit, hardware at customization sa browser mo para mapaganda lalo ang %1$s</string>
+    <string name="preferences_usage_data_description">Ibinabahagi sa Asil Browser ang datos patungkol sa performance, paggamit, hardware at customization sa browser mo para mapaganda lalo ang %1$s</string>
     <!-- Preference switch for marketing data collection -->
     <string name="preferences_marketing_data">Marketing data</string>
     <!-- Preference description for marketing data collection -->
@@ -501,7 +501,7 @@
     <!-- Title for studies preferences -->
     <string name="preference_experiments_2">Mga pag-aaral</string>
     <!-- Summary for studies preferences -->
-    <string name="preference_experiments_summary_2">Pinapayagan ang Mozilla para magkabit at magpatakbo ng mga pag-aaral</string>
+    <string name="preference_experiments_summary_2">Pinapayagan ang Asil Browser para magkabit at magpatakbo ng mga pag-aaral</string>
 
     <!-- Turn On Sync Preferences -->
     <!-- Header of the Sync and save your data preference view -->
@@ -636,7 +636,7 @@
     <string name="studies_remove">Tanggalin</string>
     <!-- Title of the active section on the studies list -->
     <string name="studies_active">Aktibo</string>
-    <!-- Description for studies, it indicates why Firefox use studies. The first parameter is the name of the application. -->
+    <!-- Description for studies, it indicates why Asil Browser use studies. The first parameter is the name of the application. -->
     <string name="studies_description_2">Paminsan-minsan, maaaring mag-install at magpatakbo ang %1$s ng mga pag-aaral.</string>
     <!-- Learn more link for studies, links to an article for more information about studies. -->
     <string name="studies_learn_more">Matuto ng higit pa</string>
@@ -767,7 +767,7 @@
     <!-- Title text displayed on the tab crash page. This first parameter is the name of the application (For example: Fenix) -->
     <string name="tab_crash_title_2">Pasensya na. Hindi kayang ma-load ng %1$s ang pahina.</string>
     <!-- Send crash report checkbox text on the tab crash page -->
-    <string name="tab_crash_send_report">Ipadala ang crash report sa Mozilla</string>
+    <string name="tab_crash_send_report">Ipadala ang crash report sa Asil Browser</string>
     <!-- Close tab button text on the tab crash page -->
     <string name="tab_crash_close">Isara ang tab</string>
     <!-- Restore tab button text on the tab crash page -->
@@ -998,7 +998,7 @@
     <!-- An option to connect additional devices -->
     <string name="sync_connect_device">Magkonekta ng isa pang device</string>
     <!-- The dialog text shown when additional devices are not available -->
-    <string name="sync_connect_device_dialog">Para makapagpadala ng tab, mag-sign in sa Firefox sa isa pang device.</string>
+    <string name="sync_connect_device_dialog">Para makapagpadala ng tab, mag-sign in sa Asil Browser sa isa pang device.</string>
     <!-- Confirmation dialog button -->
     <string name="sync_confirmation_button">Nakuha ko</string>
     <!-- Share error message -->
@@ -1138,11 +1138,11 @@
 
     <!-- Text for the onboarding welcome message. -->
     <string name="onboarding_message">Browser na binuo para sa mga tao, hindi para sa kita.</string>
-    <!-- Text for the Firefox account onboarding sign in card header. -->
+    <!-- Text for the Asil Browser account onboarding sign in card header. -->
     <string name="onboarding_account_sign_in_header">Kunin kung saan ka umalis</string>
-    <!-- Text for the button to learn more about signing in to your Firefox account. -->
-    <string name="onboarding_manual_sign_in_description">Bring bookmarks, history, and passwords to Firefox on this device.</string>
-    <!-- Text for the button to manually sign into Firefox account. -->
+    <!-- Text for the button to learn more about signing in to your Asil Browser account. -->
+    <string name="onboarding_manual_sign_in_description">Bring bookmarks, history, and passwords to Asil Browser on this device.</string>
+    <!-- Text for the button to manually sign into Asil Browser account. -->
     <string name="onboarding_firefox_account_sign_in">Mag-sign in</string>
     <!-- text to display in the snackbar once account is signed-in -->
     <string name="onboarding_firefox_account_sync_is_on">Nakabukas ang Sync</string>
@@ -1158,7 +1158,7 @@
     <string name="onboarding_toolbar_placement_header_1">Pilin ang paglalagyan ng toolbar</string>
 
     <!-- Text for the privacy notice onboarding card description. -->
-    <string name="onboarding_privacy_notice_description">Binibigyan ka ng Firefox ng mamahala sa mga ibinabahagi mo online at kung ano ang ibinabahagi mo sa amin.</string>
+    <string name="onboarding_privacy_notice_description">Binibigyan ka ng Asil Browser ng mamahala sa mga ibinabahagi mo online at kung ano ang ibinabahagi mo sa amin.</string>
     <!-- Text for the button to read the privacy notice -->
     <string name="onboarding_privacy_notice_read_button">Basahin ang aming paunawa sa privacy</string>
 
@@ -1192,16 +1192,16 @@
     <!-- Title of QR Pairing Fragment -->
     <string name="sync_scan_code">i-Scan ang code</string>
     <!-- Instructions on how to access pairing -->
-    <string name="sign_in_instructions"><![CDATA[Buksan ang Firefox sa computer mo at pumunta sa <b>https://firefox.com/pair</b>]]></string>
+    <string name="sign_in_instructions"><![CDATA[Buksan ang Asil Browser sa computer mo at pumunta sa <b>https://firefox.com/pair</b>]]></string>
     <!-- Text shown for sign in pairing when ready -->
     <string name="sign_in_ready_for_scan">Handa nang mag-scan</string>
     <!-- Text shown for settings option for sign with pairing -->
     <string name="sign_in_with_camera">Mag-sign in gamit ang iyong camera</string>
     <!-- Text shown for settings option for sign with email -->
     <string name="sign_in_with_email">Gumamit na lang ng email</string>
-    <!-- Text shown for settings option for create new account text.'Firefox' intentionally hardcoded here.-->
-    <string name="sign_in_create_account_text"><![CDATA[Walang account? <u>Gumawa ng isa</u> para makapag-sync ng Firefox sa mga device.]]></string>
-    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Firefox Preview) -->
+    <!-- Text shown for settings option for create new account text.'Asil Browser' intentionally hardcoded here.-->
+    <string name="sign_in_create_account_text"><![CDATA[Walang account? <u>Gumawa ng isa</u> para makapag-sync ng Asil Browser sa mga device.]]></string>
+    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Asil Browser Preview) -->
     <string name="sign_out_confirmation_message_2">Titigil na ang %s sa pag-sync sa iyong account, pero hindi nito buburahin ang kahit anong browsing data sa device na ito.</string>
     <!-- Option to continue signing out of account shown in confirmation dialog to sign out of account -->
     <string name="sign_out_disconnect">Mag-disconnect</string>
@@ -1366,7 +1366,7 @@
     <!-- Preference option for never saving passwords in Fenix -->
     <string name="preferences_passwords_save_logins_never_save">Huwag mag-save kailanman</string>
 
-    <!-- Preference for autofilling saved logins in Firefox (in web content), %1$s will be replaced with the app name -->
+    <!-- Preference for autofilling saved logins in Asil Browser (in web content), %1$s will be replaced with the app name -->
     <string name="preferences_passwords_autofill2">i-Autofill ang %1$s</string>
     <!-- Preference for autofilling logins from Fenix in other apps (e.g. autofilling the Twitter app) -->
     <string name="preferences_android_autofill">i-Autofill sa ibang apps</string>
@@ -1639,13 +1639,13 @@
     <string name="synced_tabs_connect_another_device">Magkonekta ng isa pang device.</string>
     <!-- Text displayed asking user to re-authenticate -->
     <string name="synced_tabs_reauth">Mangyaring mag-re-authenticate.</string>
-    <!-- Text displayed when user has disabled tab syncing in Firefox Sync Account -->
+    <!-- Text displayed when user has disabled tab syncing in Asil Browser Sync Account -->
     <string name="synced_tabs_enable_tab_syncing">Paki-enable ang pag-sync ng tab.</string>
     <!-- Text displayed when user has no tabs that have been synced -->
-    <string name="synced_tabs_no_tabs">Wala kang mga nakabukas na tab sa Firefox sa iba mo pang mga device.</string>
-    <!-- Text displayed in the synced tabs screen when a user is not signed in to Firefox Sync describing Synced Tabs -->
+    <string name="synced_tabs_no_tabs">Wala kang mga nakabukas na tab sa Asil Browser sa iba mo pang mga device.</string>
+    <!-- Text displayed in the synced tabs screen when a user is not signed in to Asil Browser Sync describing Synced Tabs -->
     <string name="synced_tabs_sign_in_message">Tingnan ang listahan ng mga tab mula sa iba mong mga device.</string>
-    <!-- Text displayed on a button in the synced tabs screen to link users to sign in when a user is not signed in to Firefox Sync -->
+    <!-- Text displayed on a button in the synced tabs screen to link users to sign in when a user is not signed in to Asil Browser Sync -->
     <string name="synced_tabs_sign_in_button">Mag-sign in sa sync</string>
     <!-- The text displayed when a synced device has no tabs to show in the list of Synced Tabs. -->
     <string name="synced_tabs_no_open_tabs">Walang nakabukas na mga tab</string>
@@ -1667,7 +1667,7 @@
     <string name="google_search_engine_suggestion_header">Paghahanap sa Google</string>
 
     <!-- Default browser experiment -->
-    <string name="default_browser_experiment_card_text">Set links from websites, emails, and messages to open automatically in Firefox.</string>
+    <string name="default_browser_experiment_card_text">Set links from websites, emails, and messages to open automatically in Asil Browser.</string>
 
     <!-- Content description for close button in collection placeholder. -->
     <string name="remove_home_collection_placeholder_content_description">Tanggalin</string>

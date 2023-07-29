@@ -96,10 +96,6 @@ class ToolbarView(
                     view.context.theme.resolveAttribute(R.attr.bottomBarBackgroundTop),
                 )
 
-                binding.homeAppBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                    topMargin =
-                        context.resources.getDimensionPixelSize(R.dimen.home_fragment_top_toolbar_header_margin)
-                }
             }
 
             ToolbarPosition.BOTTOM -> {}

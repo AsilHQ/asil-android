@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
+<!-- This Source Code Form is subject to the terms of the Asil Browser Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
@@ -27,7 +27,7 @@
 
     <style name="BottomSheetPrivate" parent="BottomSheetBasePrivate">
         <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">#171720</item>
         <item name="android:navigationBarColor">?attr/layer1</item>
         <item name="android:colorBackground">?attr/layer1</item>
         <!-- Style the navigation bar -->
@@ -37,7 +37,7 @@
 
     <style name="BottomSheet" parent="BottomSheetBase">
         <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/asil_status_bar_color</item>
         <item name="android:navigationBarColor">?attr/layer1</item>
         <item name="android:colorBackground">?attr/layer1</item>
         <!-- Style the navigation bar -->

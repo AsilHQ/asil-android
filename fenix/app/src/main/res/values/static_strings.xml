@@ -4,8 +4,8 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
     <!-- Name of the application -->
-    <string name="app_name" translatable="false">Firefox Fenix</string>
-    <string name="firefox" translatable="false">Firefox</string>
+    <string name="app_name" translatable="false">Asil Browser</string>
+    <string name="firefox" translatable="false">Asil Browser</string>
 
     <!-- Preference for developers -->
     <string name="preference_leakcanary" translatable="false">LeakCanary</string>
@@ -82,7 +82,7 @@
     <string name="profiler_stop">Stop Profiler</string>
 
     <string name="profiler_settings_title">Profiler Settings</string>
-    <string name="profiler_filter_firefox">Firefox</string>
+    <string name="profiler_filter_firefox">Asil Browser</string>
     <string name="profiler_running">Profiler is currently running</string>
     <string name="profiler_filter_firefox_explain">Recommended preset for profiling Firefox</string>
     <string name="profiler_filter_graphics">Graphics</string>

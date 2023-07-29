@@ -149,30 +149,30 @@ class SavedLoginsAuthFragment : PreferenceFragmentCompat() {
             true
         }
 
-        SyncPreferenceView(
-            syncPreference = requirePreference(R.string.pref_key_sync_logins),
-            lifecycleOwner = viewLifecycleOwner,
-            accountManager = requireComponents.backgroundServices.accountManager,
-            syncEngine = SyncEngine.Passwords,
-            loggedOffTitle = requireContext()
-                .getString(R.string.preferences_passwords_sync_logins_across_devices),
-            loggedInTitle = requireContext()
-                .getString(R.string.preferences_passwords_sync_logins),
-            onSyncSignInClicked = {
-                val directions =
-                    SavedLoginsAuthFragmentDirections.actionSavedLoginsAuthFragmentToTurnOnSyncFragment(
-                        entrypoint = FenixFxAEntryPoint.SavedLogins,
-                    )
-                findNavController().navigate(directions)
-            },
-            onReconnectClicked = {
-                val directions =
-                    SavedLoginsAuthFragmentDirections.actionGlobalAccountProblemFragment(
-                        entrypoint = FenixFxAEntryPoint.SavedLogins,
-                    )
-                findNavController().navigate(directions)
-            },
-        )
+//        SyncPreferenceView(
+//            syncPreference = requirePreference(R.string.pref_key_sync_logins),
+//            lifecycleOwner = viewLifecycleOwner,
+//            accountManager = requireComponents.backgroundServices.accountManager,
+//            syncEngine = SyncEngine.Passwords,
+//            loggedOffTitle = requireContext()
+//                .getString(R.string.preferences_passwords_sync_logins_across_devices),
+//            loggedInTitle = requireContext()
+//                .getString(R.string.preferences_passwords_sync_logins),
+//            onSyncSignInClicked = {
+//                val directions =
+//                    SavedLoginsAuthFragmentDirections.actionSavedLoginsAuthFragmentToTurnOnSyncFragment(
+//                        entrypoint = FenixFxAEntryPoint.SavedLogins,
+//                    )
+//                findNavController().navigate(directions)
+//            },
+//            onReconnectClicked = {
+//                val directions =
+//                    SavedLoginsAuthFragmentDirections.actionGlobalAccountProblemFragment(
+//                        entrypoint = FenixFxAEntryPoint.SavedLogins,
+//                    )
+//                findNavController().navigate(directions)
+//            },
+//        )
 
         togglePrefsEnabledWhileAuthenticating(true)
     }

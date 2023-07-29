@@ -55,7 +55,7 @@
     <string name="recently_saved_menu_item_remove">Fuortsmite</string>
 
     <!-- About content. The first parameter is the name of the application. (For example: Fenix) -->
-    <string name="about_content">%1$s is makke troch Mozilla.</string>
+    <string name="about_content">%1$s is makke troch Asil Browser.</string>
 
     <!-- Private Browsing -->
     <!-- Explanation for private browsing displayed to users on home view when they first enable private mode
@@ -308,15 +308,15 @@
         The first parameter is the name of the app defined in app_name (for example: Fenix) -->
     <string name="juno_onboarding_default_browser_title">Meitsje %s jo ‘gean nei’-browser</string>
     <!-- Title for set firefox as default browser screen used by Nimbus experiments. Nimbus experiments do not support string placeholders.
-        Note: The word "Firefox" should NOT be translated -->
-    <string name="juno_onboarding_default_browser_title_nimbus" tools:ignore="UnusedResources">Meitsje Firefox jo ‘gean nei’-browser</string>
+        Note: The word "Asil Browser" should NOT be translated -->
+    <string name="juno_onboarding_default_browser_title_nimbus" tools:ignore="UnusedResources">Meitsje Asil Browser jo ‘gean nei’-browser</string>
     <!-- Description for set firefox as default browser screen.
-        The first parameter is the Firefox brand name.
+        The first parameter is the Asil Browser brand name.
         The second parameter is the string with key "juno_onboarding_default_browser_description_link_text". -->
     <string name="juno_onboarding_default_browser_description">%1$s pleatst minsken boppe winst en ferdigenet jo privacy troch cross-sitetrackers te blokkearjen.\n\nMear ynfo yn ús %2$s.</string>
     <!-- Description for set firefox as default browser screen used by Nimbus experiments. Nimbus experiments do not support string placeholders.
-        Note: The word "Firefox" should NOT be translated -->
-    <string name="juno_onboarding_default_browser_description_nimbus" tools:ignore="UnusedResources">Firefox pleatst minsken boppe winst en ferdigenet jo privacy troch cross-sitetrackers te blokkearjen.\n\nMear ynfo yn ús privacyferklearing.</string>
+        Note: The word "Asil Browser" should NOT be translated -->
+    <string name="juno_onboarding_default_browser_description_nimbus" tools:ignore="UnusedResources">Asil Browser pleatst minsken boppe winst en ferdigenet jo privacy troch cross-sitetrackers te blokkearjen.\n\nMear ynfo yn ús privacyferklearing.</string>
     <!-- Text for the link to the privacy notice webpage for set as firefox default browser screen.
     This is part of the string with the key "juno_onboarding_default_browser_description". -->
     <string name="juno_onboarding_default_browser_description_link_text">privacyferklearring</string>
@@ -336,14 +336,14 @@
         The first parameter is the name of the app defined in app_name (for example: Fenix) -->
     <string name="juno_onboarding_enable_notifications_title">Meldingen helpe jo mear te dwaan mei %s</string>
     <!-- Title for enable notification permission screen used by Nimbus experiments. Nimbus experiments do not support string placeholders.
-        Note: The word "Firefox" should NOT be translated -->
-    <string name="juno_onboarding_enable_notifications_title_nimbus" tools:ignore="UnusedResources">Meldingen helpe jo mear te dwaan mei Firefox</string>
+        Note: The word "Asil Browser" should NOT be translated -->
+    <string name="juno_onboarding_enable_notifications_title_nimbus" tools:ignore="UnusedResources">Meldingen helpe jo mear te dwaan mei Asil Browser</string>
     <!-- Description for enable notification permission screen.
         The first parameter is the name of the app defined in app_name (for example: Fenix) -->
     <string name="juno_onboarding_enable_notifications_description">Ferstjoer ljepblêden tusken apparaten, behear downloads en ûntfang tips om %s optimaal te benutten.</string>
     <!-- Description for enable notification permission screen used by Nimbus experiments. Nimbus experiments do not support string placeholders.
-       Note: The word "Firefox" should NOT be translated   -->
-    <string name="juno_onboarding_enable_notifications_description_nimbus" tools:ignore="UnusedResources">Ferstjoer ljepblêden tusken apparaten, behear downloads en ûntfang tips om Firefox optimaal te brûken.</string>
+       Note: The word "Asil Browser" should NOT be translated   -->
+    <string name="juno_onboarding_enable_notifications_description_nimbus" tools:ignore="UnusedResources">Ferstjoer ljepblêden tusken apparaten, behear downloads en ûntfang tips om Asil Browser optimaal te brûken.</string>
     <!-- Text for the button to request notification permission on the device -->
     <string name="juno_onboarding_enable_notifications_positive_button">Notifikaasjes ynskeakelje</string>
     <!-- Text for the button dismiss the screen and move on with the flow -->
@@ -432,7 +432,7 @@
     <string name="cookie_banner_handling_report_site_snack_bar_text_2">Oanfraach ferstjoerd</string>
     <!-- Text for indicating cookie banner handling is on this site, this is shown as part of the protections panel with the tracking protection toggle -->
     <string name="reduce_cookie_banner_on_for_site">Oan foar dizze website</string>
-    <!-- Text for indicating that a request for unsupported site was sent to Nimbus (it's a Mozilla library for experiments), this is shown as part of the protections panel with the tracking protection toggle -->
+    <!-- Text for indicating that a request for unsupported site was sent to Nimbus (it's a Asil Browser library for experiments), this is shown as part of the protections panel with the tracking protection toggle -->
     <string name="reduce_cookie_banner_unsupported_site_request_submitted_2">Stipe-oanfraach ferstjoerd</string>
     <!-- Text for indicating cookie banner handling is currently not supported for this site, this is shown as part of the protections panel with the tracking protection toggle -->
     <string name="reduce_cookie_banner_unsupported_site">Website wurdt op dit stuit net stipe</string>
@@ -481,12 +481,12 @@
     <string name="errorpage_httpsonly_message_summary">It is lykwols ek mooglik dat der in oanfaller by belutsen is. As jo trochgean nei de webside, moatte jo gjin gefoelige ynformaasje ynfiere. As jo trochgean, sil Allinnich-HTTPS-modus tydlik útskeakele wurde foar de website.</string>
     <!-- Preference for accessibility -->
     <string name="preferences_accessibility">Tagonklikheid</string>
-    <!-- Preference to override the Firefox Account server -->
-    <string name="preferences_override_fxa_server">Oanpaste Firefox Accountserver</string>
+    <!-- Preference to override the Asil Browser Account server -->
+    <string name="preferences_override_fxa_server">Oanpaste Asil Browser Accountserver</string>
     <!-- Preference to override the Sync token server -->
     <string name="preferences_override_sync_tokenserver">Oanpaste Syncserver</string>
     <!-- Toast shown after updating the FxA/Sync server override preferences -->
-    <string name="toast_override_fxa_sync_server_done">Firefox Account-/Syncserver oanpast. Tapassing wurdt ôfsluten om wizigingen ta te passen…</string>
+    <string name="toast_override_fxa_sync_server_done">Asil Browser Account-/Syncserver oanpast. Tapassing wurdt ôfsluten om wizigingen ta te passen…</string>
     <!-- Preference category for account information -->
     <string name="preferences_category_account">Account</string>
     <!-- Preference for changing where the toolbar is positioned -->
@@ -502,7 +502,7 @@
     <!-- Preference description for banner about signing in -->
     <string name="preferences_sign_in_description_2">Meld jo oan om jo ljepblêden, blêdwizers, wachtwurden en mear te syngronisearjen.</string>
     <!-- Preference shown instead of account display name while account profile information isn't available yet. -->
-    <string name="preferences_account_default_name">Firefox-account</string>
+    <string name="preferences_account_default_name">Asil Browser-account</string>
     <!-- Preference text for account title when there was an error syncing FxA -->
     <string name="preferences_account_sync_error">Ferbyn opnij om de syngronisaasje te ferfetsjen</string>
     <!-- Preference for language -->
@@ -611,7 +611,7 @@
     <!-- Text displayed that links to website containing documentation about the "Limited Edition" wallpapers. -->
     <string name="wallpaper_learn_more">Mear ynfo</string>
 
-    <!-- Text for classic wallpapers title. The first parameter is the Firefox name. -->
+    <!-- Text for classic wallpapers title. The first parameter is the Asil Browser name. -->
     <string name="wallpaper_classic_title">Klassike %s</string>
     <!-- Text for limited edition wallpapers title. -->
     <string name="wallpaper_limited_edition_title">Beheinde edysje</string>
@@ -678,7 +678,7 @@
     <!-- Name of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
     <string name="fxa_received_tab_channel_name">Untfongen ljepblêden</string>
     <!-- Description of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
-    <string name="fxa_received_tab_channel_description">Meldingen foar ljepblêden ûntfongen fan oare Firefox-apparaten.</string>
+    <string name="fxa_received_tab_channel_description">Meldingen foar ljepblêden ûntfongen fan oare Asil Browser-apparaten.</string>
     <!--  The body for these is the URL of the tab received  -->
     <string name="fxa_tab_received_notification_name">Ljepblêd ûntfongen</string>
     <!-- %s is the device name -->
@@ -697,7 +697,7 @@
     <!-- Preference switch for usage and technical data collection -->
     <string name="preference_usage_data">Gebrûks- en technyske gegevens</string>
     <!-- Preference description for usage and technical data collection -->
-    <string name="preferences_usage_data_description">Dielt gegevens oer prestaasjes, gebrûk, hardware en oanpassingen fan jo browser mei Mozilla om %1$s te helpen ferbetterjen</string>
+    <string name="preferences_usage_data_description">Dielt gegevens oer prestaasjes, gebrûk, hardware en oanpassingen fan jo browser mei Asil Browser om %1$s te helpen ferbetterjen</string>
     <!-- Preference switch for marketing data collection -->
     <string name="preferences_marketing_data">Marketinggegevens</string>
     <!-- Preference description for marketing data collection -->
@@ -705,7 +705,7 @@
     <!-- Title for studies preferences -->
     <string name="preference_experiments_2">Undersiken</string>
     <!-- Summary for studies preferences -->
-    <string name="preference_experiments_summary_2">Stelt Mozilla yn steat om ûndersiken te ynstallearjen en út te fieren</string>
+    <string name="preference_experiments_summary_2">Stelt Asil Browser yn steat om ûndersiken te ynstallearjen en út te fieren</string>
 
     <!-- Turn On Sync Preferences -->
     <!-- Header of the Sync and save your data preference view -->
@@ -858,7 +858,7 @@
     <string name="studies_remove">Fuortsmite</string>
     <!-- Title of the active section on the studies list -->
     <string name="studies_active">Aktyf</string>
-    <!-- Description for studies, it indicates why Firefox use studies. The first parameter is the name of the application. -->
+    <!-- Description for studies, it indicates why Asil Browser use studies. The first parameter is the name of the application. -->
     <string name="studies_description_2">%1$s kin sa no en dan ûndersiken ynstallearje en útfiere.</string>
     <!-- Learn more link for studies, links to an article for more information about studies. -->
     <string name="studies_learn_more">Mear ynfo</string>
@@ -984,7 +984,7 @@
     <!-- Title text displayed on the tab crash page. This first parameter is the name of the application (For example: Fenix) -->
     <string name="tab_crash_title_2">Sorry. %1$s kin dy side net lade.</string>
     <!-- Send crash report checkbox text on the tab crash page -->
-    <string name="tab_crash_send_report">Ungelokrapport nei Mozilla ferstjoere</string>
+    <string name="tab_crash_send_report">Ungelokrapport nei Asil Browser ferstjoere</string>
     <!-- Close tab button text on the tab crash page -->
     <string name="tab_crash_close">Ljepblêd slute</string>
     <!-- Restore tab button text on the tab crash page -->
@@ -1228,7 +1228,7 @@
     <!-- An option to connect additional devices -->
     <string name="sync_connect_device">Noch in apparaat keppelje</string>
     <!-- The dialog text shown when additional devices are not available -->
-    <string name="sync_connect_device_dialog">Meld jo oan by Firefox op op syn minst ien oar apparaat om in ljepblêd te ferstjoeren.</string>
+    <string name="sync_connect_device_dialog">Meld jo oan by Asil Browser op op syn minst ien oar apparaat om in ljepblêd te ferstjoeren.</string>
     <!-- Confirmation dialog button -->
     <string name="sync_confirmation_button">Begrepen</string>
     <!-- Share error message -->
@@ -1251,10 +1251,10 @@
 
     <!-- Title shown in the notification that pops up to remind the user to set fenix as default browser.
     The app name is in the text, due to limitations with localizing Nimbus experiments -->
-    <string name="nimbus_notification_default_browser_title" tools:ignore="UnusedResources">Firefox is fluch en privee</string>
+    <string name="nimbus_notification_default_browser_title" tools:ignore="UnusedResources">Asil Browser is fluch en privee</string>
     <!-- Text shown in the notification that pops up to remind the user to set fenix as default browser.
     The app name is in the text, due to limitations with localizing Nimbus experiments -->
-    <string name="nimbus_notification_default_browser_text" tools:ignore="UnusedResources">Firefox jo standertbrowser meitsje</string>
+    <string name="nimbus_notification_default_browser_text" tools:ignore="UnusedResources">Asil Browser jo standertbrowser meitsje</string>
     <!-- Title shown in the notification that pops up to re-engage the user -->
     <string name="notification_re_engagement_title">Probearje priveenavigaasje</string>
     <!-- Text shown in the notification that pops up to re-engage the user.
@@ -1274,7 +1274,7 @@
     <!-- Survey -->
     <!-- Text shown in the fullscreen message that pops up to ask user to take a short survey.
     The app name is in the text, due to limitations with localizing Nimbus experiments -->
-    <string name="nimbus_survey_message_text">Help Firefox better te meitsjen troch in koarte enkête yn te foljen.</string>
+    <string name="nimbus_survey_message_text">Help Asil Browser better te meitsjen troch in koarte enkête yn te foljen.</string>
     <!-- Preference for taking the short survey. -->
     <string name="preferences_take_survey">Enkête starte</string>
     <!-- Preference for not taking the short survey. -->
@@ -1408,11 +1408,11 @@
     <string name="onboarding_header_2">Wolkom by in better ynternet</string>
     <!-- Text for the onboarding welcome message. -->
     <string name="onboarding_message">In browser dy’t boud is foar minsken, net foar winst.</string>
-    <!-- Text for the Firefox account onboarding sign in card header. -->
+    <!-- Text for the Asil Browser account onboarding sign in card header. -->
     <string name="onboarding_account_sign_in_header">Gean troch wêr’t jo bleaun wiene</string>
-    <!-- Text for the button to learn more about signing in to your Firefox account. -->
+    <!-- Text for the button to learn more about signing in to your Asil Browser account. -->
     <string name="onboarding_manual_sign_in_description">Syngronisearje ljepblêden en wachtwurden op ferskate apparaten foar maklik wikseljen tusken skermen.</string>
-    <!-- Text for the button to manually sign into Firefox account. -->
+    <!-- Text for the button to manually sign into Asil Browser account. -->
     <string name="onboarding_firefox_account_sign_in">Oanmelde</string>
     <!-- text to display in the snackbar once account is signed-in -->
     <string name="onboarding_firefox_account_sync_is_on">Syngronisaasje is ynskeakele</string>
@@ -1437,7 +1437,7 @@
     <!-- Text for the privacy notice onboarding card header -->
     <string name="onboarding_privacy_notice_header_1">Jo beheare jo gegevens</string>
     <!-- Text for the privacy notice onboarding card description. -->
-    <string name="onboarding_privacy_notice_description">Firefox jout jo kontrôle oer wat jo online diele en wat jo mei ús diele.</string>
+    <string name="onboarding_privacy_notice_description">Asil Browser jout jo kontrôle oer wat jo online diele en wat jo mei ús diele.</string>
     <!-- Text for the button to read the privacy notice -->
     <string name="onboarding_privacy_notice_read_button">Lês ús privacyferklearring</string>
 
@@ -1471,16 +1471,16 @@
     <!-- Title of QR Pairing Fragment -->
     <string name="sync_scan_code">De koade scanne</string>
     <!-- Instructions on how to access pairing -->
-    <string name="sign_in_instructions"><![CDATA[Iepenje Firefox op jo kompjûter en gean nei <b>https://firefox.com/pair</b>]]></string>
+    <string name="sign_in_instructions"><![CDATA[Iepenje Asil Browser op jo kompjûter en gean nei <b>https://firefox.com/pair</b>]]></string>
     <!-- Text shown for sign in pairing when ready -->
     <string name="sign_in_ready_for_scan">Ree om te scannen</string>
     <!-- Text shown for settings option for sign with pairing -->
     <string name="sign_in_with_camera">Meld jo oan mei jo kamera</string>
     <!-- Text shown for settings option for sign with email -->
     <string name="sign_in_with_email">E-mail brûke</string>
-    <!-- Text shown for settings option for create new account text.'Firefox' intentionally hardcoded here.-->
-    <string name="sign_in_create_account_text"><![CDATA[Gjin account? <u>Meitsje der ien oan</u> om Firefox tusken apparaten te syngronisearjen.]]></string>
-    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Firefox Preview) -->
+    <!-- Text shown for settings option for create new account text.'Asil Browser' intentionally hardcoded here.-->
+    <string name="sign_in_create_account_text"><![CDATA[Gjin account? <u>Meitsje der ien oan</u> om Asil Browser tusken apparaten te syngronisearjen.]]></string>
+    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Asil Browser Preview) -->
     <string name="sign_out_confirmation_message_2">%s stoppet de syngronisaasje mei jo account, mar sil gjin sneupgegevens op dit apparaat fuortsmite.</string>
     <!-- Option to continue signing out of account shown in confirmation dialog to sign out of account -->
     <string name="sign_out_disconnect">Ferbining ferbrekke</string>
@@ -1496,7 +1496,7 @@
     <string name="preference_enhanced_tracking_protection">Ferbettere beskerming tsjin folgjen</string>
     <!-- Preference summary for enhanced tracking protection settings on/off switch -->
     <string name="preference_enhanced_tracking_protection_summary">No mei Totale cookiebeskerming, ús krêftichste barriêre oant no ta tsjin cross-sitetrackers.</string>
-    <!-- Description of enhanced tracking protection. The parameter is the name of the application (For example: Firefox Fenix) -->
+    <!-- Description of enhanced tracking protection. The parameter is the name of the application (For example: Asil Browser Fenix) -->
     <string name="preference_enhanced_tracking_protection_explanation_2">%s beskermet jo tsjin in protte fan de meast foarkommende trackers dy\’t folgje wat jo online dogge.  </string>
     <!-- Text displayed that links to website about enhanced tracking protection -->
     <string name="preference_enhanced_tracking_protection_explanation_learn_more">Mear ynfo</string>
@@ -1653,9 +1653,9 @@
     <string name="preferences_passwords_save_logins_ask_to_save">Freegje om te bewarjen</string>
     <!-- Preference option for never saving passwords in Fenix -->
     <string name="preferences_passwords_save_logins_never_save">Nea bewarje</string>
-    <!-- Preference for autofilling saved logins in Firefox (in web content), %1$s will be replaced with the app name -->
+    <!-- Preference for autofilling saved logins in Asil Browser (in web content), %1$s will be replaced with the app name -->
     <string name="preferences_passwords_autofill2">Automatysk ynfolje yn %1$s</string>
-    <!-- Description for the preference for autofilling saved logins in Firefox (in web content), %1$s will be replaced with the app name -->
+    <!-- Description for the preference for autofilling saved logins in Asil Browser (in web content), %1$s will be replaced with the app name -->
     <string name="preferences_passwords_autofill_description">Brûkersnammen en wachtwurden op websites ynfolje en bewarje wylst jo %1$s brûke.</string>
     <!-- Preference for autofilling logins from Fenix in other apps (e.g. autofilling the Twitter app) -->
     <string name="preferences_android_autofill">Automatysk ynfolje yn oare apps</string>
@@ -2002,14 +2002,14 @@
     <string name="synced_tabs_connect_another_device">In oar apparaat ferbine.</string>
     <!-- Text displayed asking user to re-authenticate -->
     <string name="synced_tabs_reauth">Graach opnij autentisearje.</string>
-    <!-- Text displayed when user has disabled tab syncing in Firefox Sync Account -->
+    <!-- Text displayed when user has disabled tab syncing in Asil Browser Sync Account -->
     <string name="synced_tabs_enable_tab_syncing">Skeakelje it syngronisearjen fan ljepblêden yn.</string>
 
     <!-- Text displayed when user has no tabs that have been synced -->
-    <string name="synced_tabs_no_tabs">Jo hawwe gjin ljepblêden iepene yn Firefox op jo oare apparaten.</string>
-    <!-- Text displayed in the synced tabs screen when a user is not signed in to Firefox Sync describing Synced Tabs -->
+    <string name="synced_tabs_no_tabs">Jo hawwe gjin ljepblêden iepene yn Asil Browser op jo oare apparaten.</string>
+    <!-- Text displayed in the synced tabs screen when a user is not signed in to Asil Browser Sync describing Synced Tabs -->
     <string name="synced_tabs_sign_in_message">Besjoch in list mei ljepblêden fan jo oare apparaten.</string>
-    <!-- Text displayed on a button in the synced tabs screen to link users to sign in when a user is not signed in to Firefox Sync -->
+    <!-- Text displayed on a button in the synced tabs screen to link users to sign in when a user is not signed in to Asil Browser Sync -->
     <string name="synced_tabs_sign_in_button">Oanmelde om te syngronisearjen</string>
 
     <!-- The text displayed when a synced device has no tabs to show in the list of Synced Tabs. -->
@@ -2062,7 +2062,7 @@
     <!-- The header text of the auto-close message when the user is asked if they want to turn on the auto-closing of inactive tabs. -->
     <string name="inactive_tabs_auto_close_message_header" tools:ignore="UnusedResources">Automatysk slute nei in moanne?</string>
     <!-- A description below the header to notify the user what the inactive tabs auto-close feature is. -->
-    <string name="inactive_tabs_auto_close_message_description" tools:ignore="UnusedResources">Firefox kin ljepblêden dy’t jo de ôfrûne moanne net besjoen hawwe slute.</string>
+    <string name="inactive_tabs_auto_close_message_description" tools:ignore="UnusedResources">Asil Browser kin ljepblêden dy’t jo de ôfrûne moanne net besjoen hawwe slute.</string>
     <!-- A call to action below the description to allow the user to turn on the auto closing of inactive tabs. -->
     <string name="inactive_tabs_auto_close_message_action" tools:ignore="UnusedResources">AUTOMATYSK SLUTE YNSKEAKELJE</string>
 
@@ -2070,8 +2070,8 @@
     <string name="inactive_tabs_auto_close_message_snackbar">Automatysk slute ynskeakele</string>
 
     <!-- Awesome bar suggestion's headers -->
-    <!-- Search suggestions title for Firefox Suggest. -->
-    <string name="firefox_suggest_header">Firefox Suggestjes</string>
+    <!-- Search suggestions title for Asil Browser Suggest. -->
+    <string name="firefox_suggest_header">Asil Browser Suggestjes</string>
 
     <!-- Title for search suggestions when Google is the default search suggestion engine. -->
     <string name="google_search_engine_suggestion_header">Google Sykje</string>
@@ -2079,7 +2079,7 @@
     <string name="other_default_search_engine_suggestion_header">Sykje mei %s</string>
 
     <!-- Default browser experiment -->
-    <string name="default_browser_experiment_card_text">Keppelingen fan websites, e-mail en berjochten automatysk yn Firefox iepenje.</string>
+    <string name="default_browser_experiment_card_text">Keppelingen fan websites, e-mail en berjochten automatysk yn Asil Browser iepenje.</string>
 
     <!-- Content description for close button in collection placeholder. -->
     <string name="remove_home_collection_placeholder_content_description">Fuortsmite</string>
@@ -2103,7 +2103,7 @@
     <!-- Title of an app feature. Smaller than a heading. The first parameter is product name Pocket -->
     <string name="pocket_stories_feature_title_2">Mooglik makke troch %s.</string>
     <!-- Caption for describing a certain feature. The placeholder is for a clickable text (eg: Learn more) which will load an url in a new tab when clicked.  -->
-    <string name="pocket_stories_feature_caption">Underdiel fan de Firefox-famylje. %s</string>
+    <string name="pocket_stories_feature_caption">Underdiel fan de Asil Browser-famylje. %s</string>
     <!-- Clickable text for opening an external link for more information about Pocket. -->
     <string name="pocket_stories_feature_learn_more">Mear ynfo</string>
 
@@ -2124,6 +2124,6 @@
     <string name="a11y_action_label_wallpaper_collection_learn_more">keppeling iepenje foar mear ynfo oer dizze kolleksje</string>
     <!-- Action label for links that point to an article. Talkback will append this to say "Double tap to read the article". -->
     <string name="a11y_action_label_read_article">it artikel te lêzen</string>
-    <!-- Action label for links to the Firefox Pocket website. Talkback will append this to say "Double tap to open link to learn more". -->
+    <!-- Action label for links to the Asil Browser Pocket website. Talkback will append this to say "Double tap to open link to learn more". -->
     <string name="a11y_action_label_pocket_learn_more">de keppeling te iepenjen foar mear ynfo</string>
 </resources>

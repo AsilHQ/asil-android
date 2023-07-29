@@ -49,7 +49,7 @@
     <string name="recently_saved_menu_item_remove">Ukloni</string>
 
     <!-- About content. The first parameter is the name of the application. (For example: Fenix) -->
-    <string name="about_content">%1$s proizvodi Mozilla.</string>
+    <string name="about_content">%1$s proizvodi Asil Browser.</string>
 
     <!-- Private Browsing -->
     <!-- Explanation for private browsing displayed to users on home view when they first enable private mode
@@ -317,12 +317,12 @@
     <string name="errorpage_httpsonly_message_title">Web stranica najvjerojatnije ne podržava HTTPS.</string>
     <!-- Preference for accessibility -->
     <string name="preferences_accessibility">Pristupačnost</string>
-    <!-- Preference to override the Firefox Account server -->
-    <string name="preferences_override_fxa_server">Prilagođeni poslužitelj Firefox računa</string>
+    <!-- Preference to override the Asil Browser Account server -->
+    <string name="preferences_override_fxa_server">Prilagođeni poslužitelj Asil Browser računa</string>
     <!-- Preference to override the Sync token server -->
     <string name="preferences_override_sync_tokenserver">Prilagođeni poslužitelj za sinkronizaciju</string>
     <!-- Toast shown after updating the FxA/Sync server override preferences -->
-    <string name="toast_override_fxa_sync_server_done">Firefox Account/Sync poslužitelj je izmijenjen. Izlaskom iz aplikacije će se primijeniti izmjene…</string>
+    <string name="toast_override_fxa_sync_server_done">Asil Browser Account/Sync poslužitelj je izmijenjen. Izlaskom iz aplikacije će se primijeniti izmjene…</string>
     <!-- Preference category for account information -->
     <string name="preferences_category_account">Račun</string>
     <!-- Preference for changing where the toolbar is positioned -->
@@ -336,7 +336,7 @@
     <!-- Preference for settings related to visual options -->
     <string name="preferences_customize">Prilagodi</string>
     <!-- Preference shown instead of account display name while account profile information isn't available yet. -->
-    <string name="preferences_account_default_name">Firefox račun</string>
+    <string name="preferences_account_default_name">Asil Browser račun</string>
     <!-- Preference text for account title when there was an error syncing FxA -->
     <string name="preferences_account_sync_error">Ponovo se poveži za nastavak sinkronizacije</string>
     <!-- Preference for language -->
@@ -475,7 +475,7 @@
     <!-- Name of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
     <string name="fxa_received_tab_channel_name">Primljene kartice</string>
     <!-- Description of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
-    <string name="fxa_received_tab_channel_description">Obavijesti za kartice koje su primljene s drugih Firefox uređaja.</string>
+    <string name="fxa_received_tab_channel_description">Obavijesti za kartice koje su primljene s drugih Asil Browser uređaja.</string>
     <!--  The body for these is the URL of the tab received  -->
     <string name="fxa_tab_received_notification_name">Kartica primljena</string>
     <!-- %s is the device name -->
@@ -644,7 +644,7 @@
     <string name="studies_remove">Ukloni</string>
     <!-- Title of the active section on the studies list -->
     <string name="studies_active">Aktivno</string>
-    <!-- Description for studies, it indicates why Firefox use studies. The first parameter is the name of the application. -->
+    <!-- Description for studies, it indicates why Asil Browser use studies. The first parameter is the name of the application. -->
     <string name="studies_description_2">%1$s može s vremena na vrijeme instalirati i pokretati studije.</string>
     <!-- Learn more link for studies, links to an article for more information about studies. -->
     <string name="studies_learn_more">Saznaj više</string>
@@ -1009,7 +1009,7 @@
     <!-- An option to connect additional devices -->
     <string name="sync_connect_device">Poveži jedan drugi uređaj</string>
     <!-- The dialog text shown when additional devices are not available -->
-    <string name="sync_connect_device_dialog">Za slanje kartice, prijavi se na Firefox na barem jednom drugom uređaju.</string>
+    <string name="sync_connect_device_dialog">Za slanje kartice, prijavi se na Asil Browser na barem jednom drugom uređaju.</string>
     <!-- Confirmation dialog button -->
     <string name="sync_confirmation_button">Razumijem</string>
     <!-- Share error message -->
@@ -1155,7 +1155,7 @@
     <!-- Text for the snackbar confirmation that the history group was deleted -->
     <string name="delete_history_group_snackbar">Grupa obrisana</string>
 
-    <!-- Text for the button to manually sign into Firefox account. -->
+    <!-- Text for the button to manually sign into Asil Browser account. -->
     <string name="onboarding_firefox_account_sign_in">Prijavi se</string>
     <!-- text to display in the snackbar once account is signed-in -->
     <string name="onboarding_firefox_account_sync_is_on">Sinkronizacija je uključena</string>
@@ -1203,16 +1203,16 @@
     <!-- Title of QR Pairing Fragment -->
     <string name="sync_scan_code">Skeniraj kȏd</string>
     <!-- Instructions on how to access pairing -->
-    <string name="sign_in_instructions"><![CDATA[Na računalu otvori Firefox i idi na <b>https://firefox.com/pair</b>]]></string>
+    <string name="sign_in_instructions"><![CDATA[Na računalu otvori Asil Browser i idi na <b>https://firefox.com/pair</b>]]></string>
     <!-- Text shown for sign in pairing when ready -->
     <string name="sign_in_ready_for_scan">Spremno za skeniranje</string>
     <!-- Text shown for settings option for sign with pairing -->
     <string name="sign_in_with_camera">Prijavi se pomoću kamere</string>
     <!-- Text shown for settings option for sign with email -->
     <string name="sign_in_with_email">Umjesto toga koristi e-poštu</string>
-    <!-- Text shown for settings option for create new account text.'Firefox' intentionally hardcoded here.-->
-    <string name="sign_in_create_account_text"><![CDATA[Nemaš račun? <u>Stvori ga</u> i sinkroniziraj Firefox među uređajima.]]></string>
-    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Firefox Preview) -->
+    <!-- Text shown for settings option for create new account text.'Asil Browser' intentionally hardcoded here.-->
+    <string name="sign_in_create_account_text"><![CDATA[Nemaš račun? <u>Stvori ga</u> i sinkroniziraj Asil Browser među uređajima.]]></string>
+    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Asil Browser Preview) -->
     <string name="sign_out_confirmation_message_2">%s će prestati sinkroniziranje s tvojim računom, ali neće izbrisati podatke o tvom pregledavanju na ovom uređaju.</string>
     <!-- Option to continue signing out of account shown in confirmation dialog to sign out of account -->
     <string name="sign_out_disconnect">Prekini vezu</string>
@@ -1376,9 +1376,9 @@
     <string name="preferences_passwords_save_logins_ask_to_save">Pitaj treba li se spremiti</string>
     <!-- Preference option for never saving passwords in Fenix -->
     <string name="preferences_passwords_save_logins_never_save">Nikad ne spremaj</string>
-    <!-- Preference for autofilling saved logins in Firefox (in web content), %1$s will be replaced with the app name -->
+    <!-- Preference for autofilling saved logins in Asil Browser (in web content), %1$s will be replaced with the app name -->
     <string name="preferences_passwords_autofill2">Automatski ispuni u %1$s</string>
-    <!-- Description for the preference for autofilling saved logins in Firefox (in web content), %1$s will be replaced with the app name -->
+    <!-- Description for the preference for autofilling saved logins in Asil Browser (in web content), %1$s will be replaced with the app name -->
     <string name="preferences_passwords_autofill_description">Ispuni i spremi korisnička imena i lozinke na web-stranicama tijekom korištenja %1$sa.</string>
     <!-- Preference for autofilling logins from Fenix in other apps (e.g. autofilling the Twitter app) -->
     <string name="preferences_android_autofill">Automatski ispuni u drugim aplikacijama</string>
@@ -1710,14 +1710,14 @@
     <string name="synced_tabs_connect_another_device">Poveži drugi uređaj.</string>
     <!-- Text displayed asking user to re-authenticate -->
     <string name="synced_tabs_reauth">Ponovite autorizaciju.</string>
-    <!-- Text displayed when user has disabled tab syncing in Firefox Sync Account -->
+    <!-- Text displayed when user has disabled tab syncing in Asil Browser Sync Account -->
     <string name="synced_tabs_enable_tab_syncing">Omogućite sinkroniziranje kartica.</string>
 
     <!-- Text displayed when user has no tabs that have been synced -->
     <string name="synced_tabs_no_tabs">Nemaš otvorene kartice u Firefoxu na drugim uređajima.</string>
-    <!-- Text displayed in the synced tabs screen when a user is not signed in to Firefox Sync describing Synced Tabs -->
+    <!-- Text displayed in the synced tabs screen when a user is not signed in to Asil Browser Sync describing Synced Tabs -->
     <string name="synced_tabs_sign_in_message">Pogledaj popis kartica s tvojih drugih uređaja.</string>
-    <!-- Text displayed on a button in the synced tabs screen to link users to sign in when a user is not signed in to Firefox Sync -->
+    <!-- Text displayed on a button in the synced tabs screen to link users to sign in when a user is not signed in to Asil Browser Sync -->
     <string name="synced_tabs_sign_in_button">Prijavi se za sinkronizaciju</string>
 
     <!-- The text displayed when a synced device has no tabs to show in the list of Synced Tabs. -->
@@ -1759,7 +1759,7 @@
     <!-- The header text of the auto-close message when the user is asked if they want to turn on the auto-closing of inactive tabs. -->
     <string name="inactive_tabs_auto_close_message_header" tools:ignore="UnusedResources">Automatski zatvoriti nakon jednog mjeseca?</string>
     <!-- A description below the header to notify the user what the inactive tabs auto-close feature is. -->
-    <string name="inactive_tabs_auto_close_message_description" tools:ignore="UnusedResources">Firefox može zatvoriti kartice koje nisu pregledane posljednjih mjesec dana.</string>
+    <string name="inactive_tabs_auto_close_message_description" tools:ignore="UnusedResources">Asil Browser može zatvoriti kartice koje nisu pregledane posljednjih mjesec dana.</string>
     <!-- A call to action below the description to allow the user to turn on the auto closing of inactive tabs. -->
     <string name="inactive_tabs_auto_close_message_action" tools:ignore="UnusedResources">UKLJUČI AUTOMATSKO ZATVARANJE</string>
 
@@ -1767,8 +1767,8 @@
     <string name="inactive_tabs_auto_close_message_snackbar">Automatsko zatvaranje omogućeno</string>
 
     <!-- Awesome bar suggestion's headers -->
-    <!-- Search suggestions title for Firefox Suggest. -->
-    <string name="firefox_suggest_header">Firefox prijedlozi</string>
+    <!-- Search suggestions title for Asil Browser Suggest. -->
+    <string name="firefox_suggest_header">Asil Browser prijedlozi</string>
 
     <!-- Title for search suggestions when Google is the default search suggestion engine. -->
     <string name="google_search_engine_suggestion_header">Google pretraga</string>

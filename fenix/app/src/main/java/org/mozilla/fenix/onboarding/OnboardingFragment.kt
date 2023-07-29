@@ -24,7 +24,6 @@ import org.mozilla.fenix.databinding.FragmentHomeBinding
 import org.mozilla.fenix.ext.hideToolbar
 import org.mozilla.fenix.ext.requireComponents
 import org.mozilla.fenix.home.HomeMenuView
-import org.mozilla.fenix.home.PrivateBrowsingButtonView
 import org.mozilla.fenix.home.TabCounterView
 import org.mozilla.fenix.home.ToolbarView
 import org.mozilla.fenix.home.privatebrowsing.controller.DefaultPrivateBrowsingController
@@ -163,13 +162,6 @@ class OnboardingFragment : Fragment() {
 
         toolbarView?.build()
 
-        PrivateBrowsingButtonView(
-            button = binding.privateBrowsingButton,
-            browsingModeManager = browsingModeManager,
-            onClick = { mode ->
-                interactor.onPrivateModeButtonClicked(mode, userHasBeenOnboarded = false)
-            },
-        )
 
         searchSelectorBinding.set(
             feature = SearchSelectorBinding(

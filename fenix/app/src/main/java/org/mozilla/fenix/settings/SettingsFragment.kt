@@ -69,25 +69,24 @@ import org.mozilla.fenix.GleanMetrics.Settings as SettingsMetrics
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val args by navArgs<SettingsFragmentArgs>()
-    private lateinit var accountUiView: AccountUiView
+    //private lateinit var accountUiView: AccountUiView
     private val profilerViewModel: ProfilerViewModel by activityViewModels()
 
     @VisibleForTesting
     internal val accountObserver = object : AccountObserver {
-        private fun updateAccountUi(profile: Profile? = null) {
-            val context = context ?: return
+        private fun updateAccountUi() {
             lifecycleScope.launch {
-                accountUiView.updateAccountUIState(
-                    context = context,
-                    profile = profile
-                        ?: context.components.backgroundServices.accountManager.accountProfile(),
-                )
+//                accountUiView.updateAccountUIState(
+//                    context = context,
+//                    profile = profile
+//                        ?: context.components.backgroundServices.accountManager.accountProfile(),
+//                )
             }
         }
 
         override fun onAuthenticated(account: OAuthAccount, authType: AuthType) = updateAccountUi()
         override fun onLoggedOut() = updateAccountUi()
-        override fun onProfileUpdated(profile: Profile) = updateAccountUi(profile)
+        override fun onProfileUpdated(profile: Profile) = updateAccountUi()
         override fun onAuthenticationProblems() = updateAccountUi()
     }
 
@@ -99,13 +98,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        accountUiView = AccountUiView(
-            fragment = this,
-            scope = lifecycleScope,
-            accountManager = requireComponents.backgroundServices.accountManager,
-            httpClient = requireComponents.core.client,
-            updateFxAAllowDomesticChinaServerMenu = ::updateFxAAllowDomesticChinaServerMenu,
-        )
+//        accountUiView = AccountUiView(
+//            fragment = this,
+//            scope = lifecycleScope,
+//            accountManager = requireComponents.backgroundServices.accountManager,
+//            httpClient = requireComponents.core.client,
+//            updateFxAAllowDomesticChinaServerMenu = ::updateFxAAllowDomesticChinaServerMenu,
+//        )
 
         // It's important to update the account UI state in onCreate since that ensures we'll never
         // display an incorrect state in the UI. We take care to not also call it as part of onResume
@@ -113,10 +112,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         // For example, if user is signed-in, and we don't perform this call in onCreate, we'll briefly
         // display a "Sign In" preference, which will then get replaced by the correct account information
         // once this call is ran in onResume shortly after.
-        accountUiView.updateAccountUIState(
-            requireContext(),
-            requireComponents.backgroundServices.accountManager.accountProfile(),
-        )
+//        accountUiView.updateAccountUIState(
+//            requireContext(),
+//            requireComponents.backgroundServices.accountManager.accountProfile(),
+//        )
 
         val booleanPreferenceTelemetryAllowList = listOf(
             requireContext().getString(R.string.pref_key_show_search_suggestions),
@@ -149,10 +148,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         profilerViewModel.getProfilerState().observe(
             this,
-            Observer<Boolean> {
-                updateProfilerUI(it)
-            },
-        )
+        ) {
+            updateProfilerUI(it)
+        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -173,7 +171,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         // Account UI state is updated as part of `onCreate`. To not do it twice in a row, we only
         // update it here if we're not going through the `onCreate->onStart->onResume` lifecycle chain.
-        update(shouldUpdateAccountUIState = !creatingFragment)
+        update()
 
         requireView().findViewById<RecyclerView>(R.id.recycler_view)
             ?.hideInitialScrollBar(viewLifecycleOwner.lifecycleScope)
@@ -202,17 +200,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         requireComponents.backgroundServices.accountManager.unregister(accountObserver)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        accountUiView.cancel()
-    }
-
-    private fun update(shouldUpdateAccountUIState: Boolean) {
+    private fun update() {
         val settings = requireContext().settings()
 
-        val aboutPreference = requirePreference<Preference>(R.string.pref_key_about)
-        val appName = getString(R.string.app_name)
-        aboutPreference.title = getString(R.string.preferences_about, appName)
+//        val aboutPreference = requirePreference<Preference>(R.string.pref_key_about)
+//        val appName = getString(R.string.app_name)
+//        aboutPreference.title = getString(R.string.preferences_about, appName)
 
         val deleteBrowsingDataPreference =
             requirePreference<Preference>(R.string.pref_key_delete_browsing_data_on_quit_preference)
@@ -226,12 +219,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             requirePreference<Preference>(R.string.pref_key_tabs)
         tabSettingsPreference.summary = context?.settings()?.getTabTimeoutString()
 
-        val autofillPreference = requirePreference<Preference>(R.string.pref_key_credit_cards)
-        autofillPreference.title = if (settings.addressFeature) {
-            getString(R.string.preferences_autofill)
-        } else {
-            getString(R.string.preferences_credit_cards)
-        }
+//        val autofillPreference = requirePreference<Preference>(R.string.pref_key_credit_cards)
+//        autofillPreference.title = if (settings.addressFeature) {
+//            getString(R.string.preferences_autofill)
+//        } else {
+//            getString(R.string.preferences_credit_cards)
+//        }
 
         val openLinksInAppsSettingsPreference =
             requirePreference<Preference>(R.string.pref_key_open_links_in_apps)
@@ -239,12 +232,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         setupPreferences()
 
-        if (shouldUpdateAccountUIState) {
-            accountUiView.updateAccountUIState(
-                requireContext(),
-                requireComponents.backgroundServices.accountManager.accountProfile(),
-            )
-        }
+//        if (shouldUpdateAccountUIState) {
+//            accountUiView.updateAccountUIState(
+//                requireContext(),
+//                requireComponents.backgroundServices.accountManager.accountProfile(),
+//            )
+//        }
     }
 
     @SuppressLint("InflateParams")

@@ -55,7 +55,7 @@
     <string name="recently_saved_menu_item_remove">Өшіру</string>
 
     <!-- About content. The first parameter is the name of the application. (For example: Fenix) -->
-    <string name="about_content">%1$s жасаған Mozilla.</string>
+    <string name="about_content">%1$s жасаған Asil Browser.</string>
 
     <!-- Private Browsing -->
     <!-- Explanation for private browsing displayed to users on home view when they first enable private mode
@@ -302,15 +302,15 @@
         The first parameter is the name of the app defined in app_name (for example: Fenix) -->
     <string name="juno_onboarding_default_browser_title">%s негізгі браузер етіп орнатыңыз</string>
     <!-- Title for set firefox as default browser screen used by Nimbus experiments. Nimbus experiments do not support string placeholders.
-        Note: The word "Firefox" should NOT be translated -->
-    <string name="juno_onboarding_default_browser_title_nimbus" tools:ignore="UnusedResources">Firefox-ты негізгі браузер етіп орнатыңыз</string>
+        Note: The word "Asil Browser" should NOT be translated -->
+    <string name="juno_onboarding_default_browser_title_nimbus" tools:ignore="UnusedResources">Asil Browser-ты негізгі браузер етіп орнатыңыз</string>
     <!-- Description for set firefox as default browser screen.
-        The first parameter is the Firefox brand name.
+        The first parameter is the Asil Browser brand name.
         The second parameter is the string with key "juno_onboarding_default_browser_description_link_text". -->
     <string name="juno_onboarding_default_browser_description">%1$s сайтаралық трекерлерді блоктау арқылы адамдарды табыстан жоғары қояды және жекелігіңізді қорғайды.\n\nТолығырақ ақпаратты %2$s ішінен алыңыз.</string>
     <!-- Description for set firefox as default browser screen used by Nimbus experiments. Nimbus experiments do not support string placeholders.
-        Note: The word "Firefox" should NOT be translated -->
-    <string name="juno_onboarding_default_browser_description_nimbus" tools:ignore="UnusedResources">Firefox сайтаралық трекерлерді блоктау арқылы адамдарды табыстан жоғары қояды және жекелігіңізді қорғайды.\n\nТолығырақ ақпаратты жекелік хабарламамыздан алыңыз.</string>
+        Note: The word "Asil Browser" should NOT be translated -->
+    <string name="juno_onboarding_default_browser_description_nimbus" tools:ignore="UnusedResources">Asil Browser сайтаралық трекерлерді блоктау арқылы адамдарды табыстан жоғары қояды және жекелігіңізді қорғайды.\n\nТолығырақ ақпаратты жекелік хабарламамыздан алыңыз.</string>
     <!-- Text for the link to the privacy notice webpage for set as firefox default browser screen.
     This is part of the string with the key "juno_onboarding_default_browser_description". -->
     <string name="juno_onboarding_default_browser_description_link_text">жекелік ескертуі</string>
@@ -330,14 +330,14 @@
         The first parameter is the name of the app defined in app_name (for example: Fenix) -->
     <string name="juno_onboarding_enable_notifications_title">Хабарландырулар %s арқылы көбірек жұмыс бітіруге көмектеседі</string>
     <!-- Title for enable notification permission screen used by Nimbus experiments. Nimbus experiments do not support string placeholders.
-        Note: The word "Firefox" should NOT be translated -->
-    <string name="juno_onboarding_enable_notifications_title_nimbus" tools:ignore="UnusedResources">Хабарландырулар Firefox арқылы көбірек жұмыс бітіруге көмектеседі</string>
+        Note: The word "Asil Browser" should NOT be translated -->
+    <string name="juno_onboarding_enable_notifications_title_nimbus" tools:ignore="UnusedResources">Хабарландырулар Asil Browser арқылы көбірек жұмыс бітіруге көмектеседі</string>
     <!-- Description for enable notification permission screen.
         The first parameter is the name of the app defined in app_name (for example: Fenix) -->
     <string name="juno_onboarding_enable_notifications_description">Құрылғылар арасында беттерді жіберіңіз, жүктемелеріңізді басқарыңыз және %s мүмкіндігін барынша пайдалану туралы кеңестер алыңыз.</string>
     <!-- Description for enable notification permission screen used by Nimbus experiments. Nimbus experiments do not support string placeholders.
-       Note: The word "Firefox" should NOT be translated   -->
-    <string name="juno_onboarding_enable_notifications_description_nimbus" tools:ignore="UnusedResources">Құрылғылар арасында беттерді жіберіңіз, жүктемелеріңізді басқарыңыз және Firefox мүмкіндігін барынша пайдалану туралы кеңестер алыңыз.</string>
+       Note: The word "Asil Browser" should NOT be translated   -->
+    <string name="juno_onboarding_enable_notifications_description_nimbus" tools:ignore="UnusedResources">Құрылғылар арасында беттерді жіберіңіз, жүктемелеріңізді басқарыңыз және Asil Browser мүмкіндігін барынша пайдалану туралы кеңестер алыңыз.</string>
     <!-- Text for the button to request notification permission on the device -->
     <string name="juno_onboarding_enable_notifications_positive_button">Хабарламаларды іске қосу</string>
     <!-- Text for the button dismiss the screen and move on with the flow -->
@@ -428,7 +428,7 @@
     <!-- Text for indicating cookie banner handling is on this site, this is shown as part of the protections panel with the tracking protection toggle -->
     <string name="reduce_cookie_banner_on_for_site">Бұл сайт үшін іске қосылған</string>
 
-    <!-- Text for indicating that a request for unsupported site was sent to Nimbus (it's a Mozilla library for experiments), this is shown as part of the protections panel with the tracking protection toggle -->
+    <!-- Text for indicating that a request for unsupported site was sent to Nimbus (it's a Asil Browser library for experiments), this is shown as part of the protections panel with the tracking protection toggle -->
     <string name="reduce_cookie_banner_unsupported_site_request_submitted_2">Қолдау көрсету сұрауы жіберілді</string>
     <!-- Text for indicating cookie banner handling is currently not supported for this site, this is shown as part of the protections panel with the tracking protection toggle -->
     <string name="reduce_cookie_banner_unsupported_site">Сайтқа ағымдағы уақытта қолдау жоқ</string>
@@ -479,12 +479,12 @@
     <string name="errorpage_httpsonly_message_summary">Дегенмен, шабуылдаушы араласқан болуы да мүмкін. Веб-сайтқа өтуді жалғастырсаңыз, ешқандай құпия ақпаратты енгізбеуіңіз керек. Жалғастырсаңыз, сайт үшін тек-HTTPS режимі уақытша сөндіріледі.</string>
     <!-- Preference for accessibility -->
     <string name="preferences_accessibility">Қолжетерлілік</string>
-    <!-- Preference to override the Firefox Account server -->
-    <string name="preferences_override_fxa_server">Таңдауыңызша Firefox тіркелгісі сервері</string>
+    <!-- Preference to override the Asil Browser Account server -->
+    <string name="preferences_override_fxa_server">Таңдауыңызша Asil Browser тіркелгісі сервері</string>
     <!-- Preference to override the Sync token server -->
     <string name="preferences_override_sync_tokenserver">Таңдауыңызша синхрондау сервері</string>
     <!-- Toast shown after updating the FxA/Sync server override preferences -->
-    <string name="toast_override_fxa_sync_server_done">Firefox тіркелгісі/синхрондау сервері өзгертілген. Өзгерістерді іске асыру үшін қолданба жұмысын аяқтау…</string>
+    <string name="toast_override_fxa_sync_server_done">Asil Browser тіркелгісі/синхрондау сервері өзгертілген. Өзгерістерді іске асыру үшін қолданба жұмысын аяқтау…</string>
     <!-- Preference category for account information -->
     <string name="preferences_category_account">Тіркелгі</string>
     <!-- Preference for changing where the toolbar is positioned -->
@@ -500,7 +500,7 @@
     <!-- Preference description for banner about signing in -->
     <string name="preferences_sign_in_description_2">Беттер, бетбелгілер, парольдерді синхрондау және т.б. үшін кіріңіз.</string>
     <!-- Preference shown instead of account display name while account profile information isn't available yet. -->
-    <string name="preferences_account_default_name">Firefox тіркелгісі</string>
+    <string name="preferences_account_default_name">Asil Browser тіркелгісі</string>
     <!-- Preference text for account title when there was an error syncing FxA -->
     <string name="preferences_account_sync_error">Синхрондауды жалғастыру үшін қайта байланысыңыз</string>
     <!-- Preference for language -->
@@ -607,7 +607,7 @@
     <!-- Text displayed that links to website containing documentation about the "Limited Edition" wallpapers. -->
     <string name="wallpaper_learn_more">Көбірек білу</string>
 
-    <!-- Text for classic wallpapers title. The first parameter is the Firefox name. -->
+    <!-- Text for classic wallpapers title. The first parameter is the Asil Browser name. -->
     <string name="wallpaper_classic_title">Классикалық %s</string>
     <!-- Text for limited edition wallpapers title. -->
     <string name="wallpaper_limited_edition_title">Шектеулі таралым</string>
@@ -673,7 +673,7 @@
     <!-- Name of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
     <string name="fxa_received_tab_channel_name">Алынған беттер</string>
     <!-- Description of the "receive tabs" notification channel. Displayed in the "App notifications" system settings for the app -->
-    <string name="fxa_received_tab_channel_description">Басқа Firefox құрылғыларынан алынған беттер туралы хабарландырулар.</string>
+    <string name="fxa_received_tab_channel_description">Басқа Asil Browser құрылғыларынан алынған беттер туралы хабарландырулар.</string>
     <!--  The body for these is the URL of the tab received  -->
     <string name="fxa_tab_received_notification_name">Бет алынды</string>
     <!-- %s is the device name -->
@@ -692,7 +692,7 @@
     <!-- Preference switch for usage and technical data collection -->
     <string name="preference_usage_data">Пайдалану және техникалық мәліметтер</string>
     <!-- Preference description for usage and technical data collection -->
-    <string name="preferences_usage_data_description">Өнімділік, қолдану, құрылғылар және баптаулар мәліметін Mozilla-ға жіберіп, бізге %1$s жақсартуға көмектеседі</string>
+    <string name="preferences_usage_data_description">Өнімділік, қолдану, құрылғылар және баптаулар мәліметін Asil Browser-ға жіберіп, бізге %1$s жақсартуға көмектеседі</string>
     <!-- Preference switch for marketing data collection -->
     <string name="preferences_marketing_data">Маркетингтік мәліметтер</string>
     <!-- Preference description for marketing data collection -->
@@ -700,7 +700,7 @@
     <!-- Title for studies preferences -->
     <string name="preference_experiments_2">Зерттеулер</string>
     <!-- Summary for studies preferences -->
-    <string name="preference_experiments_summary_2">Mozilla-ға зерттеулерді орнатуға және жүргізуге рұқсат ету</string>
+    <string name="preference_experiments_summary_2">Asil Browser-ға зерттеулерді орнатуға және жүргізуге рұқсат ету</string>
 
     <!-- Turn On Sync Preferences -->
     <!-- Header of the Sync and save your data preference view -->
@@ -854,7 +854,7 @@
     <string name="studies_remove">Өшіру</string>
     <!-- Title of the active section on the studies list -->
     <string name="studies_active">Белсенді</string>
-    <!-- Description for studies, it indicates why Firefox use studies. The first parameter is the name of the application. -->
+    <!-- Description for studies, it indicates why Asil Browser use studies. The first parameter is the name of the application. -->
     <string name="studies_description_2">%1$s кейде зерттеулерді орнатып, орындай алады.</string>
     <!-- Learn more link for studies, links to an article for more information about studies. -->
     <string name="studies_learn_more">Көбірек білу</string>
@@ -981,7 +981,7 @@
     <!-- Title text displayed on the tab crash page. This first parameter is the name of the application (For example: Fenix) -->
     <string name="tab_crash_title_2">Кешіріңіз. %1$s бұл бетті жүктей алмайды.</string>
     <!-- Send crash report checkbox text on the tab crash page -->
-    <string name="tab_crash_send_report">Mozilla-ға құлау хабарламасын жіберу</string>
+    <string name="tab_crash_send_report">Asil Browser-ға құлау хабарламасын жіберу</string>
     <!-- Close tab button text on the tab crash page -->
     <string name="tab_crash_close">Бетті жабу</string>
     <!-- Restore tab button text on the tab crash page -->
@@ -1226,7 +1226,7 @@
     <!-- An option to connect additional devices -->
     <string name="sync_connect_device">Басқа құрылғыны байланыстыру</string>
     <!-- The dialog text shown when additional devices are not available -->
-    <string name="sync_connect_device_dialog">Бетті жіберу үшін, кемінде бір басқа құрылғыдан Firefox-қа кіріңіз.</string>
+    <string name="sync_connect_device_dialog">Бетті жіберу үшін, кемінде бір басқа құрылғыдан Asil Browser-қа кіріңіз.</string>
     <!-- Confirmation dialog button -->
     <string name="sync_confirmation_button">Түсіндім</string>
     <!-- Share error message -->
@@ -1248,10 +1248,10 @@
 
     <!-- Title shown in the notification that pops up to remind the user to set fenix as default browser.
     The app name is in the text, due to limitations with localizing Nimbus experiments -->
-    <string name="nimbus_notification_default_browser_title" tools:ignore="UnusedResources">Firefox жылдам және жеке</string>
+    <string name="nimbus_notification_default_browser_title" tools:ignore="UnusedResources">Asil Browser жылдам және жеке</string>
     <!-- Text shown in the notification that pops up to remind the user to set fenix as default browser.
     The app name is in the text, due to limitations with localizing Nimbus experiments -->
-    <string name="nimbus_notification_default_browser_text" tools:ignore="UnusedResources">Firefox негізгі браузер қылу</string>
+    <string name="nimbus_notification_default_browser_text" tools:ignore="UnusedResources">Asil Browser негізгі браузер қылу</string>
     <!-- Title shown in the notification that pops up to re-engage the user -->
     <string name="notification_re_engagement_title">Жекелік шолуды қолданып көріңіз</string>
     <!-- Text shown in the notification that pops up to re-engage the user.
@@ -1271,7 +1271,7 @@
     <!-- Survey -->
     <!-- Text shown in the fullscreen message that pops up to ask user to take a short survey.
     The app name is in the text, due to limitations with localizing Nimbus experiments -->
-    <string name="nimbus_survey_message_text">Қысқа сауалнамадан өту арқылы Firefox-ты жақсартуға көмектесіңіз.</string>
+    <string name="nimbus_survey_message_text">Қысқа сауалнамадан өту арқылы Asil Browser-ты жақсартуға көмектесіңіз.</string>
     <!-- Preference for taking the short survey. -->
     <string name="preferences_take_survey">Сауалнамаға қатысу</string>
     <!-- Preference for not taking the short survey. -->
@@ -1405,11 +1405,11 @@
     <string name="onboarding_header_2">Жақсырақ интернетке қош келдіңіз</string>
     <!-- Text for the onboarding welcome message. -->
     <string name="onboarding_message">Табыс үшін емес, адамдар үшін жасалған браузер.</string>
-    <!-- Text for the Firefox account onboarding sign in card header. -->
+    <!-- Text for the Asil Browser account onboarding sign in card header. -->
     <string name="onboarding_account_sign_in_header">Жұмысты қалдырған жерінен жалғастырыңыз</string>
-    <!-- Text for the button to learn more about signing in to your Firefox account. -->
+    <!-- Text for the button to learn more about signing in to your Asil Browser account. -->
     <string name="onboarding_manual_sign_in_description">Экранды оңай ауыстыру үшін беттер мен парольдерді құрылғылар арасында синхрондаңыз.</string>
-    <!-- Text for the button to manually sign into Firefox account. -->
+    <!-- Text for the button to manually sign into Asil Browser account. -->
     <string name="onboarding_firefox_account_sign_in">Кіру</string>
     <!-- text to display in the snackbar once account is signed-in -->
     <string name="onboarding_firefox_account_sync_is_on">Синхрондау іске қосулы</string>
@@ -1435,7 +1435,7 @@
     <!-- Text for the privacy notice onboarding card header -->
     <string name="onboarding_privacy_notice_header_1">Өз деректеріңізді өзіңіз басқарасыз</string>
     <!-- Text for the privacy notice onboarding card description. -->
-    <string name="onboarding_privacy_notice_description">Firefox сіз желіде және бізбен немен бөлісетіңізді басқаруды өз қолыңызға береді.</string>
+    <string name="onboarding_privacy_notice_description">Asil Browser сіз желіде және бізбен немен бөлісетіңізді басқаруды өз қолыңызға береді.</string>
     <!-- Text for the button to read the privacy notice -->
     <string name="onboarding_privacy_notice_read_button">Біздің жекелік ескертуімізді оқыңыз</string>
 
@@ -1469,16 +1469,16 @@
     <!-- Title of QR Pairing Fragment -->
     <string name="sync_scan_code">Кодты сканерлеу</string>
     <!-- Instructions on how to access pairing -->
-    <string name="sign_in_instructions"><![CDATA[Компьютеріңізде Firefox ашып, <b>https://firefox.com/pair</b> адресіне өтіңіз]]></string>
+    <string name="sign_in_instructions"><![CDATA[Компьютеріңізде Asil Browser ашып, <b>https://firefox.com/pair</b> адресіне өтіңіз]]></string>
     <!-- Text shown for sign in pairing when ready -->
     <string name="sign_in_ready_for_scan">Сканерлеуге дайын</string>
     <!-- Text shown for settings option for sign with pairing -->
     <string name="sign_in_with_camera">Камерамен кіріңіз</string>
     <!-- Text shown for settings option for sign with email -->
     <string name="sign_in_with_email">Оның орнына эл. поштаны пайдалану</string>
-    <!-- Text shown for settings option for create new account text.'Firefox' intentionally hardcoded here.-->
-    <string name="sign_in_create_account_text"><![CDATA[Тіркелгіңіз жоқ па? Firefox-ты құрылғылар арасында синхрондау үшін, <u>тіркелгі жасаңыз</u>.]]></string>
-    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Firefox Preview) -->
+    <!-- Text shown for settings option for create new account text.'Asil Browser' intentionally hardcoded here.-->
+    <string name="sign_in_create_account_text"><![CDATA[Тіркелгіңіз жоқ па? Asil Browser-ты құрылғылар арасында синхрондау үшін, <u>тіркелгі жасаңыз</u>.]]></string>
+    <!-- Text shown in confirmation dialog to sign out of account. The first parameter is the name of the app (e.g. Asil Browser Preview) -->
     <string name="sign_out_confirmation_message_2">%sтіркелгіңізбен синхрондауды тоқтатады, бірақ, бұл құрылғыда барлық шолу деректері қалады.</string>
     <!-- Option to continue signing out of account shown in confirmation dialog to sign out of account -->
     <string name="sign_out_disconnect">Байланысты үзу</string>
@@ -1495,7 +1495,7 @@
     <string name="preference_enhanced_tracking_protection">Бақылаудан кеңейтілген қорғаныс</string>
     <!-- Preference summary for enhanced tracking protection settings on/off switch -->
     <string name="preference_enhanced_tracking_protection_summary">Енді сайтаралық трекерлерге қарсы ең күшті тосқауыл болып табылатын Cookie файлдарынан Толық қорғаныс функциясы бар.</string>
-    <!-- Description of enhanced tracking protection. The parameter is the name of the application (For example: Firefox Fenix) -->
+    <!-- Description of enhanced tracking protection. The parameter is the name of the application (For example: Asil Browser Fenix) -->
     <string name="preference_enhanced_tracking_protection_explanation_2">%s желіде сіздің соңыңыздан еретін ең кең тараған трекерлердің көбінен қорғайды.</string>
     <!-- Text displayed that links to website about enhanced tracking protection -->
     <string name="preference_enhanced_tracking_protection_explanation_learn_more">Көбірек білу</string>
@@ -1654,9 +1654,9 @@
     <!-- Preference option for never saving passwords in Fenix -->
     <string name="preferences_passwords_save_logins_never_save">Ешқашан сақтамау</string>
 
-    <!-- Preference for autofilling saved logins in Firefox (in web content), %1$s will be replaced with the app name -->
+    <!-- Preference for autofilling saved logins in Asil Browser (in web content), %1$s will be replaced with the app name -->
     <string name="preferences_passwords_autofill2">%1$s ішінде автотолтыру</string>
-    <!-- Description for the preference for autofilling saved logins in Firefox (in web content), %1$s will be replaced with the app name -->
+    <!-- Description for the preference for autofilling saved logins in Asil Browser (in web content), %1$s will be replaced with the app name -->
     <string name="preferences_passwords_autofill_description">%1$s қолдану кезінде веб-сайттарда пайдаланушы аттары мен парольдерін толтыру және сақтау.</string>
     <!-- Preference for autofilling logins from Fenix in other apps (e.g. autofilling the Twitter app) -->
     <string name="preferences_android_autofill">Басқа қолданбаларда автотолтыру</string>
@@ -2003,13 +2003,13 @@
     <string name="synced_tabs_connect_another_device">Басқа құрылғыны байланыстыру.</string>
     <!-- Text displayed asking user to re-authenticate -->
     <string name="synced_tabs_reauth">Қайта аутентификациялаңыз.</string>
-    <!-- Text displayed when user has disabled tab syncing in Firefox Sync Account -->
+    <!-- Text displayed when user has disabled tab syncing in Asil Browser Sync Account -->
     <string name="synced_tabs_enable_tab_syncing">Беттер синхрондауын іске қосыңыз.</string>
     <!-- Text displayed when user has no tabs that have been synced -->
-    <string name="synced_tabs_no_tabs">Сізде басқа құрылғыларыңызда Firefox-та ашық беттер жоқ.</string>
-    <!-- Text displayed in the synced tabs screen when a user is not signed in to Firefox Sync describing Synced Tabs -->
+    <string name="synced_tabs_no_tabs">Сізде басқа құрылғыларыңызда Asil Browser-та ашық беттер жоқ.</string>
+    <!-- Text displayed in the synced tabs screen when a user is not signed in to Asil Browser Sync describing Synced Tabs -->
     <string name="synced_tabs_sign_in_message">Басқа құрылғыларыңыздан беттер тізімін қарау.</string>
-    <!-- Text displayed on a button in the synced tabs screen to link users to sign in when a user is not signed in to Firefox Sync -->
+    <!-- Text displayed on a button in the synced tabs screen to link users to sign in when a user is not signed in to Asil Browser Sync -->
     <string name="synced_tabs_sign_in_button">Синхрондау үшін кіру</string>
 
     <!-- The text displayed when a synced device has no tabs to show in the list of Synced Tabs. -->
@@ -2061,7 +2061,7 @@
     <!-- The header text of the auto-close message when the user is asked if they want to turn on the auto-closing of inactive tabs. -->
     <string name="inactive_tabs_auto_close_message_header" tools:ignore="UnusedResources">Бір айдан кейін автожабу керек пе?</string>
     <!-- A description below the header to notify the user what the inactive tabs auto-close feature is. -->
-    <string name="inactive_tabs_auto_close_message_description" tools:ignore="UnusedResources">Firefox соңғы айда қаралмаған беттерді жаба алады.</string>
+    <string name="inactive_tabs_auto_close_message_description" tools:ignore="UnusedResources">Asil Browser соңғы айда қаралмаған беттерді жаба алады.</string>
     <!-- A call to action below the description to allow the user to turn on the auto closing of inactive tabs. -->
     <string name="inactive_tabs_auto_close_message_action" tools:ignore="UnusedResources">АВТОЖАБУДЫ ІСКЕ ҚОСУ</string>
 
@@ -2069,8 +2069,8 @@
     <string name="inactive_tabs_auto_close_message_snackbar">Автожабу іске қосылған</string>
 
     <!-- Awesome bar suggestion's headers -->
-    <!-- Search suggestions title for Firefox Suggest. -->
-    <string name="firefox_suggest_header">Firefox ұсынысы</string>
+    <!-- Search suggestions title for Asil Browser Suggest. -->
+    <string name="firefox_suggest_header">Asil Browser ұсынысы</string>
 
     <!-- Title for search suggestions when Google is the default search suggestion engine. -->
     <string name="google_search_engine_suggestion_header">Google іздеу</string>
@@ -2078,7 +2078,7 @@
     <string name="other_default_search_engine_suggestion_header">%s іздеуі</string>
 
     <!-- Default browser experiment -->
-    <string name="default_browser_experiment_card_text">Веб-сайттар, эл. пошта хаттары және хабарламалардан сілтемелерді Firefox-та автоматты түрде ашылатындай етіп баптау.</string>
+    <string name="default_browser_experiment_card_text">Веб-сайттар, эл. пошта хаттары және хабарламалардан сілтемелерді Asil Browser-та автоматты түрде ашылатындай етіп баптау.</string>
 
     <!-- Content description for close button in collection placeholder. -->
     <string name="remove_home_collection_placeholder_content_description">Өшіру</string>
@@ -2102,7 +2102,7 @@
     <!-- Title of an app feature. Smaller than a heading. The first parameter is product name Pocket -->
     <string name="pocket_stories_feature_title_2">%s негізінде.</string>
     <!-- Caption for describing a certain feature. The placeholder is for a clickable text (eg: Learn more) which will load an url in a new tab when clicked.  -->
-    <string name="pocket_stories_feature_caption">Firefox отбасының бөлігі. %s</string>
+    <string name="pocket_stories_feature_caption">Asil Browser отбасының бөлігі. %s</string>
     <!-- Clickable text for opening an external link for more information about Pocket. -->
     <string name="pocket_stories_feature_learn_more">Көбірек білу</string>
 
@@ -2123,6 +2123,6 @@
     <string name="a11y_action_label_wallpaper_collection_learn_more">осы жинақ туралы көбірек білу үшін сілтемені ашыңыз</string>
     <!-- Action label for links that point to an article. Talkback will append this to say "Double tap to read the article". -->
     <string name="a11y_action_label_read_article">мақаланы оқу</string>
-    <!-- Action label for links to the Firefox Pocket website. Talkback will append this to say "Double tap to open link to learn more". -->
+    <!-- Action label for links to the Asil Browser Pocket website. Talkback will append this to say "Double tap to open link to learn more". -->
     <string name="a11y_action_label_pocket_learn_more">көбірек білу үшін сілтемені ашыңыз</string>
 </resources>
