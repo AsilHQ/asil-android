@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView.SmoothScroller
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.MainScope
@@ -195,6 +196,7 @@ class HomeFragment : Fragment() {
         )
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     @Suppress("LongMethod")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -803,9 +805,6 @@ class HomeFragment : Fragment() {
         sessionControlView?.view?.findViewById<MaterialButton>(R.id.add_tabs_to_collections_button)
             ?.isVisible = tabCount > 0
     }
-
-
-
 
     companion object {
         const val ALL_NORMAL_TABS = "all_normal"

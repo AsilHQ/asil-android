@@ -81,7 +81,7 @@ class WebExtensionPromptFeature(
             consumePromptRequest()
             return
         }
-        showPostInstallationDialog(addon)
+        //showPostInstallationDialog(addon)
     }
 
     private fun handlePermissionRequest(
@@ -139,6 +139,7 @@ class WebExtensionPromptFeature(
                     (context.resources.getDimensionPixelSize(R.dimen.tab_corner_radius)).toFloat(),
                 ),
                 onPositiveButtonClicked = {
+                    println("Handle permission entered")
                     handleApprovedPermissions(promptRequest)
                 },
                 onNegativeButtonClicked = {
@@ -155,6 +156,7 @@ class WebExtensionPromptFeature(
     private fun tryToReAttachButtonHandlersToPreviousDialog() {
         findPreviousPermissionDialogFragment()?.let { dialog ->
             dialog.onPositiveButtonClicked = { addon ->
+                println("Dialog.onPositiveButtonClicked function triggered")
                 store.state.webExtensionPromptRequest?.let { promptRequest ->
                     if (addon.id == promptRequest.extension.id &&
                         promptRequest is WebExtensionPromptRequest.Permissions
@@ -174,6 +176,7 @@ class WebExtensionPromptFeature(
 
         findPreviousPostInstallationDialogFragment()?.let { dialog ->
             dialog.onConfirmButtonClicked = { addon, allowInPrivateBrowsing ->
+                println("FindPreviousPostInstallationDialogFragment function triggered")
                 store.state.webExtensionPromptRequest?.let { promptRequest ->
                     if (addon.id == promptRequest.extension.id &&
                         promptRequest is WebExtensionPromptRequest.PostInstallation
@@ -227,48 +230,49 @@ class WebExtensionPromptFeature(
         ) as? AddonInstallationDialogFragment
     }
 
-    private fun showPostInstallationDialog(addon: Addon) {
-        if (!isInstallationInProgress && !hasExistingAddonPostInstallationDialogFragment()) {
-            val addonCollectionProvider = context.components.addonCollectionProvider
-
-            // Fragment may not be attached to the context anymore during onConfirmButtonClicked handling,
-            // but we still want to be able to process user selection of the 'allowInPrivateBrowsing' pref.
-            // This is a best-effort attempt to do so - retain a weak reference to the application context
-            // (to avoid a leak), which we attempt to use to access addonManager.
-            // See https://github.com/mozilla-mobile/fenix/issues/15816
-            val weakApplicationContext: WeakReference<Context> = WeakReference(context)
-
-            val dialog = AddonInstallationDialogFragment.newInstance(
-                addon = addon,
-                addonCollectionProvider = addonCollectionProvider,
-                promptsStyling = AddonInstallationDialogFragment.PromptsStyling(
-                    gravity = Gravity.BOTTOM,
-                    shouldWidthMatchParent = true,
-                    confirmButtonBackgroundColor = ThemeManager.resolveAttribute(
-                        R.attr.accent,
-                        context,
-                    ),
-                    confirmButtonTextColor = ThemeManager.resolveAttribute(
-                        R.attr.textOnColorPrimary,
-                        context,
-                    ),
-                    confirmButtonRadius =
-                    (context.resources.getDimensionPixelSize(R.dimen.tab_corner_radius)).toFloat(),
-                ),
-                onDismissed = {
-                    consumePromptRequest()
-                },
-                onConfirmButtonClicked = { _, allowInPrivateBrowsing ->
-                    handlePostInstallationButtonClicked(
-                        addon = addon,
-                        context = weakApplicationContext,
-                        allowInPrivateBrowsing = allowInPrivateBrowsing,
-                    )
-                },
-            )
-            dialog.show(fragmentManager, POST_INSTALLATION_DIALOG_FRAGMENT_TAG)
-        }
-    }
+//    private fun showPostInstallationDialog(addon: Addon) {
+//        if (!isInstallationInProgress && !hasExistingAddonPostInstallationDialogFragment()) {
+//            val addonCollectionProvider = context.components.addonCollectionProvider
+//
+//            // Fragment may not be attached to the context anymore during onConfirmButtonClicked handling,
+//            // but we still want to be able to process user selection of the 'allowInPrivateBrowsing' pref.
+//            // This is a best-effort attempt to do so - retain a weak reference to the application context
+//            // (to avoid a leak), which we attempt to use to access addonManager.
+//            // See https://github.com/mozilla-mobile/fenix/issues/15816
+//            val weakApplicationContext: WeakReference<Context> = WeakReference(context)
+//
+//            val dialog = AddonInstallationDialogFragment.newInstance(
+//                addon = addon,
+//                addonCollectionProvider = addonCollectionProvider,
+//                promptsStyling = AddonInstallationDialogFragment.PromptsStyling(
+//                    gravity = Gravity.BOTTOM,
+//                    shouldWidthMatchParent = true,
+//                    confirmButtonBackgroundColor = ThemeManager.resolveAttribute(
+//                        R.attr.accent,
+//                        context,
+//                    ),
+//                    confirmButtonTextColor = ThemeManager.resolveAttribute(
+//                        R.attr.textOnColorPrimary,
+//                        context,
+//                    ),
+//                    confirmButtonRadius =
+//                    (context.resources.getDimensionPixelSize(R.dimen.tab_corner_radius)).toFloat(),
+//                ),
+//                onDismissed = {
+//                    consumePromptRequest()
+//                },
+//                onConfirmButtonClicked = { _, allowInPrivateBrowsing ->
+//                    println("Handle Post Installation Button Clicked Function Triggered")
+//                    handlePostInstallationButtonClicked(
+//                        addon = addon,
+//                        context = weakApplicationContext,
+//                        allowInPrivateBrowsing = allowInPrivateBrowsing,
+//                    )
+//                },
+//            )
+//            dialog.show(fragmentManager, POST_INSTALLATION_DIALOG_FRAGMENT_TAG)
+//        }
+//    }
 
     private fun handlePostInstallationButtonClicked(
         context: WeakReference<Context>,

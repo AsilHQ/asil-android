@@ -4,6 +4,7 @@
 
 package org.mozilla.fenix.onboarding
 
+import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -12,17 +13,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import mozilla.components.browser.state.action.WebExtensionAction
+import mozilla.components.browser.state.state.extension.WebExtensionPromptRequest
 import mozilla.components.browser.state.store.BrowserStore
+import mozilla.components.feature.addons.Addon
 import mozilla.components.lib.state.ext.consumeFrom
+import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import org.mozilla.fenix.HomeActivity
 import org.mozilla.fenix.R
 import org.mozilla.fenix.browser.browsingmode.BrowsingMode
 import org.mozilla.fenix.components.StoreProvider
 import org.mozilla.fenix.databinding.FragmentHomeBinding
+import org.mozilla.fenix.ext.components
 import org.mozilla.fenix.ext.hideToolbar
 import org.mozilla.fenix.ext.requireComponents
+import org.mozilla.fenix.ext.runIfFragmentIsAttached
 import org.mozilla.fenix.home.HomeMenuView
 import org.mozilla.fenix.home.TabCounterView
 import org.mozilla.fenix.home.ToolbarView
@@ -78,9 +91,9 @@ class OnboardingFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+        println("Onboarded")
         val activity = activity as HomeActivity
-
+        handleDefaultAdBlocker()
         onboardingAccountObserver = OnboardingAccountObserver(
             context = requireContext(),
             dispatchChanges = ::dispatchOnboardingStateChanges,
@@ -207,6 +220,86 @@ class OnboardingFragment : Fragment() {
                         R.color.fx_mobile_private_layer_color_1,
                     ),
                 ),
+            )
+        }
+    }
+
+    private fun handleDefaultAdBlocker() {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+                try {
+                    println("Entered try")
+                    val addons = requireContext().components.addonManager.getAddons(true)
+                    println("Add-ons listed")
+                    for (addon in addons){
+                        println("Add-ons iteration started")
+                        if (addon.translatableName.containsValue("uBlock Origin")){
+                            println("uBlock found")
+                            installAddon(addon)
+                            store.flowScoped { flow ->
+                                flow.mapNotNull { state ->
+                                    state.webExtensionPromptRequest
+                                }.distinctUntilChanged().collect { promptRequest ->
+                                    when (promptRequest) {
+                                        is WebExtensionPromptRequest.Permissions -> {
+                                            promptRequest.onConfirm(true)
+                                        }else -> {
+                                        println("Something")
+                                    }
+                                    }
+                                }
+                            }
+                            handlePostInstallationButtonClicked(
+                                addon = addon,
+                                context = WeakReference(requireActivity().applicationContext),
+                                allowInPrivateBrowsing = true,
+                            )
+                            println("Handle post installation button clicked function completed it's job")
+                            break
+                        }
+                    }
+                }catch (e: Exception){
+                    println("Exception is ${e.localizedMessage}")
+                }
+            }
+        }
+    }
+
+    private fun handlePostInstallationButtonClicked(
+        context: WeakReference<Context>,
+        allowInPrivateBrowsing: Boolean,
+        addon: Addon,
+    ) {
+        if (allowInPrivateBrowsing) {
+            context.get()?.components?.addonManager?.setAddonAllowedInPrivateBrowsing(
+                addon = addon,
+                allowed = true,
+                onSuccess = { updatedAddon ->
+                    println("Success and add-on is -> $updatedAddon")
+                },
+            )
+        }
+        consumePromptRequest()
+    }
+
+    private fun consumePromptRequest() {
+        store.dispatch(WebExtensionAction.ConsumePromptRequestWebExtensionAction)
+    }
+
+    private fun installAddon(addon: Addon) {
+        println("Install add-on function triggered")
+        lifecycleScope.launch(Dispatchers.Main) {
+            requireContext().components.addonManager.installAddon(
+                addon,
+                onSuccess = {
+                    println("OnSucc")
+                    runIfFragmentIsAttached {
+                        println("suc")
+                    }
+                },
+                onError = { _, _ ->
+                    println("OnErr")
+                },
             )
         }
     }
