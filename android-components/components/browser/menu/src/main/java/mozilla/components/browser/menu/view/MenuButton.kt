@@ -130,7 +130,6 @@ class MenuButton @JvmOverloads constructor(
      */
     override fun onClick(v: View) {
         this.hideKeyboard()
-
         // If a legacy menu is open, dismiss it.
         if (menu != null) {
             menu?.dismiss()
