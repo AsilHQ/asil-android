@@ -548,7 +548,6 @@ class HomeFragment : Fragment() {
         }
 
         observeSearchEngineNameChanges()
-
         homeMenuView = HomeMenuView(
             view = view,
             context = view.context,
