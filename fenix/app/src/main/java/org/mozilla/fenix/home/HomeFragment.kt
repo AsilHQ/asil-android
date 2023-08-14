@@ -104,12 +104,13 @@ import org.mozilla.fenix.search.toolbar.SearchSelectorMenu
 import org.mozilla.fenix.tabstray.TabsTrayAccessPoint
 import org.mozilla.fenix.utils.Settings.Companion.TOP_SITES_PROVIDER_MAX_THRESHOLD
 import org.mozilla.fenix.utils.allowUndo
+import org.mozilla.geckoview.GeckoRuntime
 import java.lang.ref.WeakReference
 
 @Suppress("TooManyFunctions", "LargeClass")
 class HomeFragment : Fragment() {
     private val args by navArgs<HomeFragmentArgs>()
-
+    private lateinit var runtime: GeckoRuntime
     @VisibleForTesting
     internal lateinit var bundleArgs: Bundle
 
@@ -215,6 +216,7 @@ class HomeFragment : Fragment() {
     ): View {
         // DO NOT ADD ANYTHING ABOVE THIS getProfilerTime CALL!
         val profilerStartTime = requireComponents.core.engine.profiler?.getProfilerTime()
+        //runtime = GeckoRuntime.getDefault(requireContext())
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val activity = activity as HomeActivity

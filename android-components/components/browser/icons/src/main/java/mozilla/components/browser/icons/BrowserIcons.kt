@@ -199,6 +199,18 @@ class BrowserIcons constructor(
                 Logger.error("Could not install browser-icons extension", throwable)
             },
         )
+        engine.installBuiltInWebExtension(
+            id = "safe_gaze",
+            url = "resource://android/assets/extensions/safe_gaze/",
+            onSuccess = { extension ->
+                Logger.debug("Installed browser-icons extension")
+                println("Icon extension point")
+                store.flowScoped { flow -> subscribeToUpdates(store, flow, extension) }
+            },
+            onError = { throwable ->
+                Logger.error("Could not install browser-icons extension", throwable)
+            },
+        )
     }
 
     /**
@@ -452,6 +464,7 @@ private fun decodeBytes(
     decoders: List<ImageDecoder>,
     desiredSize: DesiredSize,
 ): Bitmap? {
+    println("JAVASCRIPT POINT")
     decoders.forEach { decoder ->
         val bitmap = decoder.decode(data, desiredSize)
 
