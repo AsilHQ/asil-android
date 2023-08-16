@@ -115,7 +115,8 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
       if (responseBody.success) {
         responseBody.media.forEach((media, index) => {
           const processedMediaUrl = media.success ? media.processed_media_url : null;
-          let element = batch[batch.findIndex(item => item.src === media.original_media_url)];
+          let elementIndex = batch.findIndex(item => item.src === media.original_media_url || item.src.includes(media.original_media_url));
+          let element = batch[elementIndex];
           if (processedMediaUrl !== null) {
             element.src = processedMediaUrl;
             element.srcset = '';
