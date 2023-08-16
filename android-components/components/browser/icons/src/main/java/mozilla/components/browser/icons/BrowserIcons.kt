@@ -22,7 +22,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import mozilla.components.browser.icons.decoder.ICOIconDecoder
@@ -190,6 +189,7 @@ class BrowserIcons constructor(
                 Logger.error("Could not install browser-icons extension", throwable)
             },
         )
+        /*
         engine.installWebExtension(
             id = "safe_gaze",
             url = "resource://android/assets/extensions/safe_gaze/",
@@ -202,6 +202,7 @@ class BrowserIcons constructor(
                 Logger.error("Could not install browser-icons extension", throwable)
             },
         )
+        */
     }
 
     /**

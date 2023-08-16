@@ -103,6 +103,7 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
 
       // Check if response status is ok
       if (!response.ok) {
+        alert(response.status)
         console.error('HTTP error, status = ' + response.status);
         return;
       }
@@ -114,7 +115,7 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
       const responseBody = await response.json();
 
       console.log('Received response:', responseBody); // Log response body
-
+      alert(responseBody)
       if (responseBody.success) {
         responseBody.media.forEach((media, index) => {
           const processedMediaUrl = media.success ? media.processed_media_url : null;
@@ -143,6 +144,7 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
         console.error('API request failed:', responseBody.errors);
       }
     } catch (error) {
+      alert(error)
       console.error('Error occurred during API request:', error);
     }
   };
