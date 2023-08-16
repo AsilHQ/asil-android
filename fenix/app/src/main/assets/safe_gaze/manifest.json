@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "icons@mozac.org"
+    }
+  },
+  "name": "Safe Gaze",
+  "version": "1.3",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["safe_gaze_script.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "geckoViewAddons",
+    "nativeMessaging",
+    "nativeMessagingFromContent"
+  ]
+}
