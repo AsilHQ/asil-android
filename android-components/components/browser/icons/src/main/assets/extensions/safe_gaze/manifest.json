@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "safe_gaze"
+    }
+  },
+  "name": "GeckoView JavaScript Injection",
+  "version": "1.0",
+  "description": "Inject JavaScript into GeckoView",
+  "permissions": [
+    "nativeMessaging",
+    "nativeMessagingFromContent",
+    "geckoViewAddons",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["safe_gaze_script.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
