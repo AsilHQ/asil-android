@@ -118,12 +118,13 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
       if (responseBody.success) {
         responseBody.media.forEach((media, index) => {
           const processedMediaUrl = media.success ? media.processed_media_url : null;
-
           if (processedMediaUrl !== null) {
+            console.log('Response', batch[index].src);
             batch[index].src = processedMediaUrl;
+            batch[index].setAttribute('data-replaced', 'true');
+            unblurImages([batch[index]]);
             if (batch[index].dataset) {
               batch[index].dataset.src = processedMediaUrl;
-              unblurImages([batch[index]]);
             }
             window.__firefox__.execute(function($) {
                 let postMessage = $(function(message) {
@@ -137,7 +138,6 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
             });
 
           }
-          batch[index].setAttribute('data-replaced', 'true');
         });
       } else {
         console.error('API request failed:', responseBody.errors);
@@ -153,7 +153,7 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
         const src = img.getAttribute('src');
         const alt = img.getAttribute('alt');
         if (src && !src.startsWith('data:image/')) {
-            const isValidImage = !src.includes('.svg') && hasMinRenderedSize(img) && img.getAttribute('alt') !== 'logo' && !src.includes('logo') && img.getAttribute('isSent') !== 'true' && img.getAttribute('data-replaced') !== 'true'
+            const isValidImage = !src.includes('.svg') && hasMinRenderedSize(img) && img.getAttribute('alt') !== 'logo' && !src.includes('logo') && img.getAttribute('isSent') !== 'true' && img.getAttribute('data-replaced') !== 'true' && !src.includes('no-image')
             if (isValidImage) {
                 blurImage(img);
                 img.setAttribute('isSent', 'true');
@@ -179,11 +179,12 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
         const dataSrc = img.getAttribute('data-src');
         const alt = img.getAttribute('alt');
         if (dataSrc && !dataSrc.startsWith('data:image/')) {
-            const isValidImage = !dataSrc.includes('.svg') && hasMinRenderedSize(img) && img.getAttribute('alt') !== 'logo' && !dataSrc.includes('logo') && img.getAttribute('isSent') !== 'true' && img.getAttribute('data-replaced') !== 'true'
+            const isValidImage = !dataSrc.includes('.svg') && hasMinRenderedSize(img) && img.getAttribute('alt') !== 'logo' && !dataSrc.includes('logo') && img.getAttribute('isSent') !== 'true' && img.getAttribute('data-replaced') !== 'true' && !dataSrc.includes('no-image')
             if (isValidImage) {
                 blurImage(img);
                 img.setAttribute('isSent', 'true');
-                console.log('SRC:', dataSrc);
+                img.setAttribute('src', dataSrc);
+                console.log('Data SRC:', dataSrc);
                 return true;
             }
             else {
@@ -201,7 +202,6 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
         return false;
     });
     const allImages = [...imageElements, ...lazyImageElements];
-
     if (allImages.length > 0) {
       const newBatches = [];
       for (let i = 0; i < allImages.length; i += batchSize) {
@@ -210,15 +210,12 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
 
       for (const batch of newBatches) {
         // Filter out images that have already been replaced or sent in previous requests
-        const imagesToReplace = batch.filter(imgElement => !imgElement.hasAttribute('data-replaced') && !imgElement.startsWith('data:image/'));
+        const imagesToReplace = batch.filter(imgElement => !imgElement.hasAttribute('data-replaced'));
 
         if (imagesToReplace.length > 0) {
           await replaceImages(imagesToReplace);
         }
       }
-    }
-    else {
-        console.log("EMPTY");
     }
   };
   fetchNewImages();
