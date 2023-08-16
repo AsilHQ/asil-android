@@ -289,7 +289,7 @@ class OnboardingFragment : Fragment() {
     private fun installAddon(addon: Addon) {
         println("Install add-on function triggered")
         lifecycleScope.launch(Dispatchers.Main) {
-            requireContext().components.addonManager.installAddon(
+            activity?.baseContext?.components?.addonManager?.installAddon(
                 addon,
                 onSuccess = {
                     println("OnSucc")
