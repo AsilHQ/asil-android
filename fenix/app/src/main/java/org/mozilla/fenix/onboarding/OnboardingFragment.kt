@@ -148,8 +148,8 @@ class OnboardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        consumeFrom(onboardingStore) { state ->
-            onboardingView?.update(state.onboardingState, requireComponents.fenixOnboarding.config)
+        consumeFrom(onboardingStore) {
+            onboardingView?.update(requireComponents.fenixOnboarding.config)
         }
 
         homeMenuView = HomeMenuView(
