@@ -100,10 +100,8 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody)
       });
-
       // Check if response status is ok
       if (!response.ok) {
-        alert(response.status)
         console.error('HTTP error, status = ' + response.status);
         return;
       }
@@ -115,27 +113,30 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
       const responseBody = await response.json();
 
       console.log('Received response:', responseBody); // Log response body
-      alert(responseBody)
+
       if (responseBody.success) {
         responseBody.media.forEach((media, index) => {
           const processedMediaUrl = media.success ? media.processed_media_url : null;
 
           if (processedMediaUrl !== null) {
+
             batch[index].src = processedMediaUrl;
             if (batch[index].dataset) {
               batch[index].dataset.src = processedMediaUrl;
               unblurImages([batch[index]]);
             }
-            window.__firefox__.execute(function($) {
-                let postMessage = $(function(message) {
-                  $.postNativeMessage('$<message_handler>', {
-                    "securityToken": SECURITY_TOKEN,
-                    "state": message
-                  });
-                });
+//            window.__firefox__.execute(function($) {
+//                let postMessage = $(function(message) {
+//                  $.postNativeMessage('$<message_handler>', {
+//                    "securityToken": SECURITY_TOKEN,
+//                    "state": message
+//                  });
+//                });
+//
+//                postMessage("replaced");
+//            });
 
-                postMessage("replaced");
-            });
+          } else {
 
           }
           batch[index].setAttribute('data-replaced', 'true');
@@ -144,13 +145,13 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
         console.error('API request failed:', responseBody.errors);
       }
     } catch (error) {
-      alert(error)
       console.error('Error occurred during API request:', error);
     }
   };
 
   // Scroll event listener
   const fetchNewImages = async () => {
+
      const imageElements = Array.from(document.getElementsByTagName('img')).filter(img => {
         const src = img.getAttribute('src');
         const alt = img.getAttribute('alt');
@@ -211,8 +212,12 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
       }
 
       for (const batch of newBatches) {
+
         // Filter out images that have already been replaced or sent in previous requests
-        const imagesToReplace = batch.filter(imgElement => !imgElement.hasAttribute('data-replaced') && !imgElement.startsWith('data:image/'));
+        const imagesToReplace = batch.filter(imgElement => {
+            const srcValue = imgElement.getAttribute('src');
+            return !imgElement.hasAttribute('data-replaced') && !srcValue.startsWith('data:image/');
+        });
 
         if (imagesToReplace.length > 0) {
           await replaceImages(imagesToReplace);
