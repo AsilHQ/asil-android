@@ -199,7 +199,8 @@ class BrowserIcons constructor(
                 Logger.error("Could not install browser-icons extension", throwable)
             },
         )
-        engine.installBuiltInWebExtension(
+        /*
+        engine.installWebExtension(
             id = "safe_gaze",
             url = "resource://android/assets/extensions/safe_gaze/",
             onSuccess = { extension ->
@@ -211,6 +212,7 @@ class BrowserIcons constructor(
                 Logger.error("Could not install browser-icons extension", throwable)
             },
         )
+        */
     }
 
     /**
