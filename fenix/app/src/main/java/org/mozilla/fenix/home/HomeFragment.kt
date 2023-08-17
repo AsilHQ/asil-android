@@ -495,7 +495,6 @@ class HomeFragment : Fragment() {
         HomeScreen.homeScreenViewCount.add()
 
         observeSearchEngineNameChanges()
-
         homeMenuView = HomeMenuView(
             view = view,
             context = view.context,
