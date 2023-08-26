@@ -20,13 +20,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import mozilla.components.browser.menu.BrowserMenuBuilder
+import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.browser.toolbar.R
 import mozilla.components.browser.toolbar.internal.ActionContainer
 import mozilla.components.concept.menu.MenuController
 import mozilla.components.concept.toolbar.Toolbar
+import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.ktx.android.content.isScreenReaderEnabled
 import mozilla.components.ui.colors.R.color as photonColors
 
@@ -260,19 +263,18 @@ class DisplayToolbar internal constructor(
     fun setAsilIconClickListener(store: BrowserStore){
         val asilIcon = rootView.findViewById<ImageView>(R.id.asil_shield_image_view)
         asilIcon.setOnClickListener {
-            println("Asil Ica")
             val extensions = store.state.extensions.values.toList()
-            println("Extensions are -> $extensions")
             extensions.forEach { extension ->
-                    extension.browserAction?.let { browserAction ->
-                        println("Here")
-                        browserAction.badgeText
-                        println("Badge text is here -> ${browserAction.badgeText}")
-                    }
+                store.flowScoped { flow ->
+                    flow.distinctUntilChangedBy { it.selectedTab }
+                        .collect { state ->
+                            val badgeText = state.selectedTab?.extensionState?.get(extension.id)?.browserAction?.badgeText
+                            if (!badgeText.isNullOrEmpty()) println("")
+                        }
                 }
+            }
         }
     }
-    
 
     /**
      * Sets a listener to be invoked when the site tracking protection indicator icon is clicked.

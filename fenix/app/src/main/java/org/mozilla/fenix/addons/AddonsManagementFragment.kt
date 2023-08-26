@@ -25,20 +25,22 @@ import mozilla.components.feature.addons.AddonManager
 import mozilla.components.feature.addons.AddonManagerException
 import mozilla.components.feature.addons.ui.AddonsManagerAdapter
 import mozilla.components.feature.addons.ui.AddonsManagerAdapterDelegate
+import mozilla.components.feature.addons.ui.translateName
 import org.mozilla.fenix.BrowserDirection
 import org.mozilla.fenix.BuildConfig
 import org.mozilla.fenix.Config
 import org.mozilla.fenix.HomeActivity
 import org.mozilla.fenix.R
-import org.mozilla.fenix.components.FenixSnackbar
 import org.mozilla.fenix.databinding.FragmentAddOnsManagementBinding
 import org.mozilla.fenix.ext.components
+import org.mozilla.fenix.ext.getRootView
 import org.mozilla.fenix.ext.requireComponents
 import org.mozilla.fenix.ext.runIfFragmentIsAttached
 import org.mozilla.fenix.ext.settings
 import org.mozilla.fenix.ext.showToolbar
 import org.mozilla.fenix.settings.SupportUtils
 import org.mozilla.fenix.theme.ThemeManager
+import java.util.concurrent.CancellationException
 
 /**
  * Fragment use for managing add-ons.
@@ -136,15 +138,6 @@ class AddonsManagementFragment : Fragment(R.layout.fragment_add_ons_management) 
         }
     }
 
-    @VisibleForTesting
-    internal fun showErrorSnackBar(text: String, anchorView: View? = this.view) {
-        runIfFragmentIsAttached {
-            anchorView?.let {
-                showSnackBar(it, text, FenixSnackbar.LENGTH_LONG)
-            }
-        }
-    }
-
     private fun createAddonStyle(context: Context): AddonsManagerAdapter.Style {
         val sectionsTypeFace = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Typeface.create(Typeface.DEFAULT, FONT_WEIGHT_MEDIUM, false)
@@ -183,8 +176,22 @@ class AddonsManagementFragment : Fragment(R.layout.fragment_add_ons_management) 
                     binding?.addonProgressOverlay?.overlayCardView?.visibility = View.GONE
                 }
             },
-            onError = { _ ->
-                binding?.addonProgressOverlay?.overlayCardView?.visibility = View.GONE
+            onError = { e ->
+                this@AddonsManagementFragment.view?.let { view ->
+                    // No need to display an error message if installation was cancelled by the user.
+                    if (e !is CancellationException) {
+                        val rootView = activity?.getRootView() ?: view
+                        context?.let {
+                            showSnackBar(
+                                rootView,
+                                getString(
+                                    R.string.mozac_feature_addons_failed_to_install,
+                                    addon.translateName(it),
+                                ),
+                            )
+                        }
+                    }
+                }
             },
         )
         binding?.addonProgressOverlay?.cancelButton?.setOnClickListener {
