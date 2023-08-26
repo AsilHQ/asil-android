@@ -462,6 +462,8 @@ abstract class BaseBrowserFragment :
             showQuickSettingsDialog()
         }
 
+        browserToolbarView.view.display.setAsilIconClickListener(store)
+
         contextMenuFeature.set(
             feature = ContextMenuFeature(
                 fragmentManager = parentFragmentManager,
