@@ -42,6 +42,7 @@ dependencies {
     implementation ComponentsDependencies.google_material
 
     implementation ComponentsDependencies.kotlin_coroutines
+    implementation project(path: ':browser-state')
 
     testImplementation project(':support-test')
 

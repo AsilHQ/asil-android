@@ -21,6 +21,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import mozilla.components.browser.menu.BrowserMenuBuilder
+import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.browser.toolbar.R
 import mozilla.components.browser.toolbar.internal.ActionContainer
@@ -255,6 +256,23 @@ class DisplayToolbar internal constructor(
             views.securityIndicator.setBackgroundResource(outValue.resourceId)
         }
     }
+    /** Opens the asil shield ad-blocker tracker */
+    fun setAsilIconClickListener(store: BrowserStore){
+        val asilIcon = rootView.findViewById<ImageView>(R.id.asil_shield_image_view)
+        asilIcon.setOnClickListener {
+            println("Asil Ica")
+            val extensions = store.state.extensions.values.toList()
+            println("Extensions are -> $extensions")
+            extensions.forEach { extension ->
+                    extension.browserAction?.let { browserAction ->
+                        println("Here")
+                        browserAction.badgeText
+                        println("Badge text is here -> ${browserAction.badgeText}")
+                    }
+                }
+        }
+    }
+    
 
     /**
      * Sets a listener to be invoked when the site tracking protection indicator icon is clicked.
@@ -666,5 +684,5 @@ internal class DisplayToolbarViews(
     val trackingProtectionIndicator: TrackingProtectionIconView,
     val origin: OriginView,
     val progress: ProgressBar,
-    val highlight: HighlightView,
+    val highlight: HighlightView
 )

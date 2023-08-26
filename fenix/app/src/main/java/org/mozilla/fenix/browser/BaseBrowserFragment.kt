@@ -43,6 +43,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mozilla.appservices.places.BookmarkRoot
 import mozilla.appservices.places.uniffi.PlacesApiException
+import mozilla.components.browser.menu.WebExtensionBrowserMenu
 import mozilla.components.browser.state.action.ContentAction
 import mozilla.components.browser.state.selector.findCustomTab
 import mozilla.components.browser.state.selector.findCustomTabOrSelectedTab
@@ -459,6 +460,8 @@ abstract class BaseBrowserFragment :
         browserToolbarView.view.display.setOnSiteSecurityClickedListener {
             showQuickSettingsDialog()
         }
+
+        browserToolbarView.view.display.setAsilIconClickListener(store)
 
         contextMenuFeature.set(
             feature = ContextMenuFeature(
