@@ -221,7 +221,6 @@ class HomeMenu(
 
     init {
         val menuItems = coreMenuItems()
-        println("Manu Opened")
         // Report initial state.
         onMenuBuilderChanged(BrowserMenuBuilder(menuItems))
 

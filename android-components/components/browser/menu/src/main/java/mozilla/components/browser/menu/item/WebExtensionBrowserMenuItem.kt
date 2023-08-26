@@ -146,8 +146,6 @@ class WebExtensionBrowserMenuItem(
  * Sets the badgeText and the visibility of the TextView based on empty/nullability of the badgeText.
  */
 fun TextView.setBadgeText(badgeText: String?) {
-    println("Badge text is -> $badgeText")
-    println("Getting data from adblocker")
     if (badgeText.isNullOrEmpty()) {
         visibility = View.INVISIBLE
     } else {

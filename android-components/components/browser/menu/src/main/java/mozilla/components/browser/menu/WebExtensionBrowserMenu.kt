@@ -39,7 +39,6 @@ class WebExtensionBrowserMenu internal constructor(
         scope = store.flowScoped { flow ->
             flow.distinctUntilChangedBy { it.selectedTab }
                 .collect { state ->
-                    println(state)
                     getOrUpdateWebExtensionMenuItems(state, state.selectedTab)
                     invalidate()
                 }
@@ -78,7 +77,6 @@ class WebExtensionBrowserMenu internal constructor(
                     if (!extension.allowedInPrivateBrowsing && tab?.content?.private == true) {
                         return@forEach
                     }
-                    println("Extention data is -> ${extension.pageAction}")
                     extension.browserAction?.let { browserAction ->
                         addOrUpdateAction(
                             extension = extension,
@@ -115,7 +113,6 @@ class WebExtensionBrowserMenu internal constructor(
             menuItems: ArrayList<WebExtensionBrowserMenuItem>,
             isPageAction: Boolean = false,
         ): Boolean {
-            println("Called")
             val actionMap = if (isPageAction) webExtensionPageActions else webExtensionBrowserActions
 
             // Add the global browser/page action if it doesn't exist

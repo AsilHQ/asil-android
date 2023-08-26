@@ -139,7 +139,6 @@ class WebExtensionPromptFeature(
                     (context.resources.getDimensionPixelSize(R.dimen.tab_corner_radius)).toFloat(),
                 ),
                 onPositiveButtonClicked = {
-                    println("Handle permission entered")
                     handleApprovedPermissions(promptRequest)
                 },
                 onNegativeButtonClicked = {

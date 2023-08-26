@@ -115,7 +115,6 @@ class GeckoEngineView @JvmOverloads constructor(
             }
 
             try {
-                println("Session Starting Point")
                 geckoView.setSession(internalSession.geckoSession)
                 attachSelectionActionDelegate(internalSession.geckoSession)
             } catch (e: IllegalStateException) {

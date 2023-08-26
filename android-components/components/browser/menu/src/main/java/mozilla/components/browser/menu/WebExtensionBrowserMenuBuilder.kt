@@ -50,7 +50,6 @@ class WebExtensionBrowserMenuBuilder(
     override fun build(context: Context): BrowserMenu {
         val extensionMenuItems =
             WebExtensionBrowserMenu.getOrUpdateWebExtensionMenuItems(store.state, store.state.selectedTab)
-
         val finalList = items.toMutableList()
 
         val filteredExtensionMenuItems = extensionMenuItems.filter { webExtensionBrowserMenuItem ->
@@ -62,7 +61,6 @@ class WebExtensionBrowserMenuBuilder(
         } else {
             finalList
         }
-        println(filteredExtensionMenuItems[0].id)
 
         val adapter = BrowserMenuAdapter(context, menuItems)
         return BrowserMenu(adapter)
@@ -91,7 +89,6 @@ class WebExtensionBrowserMenuBuilder(
         items: MutableList<BrowserMenuItem>,
         filteredExtensionMenuItems: List<WebExtensionBrowserMenuItem>,
     ): List<BrowserMenuItem> {
-        println("Menu item view creation point.")
         val addonsMenuItem = if (filteredExtensionMenuItems.isNotEmpty()) {
             val backPressMenuItem = BackPressMenuItem(
                 contentDescription = context.getString(R.string.action_bar_up_description),
