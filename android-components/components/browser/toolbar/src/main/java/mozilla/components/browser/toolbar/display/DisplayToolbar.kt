@@ -291,13 +291,13 @@ class DisplayToolbar internal constructor(
             asilIcon.getGlobalVisibleRect(iconRect)
 
             val x = iconRect.left
-            val y = iconRect.top - popupView.height
+            val y = iconRect.top
             println(popupView.height)
             popupWindow.animationStyle = 2132017504
             popupWindow.isFocusable = true
 
             asilIcon.post {
-                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y)
+                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
             }
 
             val extensions = store.state.extensions.values.toList()
@@ -305,8 +305,8 @@ class DisplayToolbar internal constructor(
                 store.flowScoped { flow ->
                     flow.distinctUntilChangedBy { it.selectedTab }
                         .collect { state ->
-                            state.selectedTab?.extensionState?.get(extension.id)?.browserAction?.badgeText
-                            //if (!badgeText.isNullOrEmpty()) Toast.makeText(context, badgeText, Toast.LENGTH_LONG).show()
+                            val badgeText = state.selectedTab?.extensionState?.get(extension.id)?.browserAction?.badgeText
+                            if (!badgeText.isNullOrEmpty()) popupView.findViewById<TextView>(R.id.count_text).text = badgeText
                         }
                 }
             }
