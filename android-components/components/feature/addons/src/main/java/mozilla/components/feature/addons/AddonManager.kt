@@ -7,6 +7,7 @@ package mozilla.components.feature.addons
 import android.graphics.Bitmap
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher

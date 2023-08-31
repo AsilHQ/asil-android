@@ -42,6 +42,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mozilla.appservices.places.BookmarkRoot
 import mozilla.appservices.places.uniffi.PlacesApiException
+import mozilla.components.browser.menu.WebExtensionBrowserMenu
 import mozilla.components.browser.state.action.ContentAction
 import mozilla.components.browser.state.selector.findCustomTab
 import mozilla.components.browser.state.selector.findCustomTabOrSelectedTab
@@ -463,6 +464,8 @@ abstract class BaseBrowserFragment :
         }
 
         browserToolbarView.view.display.setAsilIconClickListener(store)
+
+        browserToolbarView.view.display.setAsilIconClickListener(store, /*context.components.addonManager*/)
 
         contextMenuFeature.set(
             feature = ContextMenuFeature(

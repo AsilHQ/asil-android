@@ -8,35 +8,28 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
-import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
-import androidx.core.widget.PopupWindowCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mozilla.components.browser.menu.BrowserMenuBuilder
@@ -291,13 +284,13 @@ class DisplayToolbar internal constructor(
             asilIcon.getGlobalVisibleRect(iconRect)
 
             val x = iconRect.left
-            val y = iconRect.top - popupView.height
+            val y = iconRect.top
             println(popupView.height)
             popupWindow.animationStyle = 2132017504
             popupWindow.isFocusable = true
 
             asilIcon.post {
-                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y)
+                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
             }
 
             val extensions = store.state.extensions.values.toList()
@@ -305,8 +298,8 @@ class DisplayToolbar internal constructor(
                 store.flowScoped { flow ->
                     flow.distinctUntilChangedBy { it.selectedTab }
                         .collect { state ->
-                            state.selectedTab?.extensionState?.get(extension.id)?.browserAction?.badgeText
-                            //if (!badgeText.isNullOrEmpty()) Toast.makeText(context, badgeText, Toast.LENGTH_LONG).show()
+                            val badgeText = state.selectedTab?.extensionState?.get(extension.id)?.browserAction?.badgeText
+                            if (!badgeText.isNullOrEmpty()) popupView.findViewById<TextView>(R.id.count_text).text = badgeText
                         }
                 }
             }

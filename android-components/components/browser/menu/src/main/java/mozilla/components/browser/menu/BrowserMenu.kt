@@ -63,7 +63,6 @@ open class BrowserMenu internal constructor(
         onDismiss: () -> Unit = {},
     ): PopupWindow {
         var view = LayoutInflater.from(anchor.context).inflate(R.layout.mozac_browser_menu, null)
-
         adapter.menu = this
 
         menuList = view.findViewById<DynamicWidthRecyclerView>(R.id.mozac_browser_menu_recyclerView).apply {

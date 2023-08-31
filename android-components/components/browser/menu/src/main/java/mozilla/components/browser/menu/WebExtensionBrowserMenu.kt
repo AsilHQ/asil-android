@@ -77,7 +77,6 @@ class WebExtensionBrowserMenu internal constructor(
                     if (!extension.allowedInPrivateBrowsing && tab?.content?.private == true) {
                         return@forEach
                     }
-
                     extension.browserAction?.let { browserAction ->
                         addOrUpdateAction(
                             extension = extension,
