@@ -4,24 +4,35 @@
 
 package mozilla.components.browser.toolbar.display
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.PixelFormat
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
+import androidx.core.widget.PopupWindowCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -268,18 +279,34 @@ class DisplayToolbar internal constructor(
             views.securityIndicator.setBackgroundResource(outValue.resourceId)
         }
     }
+
     /** Opens the asil shield ad-blocker tracker */
-    fun setAsilIconClickListener(store: BrowserStore, addonManager: AddonManager){
+    @SuppressLint("InflateParams")
+    fun setAsilIconClickListener(store: BrowserStore/*, addonManager: AddonManager*/){
+        val popupView = LayoutInflater.from(context).inflate(R.layout.popup_layout, null)
+        val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val asilIcon = rootView.findViewById<ImageView>(R.id.asil_shield_image_view)
         asilIcon.setOnClickListener {
-            showAlertDialog(addonManager)
+            val iconRect = Rect()
+            asilIcon.getGlobalVisibleRect(iconRect)
+
+            val x = iconRect.left
+            val y = iconRect.top - popupView.height
+            println(popupView.height)
+            popupWindow.animationStyle = 2132017504
+            popupWindow.isFocusable = true
+
+            asilIcon.post {
+                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y)
+            }
+
             val extensions = store.state.extensions.values.toList()
             extensions.forEach { extension ->
                 store.flowScoped { flow ->
                     flow.distinctUntilChangedBy { it.selectedTab }
                         .collect { state ->
-                            val badgeText = state.selectedTab?.extensionState?.get(extension.id)?.browserAction?.badgeText
-                            if (!badgeText.isNullOrEmpty()) Toast.makeText(context, badgeText, Toast.LENGTH_LONG).show()
+                            state.selectedTab?.extensionState?.get(extension.id)?.browserAction?.badgeText
+                            //if (!badgeText.isNullOrEmpty()) Toast.makeText(context, badgeText, Toast.LENGTH_LONG).show()
                         }
                 }
             }
