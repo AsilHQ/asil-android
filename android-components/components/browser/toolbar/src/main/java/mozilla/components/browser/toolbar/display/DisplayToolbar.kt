@@ -7,6 +7,7 @@ package mozilla.components.browser.toolbar.display
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.Typeface
@@ -23,6 +24,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
@@ -272,27 +276,57 @@ class DisplayToolbar internal constructor(
             views.securityIndicator.setBackgroundResource(outValue.resourceId)
         }
     }
-
+    var isAddOn = true
     /** Opens the asil shield ad-blocker tracker */
     @SuppressLint("InflateParams")
-    fun setAsilIconClickListener(store: BrowserStore/*, addonManager: AddonManager*/){
+    fun setAsilIconClickListener(store: BrowserStore, addonManager: AddonManager){
         val popupView = LayoutInflater.from(context).inflate(R.layout.popup_layout, null)
         val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val asilIcon = rootView.findViewById<ImageView>(R.id.asil_shield_image_view)
+        val toggle = popupView.findViewById<SwitchCompat>(R.id.asil_shield_toggle_button)
         asilIcon.setOnClickListener {
             val iconRect = Rect()
             asilIcon.getGlobalVisibleRect(iconRect)
-
+            println("Url is -> ${store.state.selectedTab?.content?.url}")
             val x = iconRect.left
             val y = iconRect.top
             println(popupView.height)
             popupWindow.animationStyle = 2132017504
             popupWindow.isFocusable = true
-
+            toggle.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked){
+                    isAddOn = true
+                    enableAddon(addonManager)
+                } else{
+                    isAddOn = false
+                    disableAddon(addonManager)
+                }
+                if (isAddOn){
+                    popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
+                        this.append("Asil Shields UP")
+                    }
+                    popupView.findViewById<TextView>(R.id.site_broken_text_view).text = buildString {
+                        this.append("If this site appears broken, try Shields down")
+                    }
+                }else{
+                    popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
+                        this.append("Asil Shields DOWN")
+                    }
+                    popupView.findViewById<TextView>(R.id.site_broken_text_view).text = buildString {
+                        this.append("You're browsing this site without Asil Browser's privacy protection.")
+                    }
+                }
+            }
             asilIcon.post {
                 popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
             }
+            println(isAddOn)
 
+            if (store.state.selectedTab?.content?.icon != null){
+                popupView.findViewById<AppCompatImageView>(R.id.site_image_view).setImageBitmap(store.state.selectedTab?.content?.icon);
+            }
+
+            popupView.findViewById<TextView>(R.id.website_url_text_view).text = store.state.selectedTab?.content?.url
             val extensions = store.state.extensions.values.toList()
             extensions.forEach { extension ->
                 store.flowScoped { flow ->
@@ -345,6 +379,7 @@ class DisplayToolbar internal constructor(
                         addon = addOn,
                         onSuccess = {
                             println("Addon disable success")
+                            isAddOn = true
                         },
                         onError = {
                             println("Addon disable error")
@@ -375,6 +410,7 @@ class DisplayToolbar internal constructor(
                         addon = addOn,
                         onSuccess = {
                             println("Addon disable success")
+                            isAddOn = false
                         },
                         onError = {
                             println("Addon disable error")
