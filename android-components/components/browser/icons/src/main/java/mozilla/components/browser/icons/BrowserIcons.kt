@@ -22,7 +22,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import mozilla.components.browser.icons.decoder.ICOIconDecoder
@@ -190,6 +189,20 @@ class BrowserIcons constructor(
                 Logger.error("Could not install browser-icons extension", throwable)
             },
         )
+        /*
+        engine.installWebExtension(
+            id = "safe_gaze",
+            url = "resource://android/assets/extensions/safe_gaze/",
+            onSuccess = { extension ->
+                Logger.debug("Installed browser-icons extension")
+                println("Icon extension point")
+                store.flowScoped { flow -> subscribeToUpdates(store, flow, extension) }
+            },
+            onError = { _, throwable ->
+                Logger.error("Could not install browser-icons extension", throwable)
+            },
+        )
+        */
     }
 
     /**
@@ -389,6 +402,7 @@ private fun decodeBytes(
     decoders: List<ImageDecoder>,
     desiredSize: DesiredSize,
 ): Bitmap? {
+    println("JAVASCRIPT POINT")
     decoders.forEach { decoder ->
         val bitmap = decoder.decode(data, desiredSize)
 

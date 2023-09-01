@@ -35,14 +35,12 @@ class OnboardingView(
      * @param onboardingConfig The new user onboarding page configuration.
      */
     fun update(
-        onboardingState: OnboardingState,
         onboardingConfig: OnboardingConfig,
     ) {
-        onboardingAdapter.submitList(onboardingAdapterItems(onboardingState, onboardingConfig))
+        onboardingAdapter.submitList(onboardingAdapterItems(onboardingConfig))
     }
 
     private fun onboardingAdapterItems(
-        onboardingState: OnboardingState,
         onboardingConfig: OnboardingConfig,
     ): List<OnboardingAdapterItem> {
         val items: MutableList<OnboardingAdapterItem> =
@@ -53,12 +51,8 @@ class OnboardingView(
                 OnboardingPanel.THEMES -> items.add(OnboardingAdapterItem.OnboardingThemePicker)
                 OnboardingPanel.TOOLBAR_PLACEMENT -> items.add(OnboardingAdapterItem.OnboardingToolbarPositionPicker)
                 // Customize FxA items based on where we are with the account state:
-                OnboardingPanel.SYNC -> if (onboardingState == OnboardingState.SignedOutNoAutoSignIn) {
-                    items.add(OnboardingAdapterItem.OnboardingManualSignIn)
-                }
-
                 OnboardingPanel.TCP -> items.add(OnboardingAdapterItem.OnboardingTrackingProtection)
-                OnboardingPanel.PRIVACY_NOTICE -> items.add(OnboardingAdapterItem.OnboardingPrivacyNotice)
+                else -> {}
             }
         }
 

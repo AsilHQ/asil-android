@@ -1364,7 +1364,19 @@ class GeckoEngineSession(
         if (shouldOpen) {
             geckoSession.open(runtime)
         }
-
+        runtime.webExtensionController.ensureBuiltIn("resource://android/assets/safe_gaze/", "safe_gaze").apply {
+            then(
+                {
+                    println("Succ that")
+                    println("WebExtention is -> $it")
+                    GeckoResult<Void>()
+                },
+                { throwable ->
+                    println("Error is that -> ${throwable.localizedMessage}")
+                    GeckoResult<Void>()
+                },
+            )
+        }
         geckoSession.navigationDelegate = createNavigationDelegate()
         geckoSession.progressDelegate = createProgressDelegate()
         geckoSession.contentDelegate = createContentDelegate()

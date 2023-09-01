@@ -104,12 +104,6 @@ sealed class OnboardingAdapterItem(@LayoutRes val viewType: Int) {
     }
 
     /**
-     * Onboarding sign into sync card.
-     */
-    object OnboardingManualSignIn :
-        OnboardingAdapterItem(OnboardingManualSignInViewHolder.LAYOUT_ID)
-
-    /**
      * Onboarding theme picker card.
      */
     object OnboardingThemePicker : OnboardingAdapterItem(OnboardingThemePickerViewHolder.LAYOUT_ID)
@@ -119,12 +113,6 @@ sealed class OnboardingAdapterItem(@LayoutRes val viewType: Int) {
      */
     object OnboardingTrackingProtection :
         OnboardingAdapterItem(OnboardingTrackingProtectionViewHolder.LAYOUT_ID)
-
-    /**
-     * Onboarding privacy card.
-     */
-    object OnboardingPrivacyNotice :
-        OnboardingAdapterItem(OnboardingPrivacyNoticeViewHolder.LAYOUT_ID)
 
     /**
      * Onboarding start browsing button.
