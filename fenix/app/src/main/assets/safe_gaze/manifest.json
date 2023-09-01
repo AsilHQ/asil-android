@@ -20,6 +20,7 @@
     "nativeMessagingFromContent",
     "webRequest",
     "webRequestBlocking",
-    "<all_urls>"
+    "https://api.safegaze.com/api/v1/analyze",
+    "https://cdn.safegaze.com/annotated_image/*"
   ]
 }
