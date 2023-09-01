@@ -18,4 +18,8 @@
     <string name="mozac_browser_toolbar_progress_loading">Loading</string>
     <!-- Content description: For the autoplay toolbar icon, it is set when the auto play permission is blocking content playing.-->
     <string name="mozac_browser_toolbar_content_description_autoplay_blocked">Some content has been blocked by the autoplay setting</string>
+    <string name="ads_and_other_creepy_things_blocked">Ads and other creepy things blocked</string>
+    <string name="_0">0</string>
+    <string name="if_this_site_appears_broken_try_shields_down">If this site appears broken, try Shields down</string>
+    <string name="asil_shields_up">Asil Shields UP</string>
 </resources>
