@@ -44,7 +44,6 @@ dependencies {
     implementation project(path: ':browser-state')
     implementation project(path: ':browser-state')
     implementation project(path: ':feature-addons')
-    implementation project(path: ':feature-addons')
 
     testImplementation project(':support-test')
 
