@@ -50,7 +50,6 @@ class WebExtensionBrowserMenuBuilder(
     override fun build(context: Context): BrowserMenu {
         val extensionMenuItems =
             WebExtensionBrowserMenu.getOrUpdateWebExtensionMenuItems(store.state, store.state.selectedTab)
-
         val finalList = items.toMutableList()
 
         val filteredExtensionMenuItems = extensionMenuItems.filter { webExtensionBrowserMenuItem ->

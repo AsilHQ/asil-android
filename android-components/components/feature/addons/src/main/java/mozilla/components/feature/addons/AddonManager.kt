@@ -6,6 +6,7 @@ package mozilla.components.feature.addons
 
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
@@ -120,7 +121,7 @@ class AddonManager(
 
             return supportedAddons + unsupportedAddons
         } catch (e: Exception) {
-            println("Getting Add-Ons exception is -> ${e.localizedMessage}")
+            Log.d("Add-O","Getting Add-Ons exception is -> ${e.localizedMessage}")
         }
         return listOf()
     }

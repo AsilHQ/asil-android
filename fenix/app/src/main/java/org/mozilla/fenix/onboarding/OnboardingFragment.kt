@@ -91,7 +91,6 @@ class OnboardingFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        println("Onboarded")
         val activity = activity as HomeActivity
         handleDefaultAdBlocker()
         onboardingAccountObserver = OnboardingAccountObserver(
@@ -228,13 +227,9 @@ class OnboardingFragment : Fragment() {
         lifecycleScope.launch {
             withContext(Dispatchers.IO){
                 try {
-                    println("Entered try")
                     val addons = requireContext().components.addonManager.getAddons(true)
-                    println("Add-ons listed")
                     for (addon in addons){
-                        println("Add-ons iteration started")
                         if (addon.translatableName.containsValue("uBlock Origin")){
-                            println("uBlock found")
                             installAddon(addon)
                             store.flowScoped { flow ->
                                 flow.mapNotNull { state ->
@@ -254,7 +249,6 @@ class OnboardingFragment : Fragment() {
                                 context = WeakReference(requireActivity().applicationContext),
                                 allowInPrivateBrowsing = true,
                             )
-                            println("Handle post installation button clicked function completed it's job")
                             break
                         }
                     }
@@ -287,12 +281,10 @@ class OnboardingFragment : Fragment() {
     }
 
     private fun installAddon(addon: Addon) {
-        println("Install add-on function triggered")
         lifecycleScope.launch(Dispatchers.Main) {
-            requireContext().components.addonManager.installAddon(
+            requireActivity().applicationContext.components.addonManager.installAddon(
                 addon,
                 onSuccess = {
-                    println("OnSucc")
                     runIfFragmentIsAttached {
                         println("suc")
                     }

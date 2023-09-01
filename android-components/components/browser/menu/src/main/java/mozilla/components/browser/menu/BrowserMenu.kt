@@ -63,7 +63,6 @@ open class BrowserMenu internal constructor(
         onDismiss: () -> Unit = {},
     ): PopupWindow {
         var view = LayoutInflater.from(anchor.context).inflate(R.layout.mozac_browser_menu, null)
-
         adapter.menu = this
 
         menuList = view.findViewById<DynamicWidthRecyclerView>(R.id.mozac_browser_menu_recyclerView).apply {
@@ -312,8 +311,9 @@ private fun PopupWindow.showAtAnchorLocation(menuPositioningData: MenuPositionin
     val anchor = menuPositioningData.inferredMenuPlacement!!.anchor
     val anchorPosition = IntArray(2)
     animationStyle = menuPositioningData.inferredMenuPlacement.animation
-
     anchor.getLocationOnScreen(anchorPosition)
+    println("Animation is -> ${menuPositioningData.inferredMenuPlacement.animation}")
+    println("Anchor position -> ${anchorPosition[0]} ${anchorPosition[1]} ${anchorPosition.size}")
     val (x, y) = anchorPosition
     PopupWindowCompat.setOverlapAnchor(this, true)
     showAtLocation(anchor, Gravity.START or Gravity.TOP, x, y)

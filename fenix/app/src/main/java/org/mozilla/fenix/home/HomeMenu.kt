@@ -5,7 +5,6 @@
 package org.mozilla.fenix.home
 
 import android.content.Context
-import androidx.core.content.ContextCompat.getColor
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -222,7 +221,6 @@ class HomeMenu(
 
     init {
         val menuItems = coreMenuItems()
-
         // Report initial state.
         onMenuBuilderChanged(BrowserMenuBuilder(menuItems))
 

@@ -4,28 +4,52 @@
 
 package mozilla.components.browser.toolbar.display
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.PixelFormat
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
+import androidx.core.widget.PopupWindowCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import mozilla.components.browser.menu.BrowserMenuBuilder
+import mozilla.components.browser.state.selector.selectedTab
+import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.browser.toolbar.R
 import mozilla.components.browser.toolbar.internal.ActionContainer
 import mozilla.components.concept.menu.MenuController
 import mozilla.components.concept.toolbar.Toolbar
+import mozilla.components.feature.addons.Addon
+import mozilla.components.feature.addons.AddonManager
+import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.ktx.android.content.isScreenReaderEnabled
 import mozilla.components.ui.colors.R.color as photonColors
 
@@ -253,6 +277,120 @@ class DisplayToolbar internal constructor(
             )
 
             views.securityIndicator.setBackgroundResource(outValue.resourceId)
+        }
+    }
+
+    /** Opens the asil shield ad-blocker tracker */
+    @SuppressLint("InflateParams")
+    fun setAsilIconClickListener(store: BrowserStore/*, addonManager: AddonManager*/){
+        val popupView = LayoutInflater.from(context).inflate(R.layout.popup_layout, null)
+        val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val asilIcon = rootView.findViewById<ImageView>(R.id.asil_shield_image_view)
+        asilIcon.setOnClickListener {
+            val iconRect = Rect()
+            asilIcon.getGlobalVisibleRect(iconRect)
+
+            val x = iconRect.left
+            val y = iconRect.top
+            println(popupView.height)
+            popupWindow.animationStyle = 2132017504
+            popupWindow.isFocusable = true
+
+            asilIcon.post {
+                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
+            }
+
+            val extensions = store.state.extensions.values.toList()
+            extensions.forEach { extension ->
+                store.flowScoped { flow ->
+                    flow.distinctUntilChangedBy { it.selectedTab }
+                        .collect { state ->
+                            val badgeText = state.selectedTab?.extensionState?.get(extension.id)?.browserAction?.badgeText
+                            if (!badgeText.isNullOrEmpty()) popupView.findViewById<TextView>(R.id.count_text).text = badgeText
+                        }
+                }
+            }
+        }
+    }
+
+    private fun showAlertDialog(addonManager: AddonManager) {
+        val alertDialogBuilder = AlertDialog.Builder(context)
+
+        alertDialogBuilder.apply {
+            setTitle("Alert Dialog")
+            setMessage("This is an example alert dialog with two buttons.")
+            setPositiveButton("Enable") { dialog, _ ->
+                enableAddon(addonManager)
+                dialog.dismiss()
+            }
+            setNegativeButton("Disable") { dialog, _ ->
+                disableAddon(addonManager)
+                dialog.dismiss()
+            }
+            setCancelable(false) // Prevent dismissing the dialog by tapping outside or using the back button
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+
+    private fun enableAddon(addonManager: AddonManager){
+        var uBlockOrigin: Addon? = null
+        val job = CoroutineScope(Dispatchers.IO).launch {
+            for (addon in addonManager.getAddons()){
+                if (addon.translatableName.containsValue("uBlock Origin")){
+                    uBlockOrigin = addon
+                    break
+                }
+            }
+        }
+        runBlocking {
+            job.join()
+            uBlockOrigin?.let { addOn ->
+                if (!addOn.isEnabled()){
+                    addonManager.enableAddon(
+                        addon = addOn,
+                        onSuccess = {
+                            println("Addon disable success")
+                        },
+                        onError = {
+                            println("Addon disable error")
+                        },
+                    )
+                }else{
+                    return@runBlocking
+                }
+            }
+        }
+    }
+
+    private fun disableAddon(addonManager: AddonManager){
+        var uBlockOrigin: Addon? = null
+        val job = CoroutineScope(Dispatchers.IO).launch {
+            for (addon in addonManager.getAddons()){
+                if (addon.translatableName.containsValue("uBlock Origin")){
+                    uBlockOrigin = addon
+                    break
+                }
+            }
+        }
+        runBlocking {
+            job.join()
+            uBlockOrigin?.let { addOn ->
+                if (addOn.isEnabled()){
+                    addonManager.disableAddon(
+                        addon = addOn,
+                        onSuccess = {
+                            println("Addon disable success")
+                        },
+                        onError = {
+                            println("Addon disable error")
+                        },
+                    )
+                }else{
+                    return@runBlocking
+                }
+            }
         }
     }
 
@@ -666,5 +804,5 @@ internal class DisplayToolbarViews(
     val trackingProtectionIndicator: TrackingProtectionIconView,
     val origin: OriginView,
     val progress: ProgressBar,
-    val highlight: HighlightView,
+    val highlight: HighlightView
 )
