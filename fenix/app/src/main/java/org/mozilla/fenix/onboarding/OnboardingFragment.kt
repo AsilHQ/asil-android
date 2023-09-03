@@ -27,6 +27,7 @@ import mozilla.components.feature.addons.Addon
 import mozilla.components.lib.state.ext.consumeFrom
 import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
+import mozilla.components.support.base.log.logger.Logger
 import org.mozilla.fenix.HomeActivity
 import org.mozilla.fenix.R
 import org.mozilla.fenix.browser.browsingmode.BrowsingMode
@@ -286,11 +287,11 @@ class OnboardingFragment : Fragment() {
                 addon,
                 onSuccess = {
                     runIfFragmentIsAttached {
-                        println("suc")
+                        Logger("Success")
                     }
                 },
                 onError = { _, _ ->
-                    println("OnErr")
+                    Logger("Error")
                 },
             )
         }
