@@ -14,7 +14,6 @@ import mozilla.components.browser.menu.item.NO_ID
 import mozilla.components.browser.menu.item.ParentBrowserMenuItem
 import mozilla.components.browser.menu.item.WebExtensionBrowserMenuItem
 import mozilla.components.browser.menu.item.WebExtensionPlaceholderMenuItem
-import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.ui.icons.R as iconsR
 
@@ -48,21 +47,7 @@ class WebExtensionBrowserMenuBuilder(
      * Builds and returns a browser menu with combination of [items] and web extension browser actions.
      */
     override fun build(context: Context): BrowserMenu {
-        val extensionMenuItems =
-            WebExtensionBrowserMenu.getOrUpdateWebExtensionMenuItems(store.state, store.state.selectedTab)
-        val finalList = items.toMutableList()
-
-        val filteredExtensionMenuItems = extensionMenuItems.filter { webExtensionBrowserMenuItem ->
-            replaceMenuPlaceholderWithExtensions(finalList, webExtensionBrowserMenuItem)
-        }
-
-        val menuItems = if (showAddonsInMenu) {
-            createAddonsMenuItems(context, finalList, filteredExtensionMenuItems)
-        } else {
-            finalList
-        }
-
-        val adapter = BrowserMenuAdapter(context, menuItems)
+        val adapter = BrowserMenuAdapter(context, items.toMutableList())
         return BrowserMenu(adapter)
     }
 
