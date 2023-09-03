@@ -5,9 +5,8 @@
 package mozilla.components.browser.toolbar.display
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.Typeface
@@ -24,7 +23,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -47,6 +45,7 @@ import mozilla.components.concept.toolbar.Toolbar
 import mozilla.components.feature.addons.Addon
 import mozilla.components.feature.addons.AddonManager
 import mozilla.components.lib.state.ext.flowScoped
+import mozilla.components.support.base.log.logger.Logger
 import mozilla.components.support.ktx.android.content.isScreenReaderEnabled
 import mozilla.components.ui.colors.R.color as photonColors
 
@@ -287,12 +286,13 @@ class DisplayToolbar internal constructor(
         asilIcon.setOnClickListener {
             val iconRect = Rect()
             asilIcon.getGlobalVisibleRect(iconRect)
-            println("Url is -> ${store.state.selectedTab?.content?.url}")
             val x = iconRect.left
             val y = iconRect.top
-            println(popupView.height)
-            popupWindow.animationStyle = 2132017504
-            popupWindow.isFocusable = true
+            popupWindow.apply {
+                animationStyle = 2132017504
+                isFocusable = true
+            }
+
             toggle.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked){
                     isAddOn = true
@@ -320,10 +320,11 @@ class DisplayToolbar internal constructor(
             asilIcon.post {
                 popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
             }
-            println(isAddOn)
 
             if (store.state.selectedTab?.content?.icon != null){
-                popupView.findViewById<AppCompatImageView>(R.id.site_image_view).setImageBitmap(store.state.selectedTab?.content?.icon);
+                val originalBitmap: Bitmap = store.state.selectedTab?.content?.icon!!
+                val bitmapWithBackgroundRemoved = removeWhiteBackground(originalBitmap)
+                popupView.findViewById<AppCompatImageView>(R.id.site_image_view).setImageBitmap(bitmapWithBackgroundRemoved)
             }
 
             popupView.findViewById<TextView>(R.id.website_url_text_view).text = store.state.selectedTab?.content?.url
@@ -340,25 +341,33 @@ class DisplayToolbar internal constructor(
         }
     }
 
-    private fun showAlertDialog(addonManager: AddonManager) {
-        val alertDialogBuilder = AlertDialog.Builder(context)
+    private fun removeWhiteBackground(bitmap: Bitmap): Bitmap {
+        val width = bitmap.width
+        val height = bitmap.height
+        val resultBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
 
-        alertDialogBuilder.apply {
-            setTitle("Alert Dialog")
-            setMessage("This is an example alert dialog with two buttons.")
-            setPositiveButton("Enable") { dialog, _ ->
-                enableAddon(addonManager)
-                dialog.dismiss()
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                val pixelColor = bitmap.getPixel(x, y)
+
+                // Check if the pixel color is white or nearly white (you can adjust the threshold)
+                if (isWhite(pixelColor)) {
+                    resultBitmap.setPixel(x, y, Color.TRANSPARENT)
+                } else {
+                    resultBitmap.setPixel(x, y, pixelColor)
+                }
             }
-            setNegativeButton("Disable") { dialog, _ ->
-                disableAddon(addonManager)
-                dialog.dismiss()
-            }
-            setCancelable(false) // Prevent dismissing the dialog by tapping outside or using the back button
         }
 
-        val alertDialog: AlertDialog = alertDialogBuilder.create()
-        alertDialog.show()
+        return resultBitmap
+    }
+
+    private fun isWhite(color: Int): Boolean {
+        val red = Color.red(color)
+        val green = Color.green(color)
+        val blue = Color.blue(color)
+
+        return red > 200 && green > 200 && blue > 200
     }
 
     private fun enableAddon(addonManager: AddonManager){
@@ -378,7 +387,7 @@ class DisplayToolbar internal constructor(
                     addonManager.enableAddon(
                         addon = addOn,
                         onSuccess = {
-                            println("Addon disable success")
+                            Logger("Addon disable success")
                             isAddOn = true
                         },
                         onError = {
@@ -409,11 +418,10 @@ class DisplayToolbar internal constructor(
                     addonManager.disableAddon(
                         addon = addOn,
                         onSuccess = {
-                            println("Addon disable success")
                             isAddOn = false
                         },
                         onError = {
-                            println("Addon disable error")
+                            Logger("Addon disable error")
                         },
                     )
                 }else{

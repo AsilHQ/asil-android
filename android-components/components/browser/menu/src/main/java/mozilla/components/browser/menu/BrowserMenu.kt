@@ -312,8 +312,6 @@ private fun PopupWindow.showAtAnchorLocation(menuPositioningData: MenuPositionin
     val anchorPosition = IntArray(2)
     animationStyle = menuPositioningData.inferredMenuPlacement.animation
     anchor.getLocationOnScreen(anchorPosition)
-    println("Animation is -> ${menuPositioningData.inferredMenuPlacement.animation}")
-    println("Anchor position -> ${anchorPosition[0]} ${anchorPosition[1]} ${anchorPosition.size}")
     val (x, y) = anchorPosition
     PopupWindowCompat.setOverlapAnchor(this, true)
     showAtLocation(anchor, Gravity.START or Gravity.TOP, x, y)
