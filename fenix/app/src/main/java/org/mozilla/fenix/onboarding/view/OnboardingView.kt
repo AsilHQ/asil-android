@@ -49,7 +49,6 @@ class OnboardingView(
         onboardingConfig.order.forEach {
             when (it) {
                 OnboardingPanel.THEMES -> items.add(OnboardingAdapterItem.OnboardingThemePicker)
-                OnboardingPanel.TOOLBAR_PLACEMENT -> items.add(OnboardingAdapterItem.OnboardingToolbarPositionPicker)
                 // Customize FxA items based on where we are with the account state:
                 OnboardingPanel.TCP -> items.add(OnboardingAdapterItem.OnboardingTrackingProtection)
                 else -> {}

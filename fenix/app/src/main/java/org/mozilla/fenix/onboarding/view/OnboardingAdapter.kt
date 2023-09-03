@@ -18,7 +18,6 @@ import org.mozilla.fenix.home.sessioncontrol.viewholders.onboarding.OnboardingMa
 import org.mozilla.fenix.home.sessioncontrol.viewholders.onboarding.OnboardingPrivacyNoticeViewHolder
 import org.mozilla.fenix.home.sessioncontrol.viewholders.onboarding.OnboardingSectionHeaderViewHolder
 import org.mozilla.fenix.home.sessioncontrol.viewholders.onboarding.OnboardingThemePickerViewHolder
-import org.mozilla.fenix.home.sessioncontrol.viewholders.onboarding.OnboardingToolbarPositionPickerViewHolder
 import org.mozilla.fenix.home.sessioncontrol.viewholders.onboarding.OnboardingTrackingProtectionViewHolder
 import org.mozilla.fenix.onboarding.interactor.OnboardingInteractor
 
@@ -45,9 +44,6 @@ class OnboardingAdapter(
                 interactor,
             )
             OnboardingFinishViewHolder.LAYOUT_ID -> OnboardingFinishViewHolder(view, interactor)
-            OnboardingToolbarPositionPickerViewHolder.LAYOUT_ID -> OnboardingToolbarPositionPickerViewHolder(
-                view,
-            )
             BottomSpacerViewHolder.LAYOUT_ID -> BottomSpacerViewHolder(view)
             else -> throw IllegalStateException("ViewType $viewType does not match a ViewHolder")
         }
@@ -122,8 +118,6 @@ sealed class OnboardingAdapterItem(@LayoutRes val viewType: Int) {
     /**
      * Onboarding toolbar placement picker.
      */
-    object OnboardingToolbarPositionPicker :
-        OnboardingAdapterItem(OnboardingToolbarPositionPickerViewHolder.LAYOUT_ID)
 
     /**
      * Spacer.
