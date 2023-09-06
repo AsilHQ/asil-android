@@ -20,6 +20,7 @@ import mozilla.components.browser.engine.gecko.media.GeckoMediaDelegate
 import mozilla.components.browser.engine.gecko.mediasession.GeckoMediaSessionDelegate
 import mozilla.components.browser.engine.gecko.permission.GeckoPermissionRequest
 import mozilla.components.browser.engine.gecko.prompt.GeckoPromptDelegate
+import mozilla.components.browser.engine.gecko.webextension.GeckoWebExtension
 import mozilla.components.browser.engine.gecko.window.GeckoWindowRequest
 import mozilla.components.browser.errorpages.ErrorType
 import mozilla.components.concept.engine.EngineSession
@@ -68,6 +69,7 @@ import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSession.PermissionDelegate.ContentPermission
 import org.mozilla.geckoview.GeckoSessionSettings
+import org.mozilla.geckoview.WebExtension
 import org.mozilla.geckoview.WebRequestError
 import org.mozilla.geckoview.WebResponse
 import java.util.Locale
@@ -1364,19 +1366,19 @@ class GeckoEngineSession(
         if (shouldOpen) {
             geckoSession.open(runtime)
         }
-        runtime.webExtensionController.ensureBuiltIn("resource://android/assets/safe_gaze/", "safe_gaze").apply {
-            then(
-                {
-                    println("Succ that")
-                    println("WebExtention is -> $it")
-                    GeckoResult<Void>()
-                },
-                { throwable ->
-                    println("Error is that -> ${throwable.localizedMessage}")
-                    GeckoResult<Void>()
-                },
-            )
-        }
+//        runtime.webExtensionController.ensureBuiltIn("resource://android/assets/safe_gaze/", "safe_gaze").apply {
+//            then(
+//                {
+//                    println("Succ that")
+//                    println("WebExtention is -> $it")
+//                    GeckoResult<Void>()
+//                },
+//                { throwable ->
+//                    println("Error is that -> ${throwable.localizedMessage}")
+//                    GeckoResult<Void>()
+//                },
+//            )
+//        }
         geckoSession.navigationDelegate = createNavigationDelegate()
         geckoSession.progressDelegate = createProgressDelegate()
         geckoSession.contentDelegate = createContentDelegate()

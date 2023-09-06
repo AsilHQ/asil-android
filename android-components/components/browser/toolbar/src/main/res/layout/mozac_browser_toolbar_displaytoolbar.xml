@@ -132,7 +132,17 @@
         android:src="@mipmap/ic_launcher_foreground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/mozac_browser_toolbar_browser_actions"/>
+        app:layout_constraintEnd_toStartOf="@id/asil_safe_gaze_image_view"
+        android:layout_marginEnd="6dp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/asil_safe_gaze_image_view"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:src="@mipmap/ic_safe_gaze_button_foreground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/mozac_browser_toolbar_browser_actions" />
 
     <mozilla.components.browser.toolbar.internal.ActionContainer
         android:id="@+id/mozac_browser_toolbar_browser_actions"

@@ -7,6 +7,7 @@ package mozilla.components.browser.toolbar.display
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.Typeface
@@ -40,6 +41,7 @@ import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.browser.toolbar.R
 import mozilla.components.browser.toolbar.internal.ActionContainer
+import mozilla.components.concept.engine.webextension.WebExtensionRuntime
 import mozilla.components.concept.menu.MenuController
 import mozilla.components.concept.toolbar.Toolbar
 import mozilla.components.feature.addons.Addon
@@ -92,7 +94,7 @@ class DisplayToolbar internal constructor(
     private val context: Context,
     private val toolbar: BrowserToolbar,
     internal val rootView: View,
-) {
+) : WebExtensionRuntime {
     /**
      * Enum of indicators that can be displayed in the toolbar.
      */
@@ -362,6 +364,54 @@ class DisplayToolbar internal constructor(
         return resultBitmap
     }
 
+    /** Opens the safe gaze tracker */
+    @SuppressLint("InflateParams")
+    fun setSafeGazeClickListener(store: BrowserStore, addonManager: AddonManager){
+        val popupView = LayoutInflater.from(context).inflate(R.layout.popup_layout, null)
+        val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val safeGazeIcon = rootView.findViewById<ImageView>(R.id.asil_safe_gaze_image_view)
+        val toggle = popupView.findViewById<SwitchCompat>(R.id.asil_shield_toggle_button)
+        safeGazeIcon.setOnClickListener {
+            val iconRect = Rect()
+            safeGazeIcon.getGlobalVisibleRect(iconRect)
+            println("Url is -> ${store.state.selectedTab?.content?.url}")
+            val x = iconRect.left
+            val y = iconRect.top
+            println(popupView.height)
+            popupWindow.animationStyle = 2132017504
+            popupWindow.isFocusable = true
+            toggle.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked){
+                    enableSafeGaze(store, addonManager)
+                    popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
+                        this.append("Safe Gaze UP")
+                    }
+                } else{
+                    disableSafeGaze(store, addonManager)
+                    popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
+                        this.append("Safe Gaze DOWN")
+                    }
+                }
+            }
+            safeGazeIcon.post {
+                popupWindow.showAtLocation(safeGazeIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
+            }
+
+            if (store.state.selectedTab?.content?.icon != null){
+                popupView.findViewById<AppCompatImageView>(R.id.site_image_view).setImageBitmap(store.state.selectedTab?.content?.icon);
+            }
+
+            popupView.findViewById<TextView>(R.id.website_url_text_view).text = store.state.selectedTab?.content?.url
+            val sharedPreferences = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
+            val totalCencoredText = "Total ${sharedPreferences.getInt("all_time_cencored_count", 0)} Sinful acts avoided since beginning"
+            popupView.findViewById<TextView>(R.id.count_text).text = sharedPreferences.getInt("session_cencored_count", 0).toString()
+            popupView.findViewById<TextView>(R.id.asil_shield_exp_text).text = buildString {
+                this.append("Sinful acts avoided")
+            }
+            popupView.findViewById<TextView>(R.id.site_broken_text_view).text = totalCencoredText
+        }
+    }
+
     private fun isWhite(color: Int): Boolean {
         val red = Color.red(color)
         val green = Color.green(color)
@@ -428,6 +478,38 @@ class DisplayToolbar internal constructor(
                     return@runBlocking
                 }
             }
+        }
+    }
+
+    private fun enableSafeGaze(store: BrowserStore, addonManager: AddonManager) {
+        val safeGazeExtension = store.state.extensionInstances["safegaze@mozac.org"]
+        safeGazeExtension?.let {
+            addonManager.getRuntime().enableWebExtension(extension = it,
+                onSuccess = { result ->
+                    store.state.extensionInstances["safegaze@mozac.org"] = result
+                    val sharedPref = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
+                    val editor = sharedPref.edit()
+                    editor.putInt("session_cencored_count", 0)
+                    editor.apply()
+                    println("extension enabled")
+                }, onError = { throwable ->
+                    println("extension enabled fail: $throwable")
+                }
+            )
+        }
+    }
+
+    private fun disableSafeGaze(store: BrowserStore, addonManager: AddonManager) {
+        val safeGazeExtension = store.state.extensionInstances["safegaze@mozac.org"]
+        safeGazeExtension?.let {
+            addonManager.getRuntime().disableWebExtension(extension = it,
+                onSuccess = { result ->
+                    store.state.extensionInstances["safegaze@mozac.org"] = result
+                    println("extension disabled")
+                }, onError = { throwable ->
+                    println("extension disable fail: $throwable")
+                }
+            )
         }
     }
 

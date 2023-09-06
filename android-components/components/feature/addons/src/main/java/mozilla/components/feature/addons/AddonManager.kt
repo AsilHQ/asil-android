@@ -362,6 +362,8 @@ class AddonManager(
         // Size of the icon to load for temporary extensions
         const val TEMPORARY_ADDON_ICON_SIZE = 48
     }
+
+    fun getRuntime() = runtime
 }
 
 /**
