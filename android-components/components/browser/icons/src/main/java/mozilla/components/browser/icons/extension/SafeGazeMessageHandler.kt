@@ -4,6 +4,7 @@
 
 package mozilla.components.browser.icons.extension
 
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,11 +21,8 @@ import org.json.JSONObject
 /**
  * [MessageHandler] implementation that receives messages from the icons web extensions and performs icon loads.
  */
-internal class IconMessageHandler(
-    private val store: BrowserStore,
-    private val sessionId: String,
-    private val private: Boolean,
-    private val icons: BrowserIcons,
+internal class SafeGazeMessageHandler(
+    private val context: Context
 ) : MessageHandler {
     private val scope = CoroutineScope(Dispatchers.IO)
 
@@ -32,22 +30,20 @@ internal class IconMessageHandler(
     internal var lastJob: Job? = null
 
     override fun onMessage(message: Any, source: EngineSession?): Any {
-        if (message is JSONObject) {
-            message.toIconRequest(private)?.let { loadRequest(it) }
+        val sharedPref = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+
+        if (message.toString().contains("page_refresh")) {
+            editor.putInt("session_cencored_count", 0)
+            editor.apply()
         } else {
-            throw IllegalStateException("Received unexpected message: $message")
+            val totalCount = sharedPref.getInt("all_time_cencored_count",-1)
+            val sessionCount = sharedPref.getInt("session_cencored_count",-1)
+            editor.putInt("all_time_cencored_count", totalCount + 1)
+            editor.putInt("session_cencored_count", sessionCount + 1)
+            editor.apply()
         }
 
-        // Needs to return something that is not null and not Unit:
-        // https://github.com/mozilla-mobile/android-components/issues/2969
         return ""
-    }
-
-    private fun loadRequest(request: IconRequest) {
-        lastJob = scope.launch {
-            val icon = icons.loadIcon(request).await()
-
-            store.dispatch(ContentAction.UpdateIconAction(sessionId, request.url, icon.bitmap))
-        }
     }
 }
