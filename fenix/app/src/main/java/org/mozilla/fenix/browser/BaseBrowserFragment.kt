@@ -465,6 +465,8 @@ abstract class BaseBrowserFragment :
 
         browserToolbarView.view.display.setAsilIconClickListener(store, context.components.addonManager)
 
+        browserToolbarView.view.display.setSafeGazeClickListener(store, context.components.addonManager)
+
         contextMenuFeature.set(
             feature = ContextMenuFeature(
                 fragmentManager = parentFragmentManager,

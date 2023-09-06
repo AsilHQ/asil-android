@@ -46,6 +46,7 @@ dependencies {
     implementation project(path: ':feature-addons')
     implementation project(path: ':browser-state')
     implementation project(path: ':feature-addons')
+    implementation project(path: ':browser-engine-gecko')
 
     testImplementation project(':support-test')
 

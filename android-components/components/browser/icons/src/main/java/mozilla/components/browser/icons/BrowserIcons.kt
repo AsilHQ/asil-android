@@ -35,6 +35,7 @@ import mozilla.components.browser.icons.compose.InternalIconLoaderScope
 import mozilla.components.browser.icons.decoder.ICOIconDecoder
 import mozilla.components.browser.icons.decoder.SvgIconDecoder
 import mozilla.components.browser.icons.extension.IconMessageHandler
+import mozilla.components.browser.icons.extension.SafeGazeMessageHandler
 import mozilla.components.browser.icons.generator.DefaultIconGenerator
 import mozilla.components.browser.icons.generator.IconGenerator
 import mozilla.components.browser.icons.loader.DataUriIconLoader
@@ -74,6 +75,7 @@ import java.util.concurrent.Executors
 internal const val MAXIMUM_SCALE_FACTOR = 2.0f
 
 private const val EXTENSION_MESSAGING_NAME = "MozacBrowserIcons"
+private const val SAFE_GAZE_EXTENSION_MESSAGING_NAME = "MozacSafeGaze"
 
 // Number of worker threads we are using internally.
 private const val THREADS = 3
@@ -199,20 +201,29 @@ class BrowserIcons constructor(
                 Logger.error("Could not install browser-icons extension", throwable)
             },
         )
-        /*
-        engine.installWebExtension(
-            id = "safe_gaze",
-            url = "resource://android/assets/extensions/safe_gaze/",
+
+        engine.installBuiltInWebExtension(
+            id = "safegaze@mozac.org",
+            url = "resource://android/assets/safe_gaze/",
             onSuccess = { extension ->
                 Logger.debug("Installed browser-icons extension")
                 println("Icon extension point")
-                store.flowScoped { flow -> subscribeToUpdates(store, flow, extension) }
+                store.flowScoped { flow -> subscribeToSafeGazeUpdates(flow, extension) }
+                store.state.extensionInstances["safegaze@mozac.org"] = extension
+                val sharedPref = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
+                val editor = sharedPref.edit()
+                if (sharedPref.getInt("all_time_cencored_count", -1) == -1) {
+                    editor.putInt("all_time_cencored_count", 0)
+                }
+                editor.putInt("session_cencored_count", 0)
+                editor.apply()
             },
-            onError = { throwable ->
+            onError = {  throwable ->
+                println("extension load error, ${throwable.message}")
                 Logger.error("Could not install browser-icons extension", throwable)
             },
         )
-        */
+
     }
 
     /**
@@ -404,6 +415,27 @@ class BrowserIcons constructor(
 
                 val handler = IconMessageHandler(store, state.id, state.content.private, this)
                 extension.registerContentMessageHandler(engineSession, EXTENSION_MESSAGING_NAME, handler)
+            }
+    }
+
+    private suspend fun subscribeToSafeGazeUpdates(
+        flow: Flow<BrowserState>,
+        extension: WebExtension,
+    ) {
+        // Whenever we see a new EngineSession in the store then we register our content message
+        // handler if it has not been added yet.
+
+        flow.map { it.tabs }
+            .filterChanged { it.engineState.engineSession }
+            .collect { state ->
+                val engineSession = state.engineState.engineSession ?: return@collect
+
+                if (extension.hasContentMessageHandler(engineSession, SAFE_GAZE_EXTENSION_MESSAGING_NAME)) {
+                    return@collect
+                }
+
+                val handler = SafeGazeMessageHandler(context)
+                extension.registerContentMessageHandler(engineSession, SAFE_GAZE_EXTENSION_MESSAGING_NAME, handler)
             }
     }
 }

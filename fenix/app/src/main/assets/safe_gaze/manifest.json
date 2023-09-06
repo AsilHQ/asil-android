@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "browser_specific_settings": {
     "gecko": {
-      "id": "icons@mozac.org"
+      "id": "safegaze@mozac.org"
     }
   },
   "name": "Safe Gaze",
