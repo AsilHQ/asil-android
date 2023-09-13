@@ -21,7 +21,6 @@
             app:layout_constraintStart_toStartOf="@+id/counter_card_view"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/counter_card_view"
-            android:layout_marginHorizontal="25dp"
             android:layout_marginTop="15dp">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/site_image_view"
