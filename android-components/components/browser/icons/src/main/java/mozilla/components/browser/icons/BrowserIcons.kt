@@ -202,6 +202,7 @@ class BrowserIcons constructor(
                 store.state.extensionInstances["safegaze@mozac.org"] = extension
                 val sharedPref = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
                 val editor = sharedPref.edit()
+                editor.putBoolean("safe_gaze_active", true)
                 if (sharedPref.getInt("all_time_cencored_count", -1) == -1) {
                     editor.putInt("all_time_cencored_count", 0)
                 }

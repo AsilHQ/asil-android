@@ -7,7 +7,6 @@ package mozilla.components.browser.toolbar.display
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.Typeface
@@ -367,38 +366,54 @@ class DisplayToolbar internal constructor(
     /** Opens the safe gaze tracker */
     @SuppressLint("InflateParams")
     fun setSafeGazeClickListener(store: BrowserStore, addonManager: AddonManager){
-        val popupView = LayoutInflater.from(context).inflate(R.layout.popup_layout, null)
+        val popupView = LayoutInflater.from(context).inflate(R.layout.popup_safe_gaze_layout, null)
         val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val safeGazeIcon = rootView.findViewById<ImageView>(R.id.asil_safe_gaze_image_view)
         val toggle = popupView.findViewById<SwitchCompat>(R.id.asil_shield_toggle_button)
+        val sharedPref = context.getSharedPreferences("safe_gaze_active", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        if (sharedPref.getBoolean("safe_gaze_active", true)){
+            popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
+                this.append("Safe Gaze UP")
+            }
+            toggle.isChecked = true
+        }else{
+            popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
+                this.append("Safe Gaze DOWN")
+            }
+            toggle.isChecked = false
+        }
         safeGazeIcon.setOnClickListener {
             val iconRect = Rect()
             safeGazeIcon.getGlobalVisibleRect(iconRect)
-            println("Url is -> ${store.state.selectedTab?.content?.url}")
             val x = iconRect.left
             val y = iconRect.top
-            println(popupView.height)
             popupWindow.animationStyle = 2132017504
             popupWindow.isFocusable = true
             toggle.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked){
                     enableSafeGaze(store, addonManager)
+                    editor.putBoolean("safe_gaze_active", true)
                     popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
                         this.append("Safe Gaze UP")
                     }
                 } else{
                     disableSafeGaze(store, addonManager)
+                    editor.putBoolean("safe_gaze_active", false)
                     popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
                         this.append("Safe Gaze DOWN")
                     }
                 }
+                editor.apply()
             }
             safeGazeIcon.post {
                 popupWindow.showAtLocation(safeGazeIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
             }
 
             if (store.state.selectedTab?.content?.icon != null){
-                popupView.findViewById<AppCompatImageView>(R.id.site_image_view).setImageBitmap(store.state.selectedTab?.content?.icon);
+                val originalBitmap: Bitmap = store.state.selectedTab?.content?.icon!!
+                val bitmapWithBackgroundRemoved = removeWhiteBackground(originalBitmap)
+                popupView.findViewById<AppCompatImageView>(R.id.site_image_view).setImageBitmap(bitmapWithBackgroundRemoved);
             }
 
             popupView.findViewById<TextView>(R.id.website_url_text_view).text = store.state.selectedTab?.content?.url
