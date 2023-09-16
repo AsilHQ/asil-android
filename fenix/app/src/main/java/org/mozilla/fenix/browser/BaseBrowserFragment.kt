@@ -126,6 +126,7 @@ import org.mozilla.fenix.components.toolbar.BrowserToolbarView
 import org.mozilla.fenix.components.toolbar.DefaultBrowserToolbarController
 import org.mozilla.fenix.components.toolbar.DefaultBrowserToolbarMenuController
 import org.mozilla.fenix.components.toolbar.ToolbarIntegration
+import org.mozilla.fenix.components.toolbar.ToolbarPosition
 import org.mozilla.fenix.components.toolbar.interactor.BrowserToolbarInteractor
 import org.mozilla.fenix.components.toolbar.interactor.DefaultBrowserToolbarInteractor
 import org.mozilla.fenix.crashes.CrashContentIntegration
@@ -1093,9 +1094,8 @@ abstract class BaseBrowserFragment :
 
         if (!context.settings().shouldUseFixedTopToolbar && context.settings().isDynamicToolbarEnabled) {
             getEngineView().setDynamicToolbarMaxHeight(toolbarHeight)
-
             val toolbarPosition = if (context.settings().shouldUseBottomToolbar) {
-                MozacToolbarPosition.BOTTOM
+                MozacToolbarPosition.TOP // If toolbar position change to bottom this part need's to be BOTTOM
             } else {
                 MozacToolbarPosition.TOP
             }
@@ -1108,6 +1108,7 @@ abstract class BaseBrowserFragment :
                     toolbarPosition,
                 )
         } else {
+            println("else entered")
             // Ensure webpage's bottom elements are aligned to the very bottom of the engineView.
             getEngineView().setDynamicToolbarMaxHeight(0)
 

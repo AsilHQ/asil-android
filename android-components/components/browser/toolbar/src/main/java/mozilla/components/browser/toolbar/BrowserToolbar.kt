@@ -252,6 +252,10 @@ class BrowserToolbar @JvmOverloads constructor(
         edit.invalidateActions()
     }
 
+    override fun addPageAction(action: Toolbar.Action) {
+        println("Action")
+    }
+
     /**
      * Adds an action to be displayed on the right side of the toolbar (outside of the URL bounding
      * box) in display mode.
@@ -276,15 +280,16 @@ class BrowserToolbar @JvmOverloads constructor(
         display.removeBrowserAction(action)
     }
 
+    override fun removePageAction(action: Toolbar.Action) {
+        println("Action")
+    }
+
     /**
      * Removes a previously added page action (see [addPageAction]). If the provided
      * action was never added, this method has no effect.
      *
      * @param action the action to remove.
      */
-    override fun removePageAction(action: Toolbar.Action) {
-        display.removePageAction(action)
-    }
 
     /**
      * Adds an action to be displayed on the right side of the URL in display mode.
@@ -292,9 +297,6 @@ class BrowserToolbar @JvmOverloads constructor(
      * Related:
      * https://developer.mozilla.org/en-US/Add-ons/WebExtensions/user_interface/Page_actions
      */
-    override fun addPageAction(action: Toolbar.Action) {
-        display.addPageAction(action)
-    }
 
     /**
      * Adds an action to be display on the far left side of the toolbar. This area is usually used
@@ -341,7 +343,7 @@ class BrowserToolbar @JvmOverloads constructor(
      * @param cursorPlacement Where the cursor should be placed after focusing on the URL input field.
      */
     override fun editMode(cursorPlacement: Toolbar.CursorPlacement) {
-        val urlValue = if (searchTerms.isEmpty()) url else searchTerms
+        val urlValue = searchTerms.ifEmpty { url }
         edit.updateUrl(urlValue.toString(), false)
         updateState(State.EDIT)
         edit.focus()
@@ -529,7 +531,7 @@ class BrowserToolbar @JvmOverloads constructor(
         background: Int = 0,
         longClickListener: (() -> Unit)? = null,
         listener: () -> Unit,
-    ) : BrowserToolbar.Button(
+    ) : Button(
         primaryImage,
         primaryContentDescription,
         background = background,
@@ -558,7 +560,7 @@ class BrowserToolbar @JvmOverloads constructor(
     }
 
     companion object {
-        internal const val ACTION_PADDING_DP = 16
+        private const val ACTION_PADDING_DP = 16
         internal val DEFAULT_PADDING =
             Padding(ACTION_PADDING_DP, ACTION_PADDING_DP, ACTION_PADDING_DP, ACTION_PADDING_DP)
     }

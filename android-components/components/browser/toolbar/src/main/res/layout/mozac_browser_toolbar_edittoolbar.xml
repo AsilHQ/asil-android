@@ -74,14 +74,6 @@
         mozac:actionContainerItemSize="40dp"
         tools:layout_width="48dp" />
 
-    <TextView
-        android:id="@+id/test_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
         android:id="@+id/mozac_browser_toolbar_clear_view"

@@ -30,7 +30,7 @@ class OnboardingToolbarPositionPickerViewHolder(view: View) : RecyclerView.ViewH
 
         val settings = view.context.components.settings
         radio = when (settings.toolbarPosition) {
-            ToolbarPosition.BOTTOM -> radioBottomToolbar
+            ToolbarPosition.BOTTOM -> radioTopToolbar
             ToolbarPosition.TOP -> radioTopToolbar
         }
         radio.updateRadioValue(true)
@@ -38,7 +38,7 @@ class OnboardingToolbarPositionPickerViewHolder(view: View) : RecyclerView.ViewH
         radioBottomToolbar.onClickListener {
             Onboarding.prefToggledToolbarPosition.record(
                 Onboarding.PrefToggledToolbarPositionExtra(
-                    Position.BOTTOM.name,
+                    Position.TOP.name,
                 ),
             )
 
@@ -48,7 +48,7 @@ class OnboardingToolbarPositionPickerViewHolder(view: View) : RecyclerView.ViewH
         binding.toolbarBottomImage.setOnClickListener {
             Onboarding.prefToggledToolbarPosition.record(
                 Onboarding.PrefToggledToolbarPositionExtra(
-                    Position.BOTTOM.name,
+                    Position.TOP.name,
                 ),
             )
 
