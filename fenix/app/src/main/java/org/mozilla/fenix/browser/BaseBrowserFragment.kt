@@ -42,7 +42,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mozilla.appservices.places.BookmarkRoot
 import mozilla.appservices.places.uniffi.PlacesApiException
-import mozilla.components.browser.menu.WebExtensionBrowserMenu
 import mozilla.components.browser.state.action.ContentAction
 import mozilla.components.browser.state.selector.findCustomTab
 import mozilla.components.browser.state.selector.findCustomTabOrSelectedTab
@@ -1103,9 +1102,8 @@ abstract class BaseBrowserFragment :
 
         if (!context.settings().shouldUseFixedTopToolbar && context.settings().isDynamicToolbarEnabled) {
             getEngineView().setDynamicToolbarMaxHeight(toolbarHeight)
-
             val toolbarPosition = if (context.settings().shouldUseBottomToolbar) {
-                MozacToolbarPosition.BOTTOM
+                MozacToolbarPosition.TOP // If toolbar position change to bottom this part need's to be BOTTOM
             } else {
                 MozacToolbarPosition.TOP
             }
@@ -1118,6 +1116,7 @@ abstract class BaseBrowserFragment :
                     toolbarPosition,
                 )
         } else {
+            println("else entered")
             // Ensure webpage's bottom elements are aligned to the very bottom of the engineView.
             getEngineView().setDynamicToolbarMaxHeight(0)
 

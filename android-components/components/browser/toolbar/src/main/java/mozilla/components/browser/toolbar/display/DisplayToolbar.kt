@@ -165,7 +165,6 @@ class DisplayToolbar internal constructor(
 
     internal val views = DisplayToolbarViews(
         browserActions = rootView.findViewById(R.id.mozac_browser_toolbar_browser_actions),
-        pageActions = rootView.findViewById(R.id.mozac_browser_toolbar_page_actions),
         navigationActions = rootView.findViewById(R.id.mozac_browser_toolbar_navigation_actions),
         background = rootView.findViewById(R.id.mozac_browser_toolbar_background),
         separator = rootView.findViewById(R.id.mozac_browser_toolbar_separator),
@@ -855,7 +854,6 @@ class DisplayToolbar internal constructor(
         views.menu.invalidateMenu()
 
         views.browserActions.invalidateActions()
-        views.pageActions.invalidateActions()
         views.navigationActions.invalidateActions()
     }
 
@@ -889,9 +887,6 @@ class DisplayToolbar internal constructor(
      *
      * @param action the action to remove.
      */
-    internal fun removePageAction(action: Toolbar.Action) {
-        views.pageActions.removeAction(action)
-    }
 
     /**
      * Adds an action to be displayed on the right side of the URL in display mode.
@@ -899,9 +894,6 @@ class DisplayToolbar internal constructor(
      * Related:
      * https://developer.mozilla.org/en-US/Add-ons/WebExtensions/user_interface/Page_actions
      */
-    internal fun addPageAction(action: Toolbar.Action) {
-        views.pageActions.addAction(action)
-    }
 
     /**
      * Adds an action to be display on the far left side of the toolbar. This area is usually used
@@ -928,7 +920,6 @@ class DisplayToolbar internal constructor(
 @Suppress("LongParameterList")
 internal class DisplayToolbarViews(
     val browserActions: ActionContainer,
-    val pageActions: ActionContainer,
     val navigationActions: ActionContainer,
     val background: ImageView,
     val separator: ImageView,

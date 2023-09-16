@@ -5,7 +5,6 @@
 package org.mozilla.fenix.components.toolbar
 
 import android.content.Context
-import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,24 +18,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.view.isVisible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.transformWhile
 import mozilla.components.browser.state.selector.findCustomTabOrSelectedTab
-import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.compose.cfr.CFRPopup
@@ -47,7 +41,6 @@ import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.ktx.kotlinx.coroutines.flow.ifAnyChanged
 import org.mozilla.fenix.GleanMetrics.CookieBanners
-import org.mozilla.fenix.GleanMetrics.Shopping
 import org.mozilla.fenix.GleanMetrics.TrackingProtection
 import org.mozilla.fenix.R
 import org.mozilla.fenix.ext.components
@@ -139,23 +132,6 @@ class BrowserToolbarCFRPresenter(
                 }
             }
 
-            ToolbarCFR.SHOPPING, ToolbarCFR.SHOPPING_OPTED_IN -> {
-                scope = browserStore.flowScoped { flow ->
-                    val shouldShowCfr: Boolean? = flow.mapNotNull { it.selectedTab }
-                        .filter { it.content.isProductUrl && it.content.progress == 100 && !it.content.loading }
-                        .distinctUntilChanged()
-                        .map { toolbar.findViewById<View>(R.id.mozac_browser_toolbar_page_actions).isVisible }
-                        .filter { popup == null && it }
-                        .firstOrNull()
-
-                    if (shouldShowCfr == true) {
-                        showShoppingCFR(getCFRToShow() == ToolbarCFR.SHOPPING_OPTED_IN)
-                    }
-
-                    scope?.cancel()
-                }
-            }
-
             ToolbarCFR.ERASE -> {
                 scope = browserStore.flowScoped { flow ->
                     flow
@@ -178,6 +154,8 @@ class BrowserToolbarCFRPresenter(
             ToolbarCFR.NONE -> {
                 // no-op
             }
+
+            else -> {}
         }
     }
 
@@ -416,71 +394,6 @@ class BrowserToolbarCFRPresenter(
             popup = this
             show()
             CookieBanners.cfrShown.record(NoExtras())
-        }
-    }
-
-    @VisibleForTesting
-    internal fun showShoppingCFR(shouldShowOptedInCFR: Boolean) {
-        CFRPopup(
-            anchor = toolbar.findViewById(
-                R.id.mozac_browser_toolbar_page_actions,
-            ),
-            properties = CFRPopupProperties(
-                popupWidth = 475.dp,
-                popupAlignment = CFRPopup.PopupAlignment.BODY_CENTERED_IN_SCREEN,
-                popupBodyColors = listOf(
-                    getColor(context, R.color.fx_mobile_layer_color_gradient_start),
-                    getColor(context, R.color.fx_mobile_layer_color_gradient_end),
-                ),
-                popupVerticalOffset = CFR_TO_ANCHOR_VERTICAL_PADDING.dp,
-                dismissButtonColor = getColor(context, R.color.fx_mobile_icon_color_oncolor),
-                indicatorDirection = if (settings.toolbarPosition == ToolbarPosition.TOP) {
-                    CFRPopup.IndicatorDirection.UP
-                } else {
-                    CFRPopup.IndicatorDirection.DOWN
-                },
-                dismissOnBackPress = true,
-                dismissOnClickOutside = true,
-            ),
-            onDismiss = {},
-            text = {
-                FirefoxTheme {
-                    Text(
-                        text = if (shouldShowOptedInCFR) {
-                            stringResource(id = R.string.review_quality_check_second_cfr_message)
-                        } else {
-                            stringResource(id = R.string.review_quality_check_first_cfr_message)
-                        },
-                        color = FirefoxTheme.colors.textOnColorPrimary,
-                        style = FirefoxTheme.typography.body2,
-                    )
-                }
-            },
-            action = {
-                FirefoxTheme {
-                    Text(
-                        text = if (shouldShowOptedInCFR) {
-                            stringResource(id = R.string.review_quality_check_second_cfr_action)
-                        } else {
-                            stringResource(id = R.string.review_quality_check_first_cfr_action)
-                        },
-                        color = FirefoxTheme.colors.textOnColorPrimary,
-                        modifier = Modifier
-                            .clickable {
-                                onShoppingCfrActionClicked()
-                                popup?.dismiss()
-                            },
-                        style = FirefoxTheme.typography.body2.copy(
-                            textDecoration = TextDecoration.Underline,
-                        ),
-                    )
-                }
-            },
-        ).run {
-            Shopping.addressBarFeatureCalloutDisplayed.record()
-            popup = this
-            onShoppingCfrDisplayed()
-            show()
         }
     }
 }
