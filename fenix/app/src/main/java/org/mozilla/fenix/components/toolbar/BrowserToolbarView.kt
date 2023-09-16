@@ -46,7 +46,7 @@ class BrowserToolbarView(
 
     @LayoutRes
     private val toolbarLayout = when (settings.toolbarPosition) {
-        ToolbarPosition.BOTTOM -> R.layout.component_bottom_browser_toolbar
+        ToolbarPosition.BOTTOM -> R.layout.component_browser_top_toolbar
         ToolbarPosition.TOP -> R.layout.component_browser_top_toolbar
     }
 

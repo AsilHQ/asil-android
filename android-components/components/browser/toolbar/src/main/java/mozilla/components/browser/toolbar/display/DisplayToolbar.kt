@@ -289,7 +289,7 @@ class DisplayToolbar internal constructor(
             val x = iconRect.left
             val y = iconRect.top
             popupWindow.apply {
-                animationStyle = 2132017504
+                animationStyle = 2132017505
                 isFocusable = true
             }
 
@@ -387,7 +387,7 @@ class DisplayToolbar internal constructor(
             safeGazeIcon.getGlobalVisibleRect(iconRect)
             val x = iconRect.left
             val y = iconRect.top
-            popupWindow.animationStyle = 2132017504
+            popupWindow.animationStyle = 2132017505
             popupWindow.isFocusable = true
             toggle.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked){
