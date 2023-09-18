@@ -179,9 +179,7 @@ class OnboardingFragment : Fragment() {
         searchSelectorBinding.set(
             feature = SearchSelectorBinding(
                 context = view.context,
-                binding = binding,
                 browserStore = store,
-                searchSelectorMenu = searchSelectorMenu,
             ),
             owner = viewLifecycleOwner,
             view = binding.root,
