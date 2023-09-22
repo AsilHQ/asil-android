@@ -22,6 +22,7 @@ import android.widget.PopupWindow
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.SwitchCompat
@@ -277,22 +278,26 @@ class DisplayToolbar internal constructor(
     }
     var isAddOn = true
     /** Opens the asil shield ad-blocker tracker */
+    @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("InflateParams")
     fun setAsilIconClickListener(store: BrowserStore, addonManager: AddonManager){
         val popupView = LayoutInflater.from(context).inflate(R.layout.popup_layout, null)
         val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val asilIcon = rootView.findViewById<ImageView>(R.id.asil_shield_image_view)
         val toggle = popupView.findViewById<SwitchCompat>(R.id.asil_shield_toggle_button)
+        val position = IntArray(2)
+        asilIcon.getLocationInSurface(position)
+        val (xX,yY) = position
+        println("Asil icon x is -> $xX \nAsil icon y is -> $yY")
         asilIcon.setOnClickListener {
             val iconRect = Rect()
             asilIcon.getGlobalVisibleRect(iconRect)
-            val x = iconRect.left
+            var x = iconRect.left
             val y = iconRect.top
             popupWindow.apply {
                 animationStyle = 2132017505
                 isFocusable = true
             }
-
             toggle.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked){
                     isAddOn = true
@@ -317,8 +322,11 @@ class DisplayToolbar internal constructor(
                     }
                 }
             }
+            println("Post x is -> $x")
+            x -= 410
+            val toolbarHeight =  context.resources.getDimension(R.dimen.mozac_browser_toolbar_default_toolbar_height)
             asilIcon.post {
-                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
+                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, (y + toolbarHeight).toInt() - 10)
             }
 
             if (store.state.selectedTab?.content?.icon != null){
@@ -363,6 +371,7 @@ class DisplayToolbar internal constructor(
     }
 
     /** Opens the safe gaze tracker */
+    @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("InflateParams")
     fun setSafeGazeClickListener(store: BrowserStore, addonManager: AddonManager){
         val popupView = LayoutInflater.from(context).inflate(R.layout.popup_safe_gaze_layout, null)
@@ -371,6 +380,10 @@ class DisplayToolbar internal constructor(
         val toggle = popupView.findViewById<SwitchCompat>(R.id.asil_shield_toggle_button)
         val sharedPref = context.getSharedPreferences("safe_gaze_active", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
+        val position = IntArray(2)
+        safeGazeIcon.getLocationInSurface(position)
+        val (xX,yY) = position
+
         if (sharedPref.getBoolean("safe_gaze_active", true)){
             popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
                 this.append("Safe Gaze UP")
@@ -383,9 +396,12 @@ class DisplayToolbar internal constructor(
             toggle.isChecked = false
         }
         safeGazeIcon.setOnClickListener {
+            println("safeGazeIcon icon x is -> $xX \nsafeGazeIcon icon y is -> $yY")
+            println("Safe gaze icon width -> ${safeGazeIcon.width}")
+            println("Menu button width is -> ${rootView.findViewById<View>(R.id.mozac_browser_toolbar_menu).width}")
             val iconRect = Rect()
             safeGazeIcon.getGlobalVisibleRect(iconRect)
-            val x = iconRect.left
+            var x = iconRect.left
             val y = iconRect.top
             popupWindow.animationStyle = 2132017505
             popupWindow.isFocusable = true
@@ -405,8 +421,10 @@ class DisplayToolbar internal constructor(
                 }
                 editor.apply()
             }
+            x -= 480
+            val toolbarHeight =  context.resources.getDimension(R.dimen.mozac_browser_toolbar_default_toolbar_height)
             safeGazeIcon.post {
-                popupWindow.showAtLocation(safeGazeIcon, android.view.Gravity.NO_GRAVITY, x, y-329)
+                popupWindow.showAtLocation(safeGazeIcon, android.view.Gravity.NO_GRAVITY, x,(y + toolbarHeight).toInt() - 10)
             }
 
             if (store.state.selectedTab?.content?.icon != null){

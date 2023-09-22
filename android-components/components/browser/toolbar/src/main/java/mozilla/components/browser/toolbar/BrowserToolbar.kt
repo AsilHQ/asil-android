@@ -253,7 +253,7 @@ class BrowserToolbar @JvmOverloads constructor(
     }
 
     override fun addPageAction(action: Toolbar.Action) {
-        println("Action")
+        println("")
     }
 
     /**
@@ -281,7 +281,7 @@ class BrowserToolbar @JvmOverloads constructor(
     }
 
     override fun removePageAction(action: Toolbar.Action) {
-        println("Action")
+        println("")
     }
 
     /**
