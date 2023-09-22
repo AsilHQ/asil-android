@@ -207,7 +207,6 @@ class BrowserIcons constructor(
             url = "resource://android/assets/safe_gaze/",
             onSuccess = { extension ->
                 Logger.debug("Installed browser-icons extension")
-                println("Icon extension point")
                 store.flowScoped { flow -> subscribeToSafeGazeUpdates(flow, extension) }
                 store.state.extensionInstances["safegaze@mozac.org"] = extension
                 val sharedPref = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
@@ -499,7 +498,6 @@ private fun decodeBytes(
     decoders: List<ImageDecoder>,
     desiredSize: DesiredSize,
 ): Bitmap? {
-    println("JAVASCRIPT POINT")
     decoders.forEach { decoder ->
         val bitmap = decoder.decode(data, desiredSize)
 
