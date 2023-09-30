@@ -12,10 +12,12 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -50,6 +52,7 @@ import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.base.log.logger.Logger
 import mozilla.components.support.ktx.android.content.isScreenReaderEnabled
 import mozilla.components.ui.colors.R.color as photonColors
+
 
 /**
  * Sub-component of the browser toolbar responsible for displaying the URL and related controls ("display mode").
@@ -323,7 +326,7 @@ class DisplayToolbar internal constructor(
                 }
             }
             println("Post x is -> $x")
-            x -= 410
+            x -= 430
             val toolbarHeight =  context.resources.getDimension(R.dimen.mozac_browser_toolbar_default_toolbar_height)
             asilIcon.post {
                 popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, (y + toolbarHeight).toInt() - 10)
@@ -382,7 +385,7 @@ class DisplayToolbar internal constructor(
         val editor = sharedPref.edit()
         val position = IntArray(2)
         safeGazeIcon.getLocationInSurface(position)
-        val (xX,yY) = position
+        //val (xX,yY) = position
 
         if (sharedPref.getBoolean("safe_gaze_active", true)){
             popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
@@ -396,12 +399,9 @@ class DisplayToolbar internal constructor(
             toggle.isChecked = false
         }
         safeGazeIcon.setOnClickListener {
-            println("safeGazeIcon icon x is -> $xX \nsafeGazeIcon icon y is -> $yY")
-            println("Safe gaze icon width -> ${safeGazeIcon.width}")
-            println("Menu button width is -> ${rootView.findViewById<View>(R.id.mozac_browser_toolbar_menu).width}")
             val iconRect = Rect()
             safeGazeIcon.getGlobalVisibleRect(iconRect)
-            var x = iconRect.left
+            val x = iconRect.left
             val y = iconRect.top
             popupWindow.animationStyle = 2132017505
             popupWindow.isFocusable = true
@@ -421,12 +421,25 @@ class DisplayToolbar internal constructor(
                 }
                 editor.apply()
             }
-            x -= 480
             val toolbarHeight =  context.resources.getDimension(R.dimen.mozac_browser_toolbar_default_toolbar_height)
-            safeGazeIcon.post {
-                popupWindow.showAtLocation(safeGazeIcon, android.view.Gravity.NO_GRAVITY, x,(y + toolbarHeight).toInt() - 10)
-            }
-
+            safeGazeIcon.postDelayed(
+                {
+                    val leftOverDevicePixel = getDeviceWidthInPixels(context) - x
+                    val popUpLayingOut = popupView.width - leftOverDevicePixel
+                    val newPopUpPosition = (x - popUpLayingOut) - 50
+                    popupWindow.showAtLocation(
+                        safeGazeIcon,
+                        android.view.Gravity.NO_GRAVITY,
+                        newPopUpPosition,
+                        (y + toolbarHeight).toInt() - 10
+                    )
+                    val testView = popupView.findViewById<TextView>(R.id.test_text_view)
+                    val testViewParams = testView.layoutParams as ConstraintLayout.LayoutParams
+                    testViewParams.rightMargin = leftOverDevicePixel - 115
+                    testView.layoutParams = testViewParams
+                },
+                0,
+            )
             if (store.state.selectedTab?.content?.icon != null){
                 val originalBitmap: Bitmap = store.state.selectedTab?.content?.icon!!
                 val bitmapWithBackgroundRemoved = removeWhiteBackground(originalBitmap)
@@ -435,13 +448,23 @@ class DisplayToolbar internal constructor(
 
             popupView.findViewById<TextView>(R.id.website_url_text_view).text = store.state.selectedTab?.content?.url
             val sharedPreferences = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
-            val totalCencoredText = "Total ${sharedPreferences.getInt("all_time_cencored_count", 0)} Sinful acts avoided since beginning"
+            val totalCensoredText = "Total ${sharedPreferences.getInt("all_time_censored_count", 0)} Sinful acts avoided since beginning"
             popupView.findViewById<TextView>(R.id.count_text).text = sharedPreferences.getInt("session_cencored_count", 0).toString()
             popupView.findViewById<TextView>(R.id.asil_shield_exp_text).text = buildString {
                 this.append("Sinful acts avoided")
             }
-            popupView.findViewById<TextView>(R.id.site_broken_text_view).text = totalCencoredText
+            popupView.findViewById<TextView>(R.id.site_broken_text_view).text = totalCensoredText
         }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun getDeviceWidthInPixels(context: Context): Int {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val displayMetrics = DisplayMetrics()
+
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+        return displayMetrics.widthPixels
     }
 
     private fun isWhite(color: Int): Boolean {
@@ -516,17 +539,20 @@ class DisplayToolbar internal constructor(
     private fun enableSafeGaze(store: BrowserStore, addonManager: AddonManager) {
         val safeGazeExtension = store.state.extensionInstances["safegaze@mozac.org"]
         safeGazeExtension?.let {
-            addonManager.getRuntime().enableWebExtension(extension = it,
+            addonManager.getRuntime().enableWebExtension(
+                extension = it,
                 onSuccess = { result ->
                     store.state.extensionInstances["safegaze@mozac.org"] = result
-                    val sharedPref = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
+                    val sharedPref =
+                        context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
                     val editor = sharedPref.edit()
                     editor.putInt("session_cencored_count", 0)
                     editor.apply()
                     println("extension enabled")
-                }, onError = { throwable ->
+                },
+                onError = { throwable ->
                     println("extension enabled fail: $throwable")
-                }
+                },
             )
         }
     }
@@ -534,13 +560,15 @@ class DisplayToolbar internal constructor(
     private fun disableSafeGaze(store: BrowserStore, addonManager: AddonManager) {
         val safeGazeExtension = store.state.extensionInstances["safegaze@mozac.org"]
         safeGazeExtension?.let {
-            addonManager.getRuntime().disableWebExtension(extension = it,
+            addonManager.getRuntime().disableWebExtension(
+                extension = it,
                 onSuccess = { result ->
                     store.state.extensionInstances["safegaze@mozac.org"] = result
                     println("extension disabled")
-                }, onError = { throwable ->
+                },
+                onError = { throwable ->
                     println("extension disable fail: $throwable")
-                }
+                },
             )
         }
     }
@@ -947,5 +975,5 @@ internal class DisplayToolbarViews(
     val trackingProtectionIndicator: TrackingProtectionIconView,
     val origin: OriginView,
     val progress: ProgressBar,
-    val highlight: HighlightView
+    val highlight: HighlightView,
 )
