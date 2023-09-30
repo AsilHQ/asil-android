@@ -23,4 +23,5 @@
     <string name="if_this_site_appears_broken_try_shields_down">If this site appears broken, try Shields down</string>
     <string name="asil_shields_up">Asil Shields UP</string>
     <string name="safe_gaze_up">Safe Gaze UP</string>
+    <string name="test">test</string>
 </resources>
