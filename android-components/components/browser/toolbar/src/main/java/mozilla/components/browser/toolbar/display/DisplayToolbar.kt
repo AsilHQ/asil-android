@@ -17,6 +17,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.ImageView
@@ -51,6 +52,7 @@ import mozilla.components.feature.addons.AddonManager
 import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.base.log.logger.Logger
 import mozilla.components.support.ktx.android.content.isScreenReaderEnabled
+import mozilla.components.support.ktx.android.util.dpToPx
 import mozilla.components.ui.colors.R.color as photonColors
 
 
@@ -288,15 +290,12 @@ class DisplayToolbar internal constructor(
         val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val asilIcon = rootView.findViewById<ImageView>(R.id.asil_shield_image_view)
         val toggle = popupView.findViewById<SwitchCompat>(R.id.asil_shield_toggle_button)
-        val position = IntArray(2)
-        asilIcon.getLocationInSurface(position)
-        val (xX,yY) = position
-        println("Asil icon x is -> $xX \nAsil icon y is -> $yY")
         asilIcon.setOnClickListener {
             val iconRect = Rect()
             asilIcon.getGlobalVisibleRect(iconRect)
-            var x = iconRect.left
+            val x = iconRect.left
             val y = iconRect.top
+            println("x is -> $x")
             popupWindow.apply {
                 animationStyle = 2132017505
                 isFocusable = true
@@ -325,11 +324,23 @@ class DisplayToolbar internal constructor(
                     }
                 }
             }
-            println("Post x is -> $x")
-            x -= 430
             val toolbarHeight =  context.resources.getDimension(R.dimen.mozac_browser_toolbar_default_toolbar_height)
             asilIcon.post {
-                popupWindow.showAtLocation(asilIcon, android.view.Gravity.NO_GRAVITY, x, (y + toolbarHeight).toInt() - 10)
+                val leftOverDevicePixel = getDeviceWidthInPixels(context) - x
+                val popUpLayingOut = 300.dpToPx(context.resources.displayMetrics) - leftOverDevicePixel
+                val newPopUpPosition = (x - popUpLayingOut) - 50
+                popupWindow.showAtLocation(
+                    asilIcon,
+                    android.view.Gravity.NO_GRAVITY,
+                    newPopUpPosition,
+                    (y + toolbarHeight).toInt() - 25
+                )
+                val pointerArrow =
+                    popupView.findViewById<ImageView>(R.id.pointer_arrow_asil_shield_image_view)
+                val pointerArrowParams =
+                    pointerArrow.layoutParams as ConstraintLayout.LayoutParams
+                pointerArrowParams.rightMargin = leftOverDevicePixel - 115
+                pointerArrow.layoutParams = pointerArrowParams
             }
 
             if (store.state.selectedTab?.content?.icon != null){
@@ -383,10 +394,6 @@ class DisplayToolbar internal constructor(
         val toggle = popupView.findViewById<SwitchCompat>(R.id.asil_shield_toggle_button)
         val sharedPref = context.getSharedPreferences("safe_gaze_active", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-        val position = IntArray(2)
-        safeGazeIcon.getLocationInSurface(position)
-        //val (xX,yY) = position
-
         if (sharedPref.getBoolean("safe_gaze_active", true)){
             popupView.findViewById<TextView>(R.id.asil_shield_state_text_view).text = buildString {
                 this.append("Safe Gaze UP")
@@ -403,8 +410,10 @@ class DisplayToolbar internal constructor(
             safeGazeIcon.getGlobalVisibleRect(iconRect)
             val x = iconRect.left
             val y = iconRect.top
-            popupWindow.animationStyle = 2132017505
-            popupWindow.isFocusable = true
+            popupWindow.apply {
+                animationStyle = 2132017505
+                isFocusable = true
+            }
             toggle.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked){
                     enableSafeGaze(store, addonManager)
@@ -422,24 +431,24 @@ class DisplayToolbar internal constructor(
                 editor.apply()
             }
             val toolbarHeight =  context.resources.getDimension(R.dimen.mozac_browser_toolbar_default_toolbar_height)
-            safeGazeIcon.postDelayed(
-                {
-                    val leftOverDevicePixel = getDeviceWidthInPixels(context) - x
-                    val popUpLayingOut = popupView.width - leftOverDevicePixel
-                    val newPopUpPosition = (x - popUpLayingOut) - 50
-                    popupWindow.showAtLocation(
-                        safeGazeIcon,
-                        android.view.Gravity.NO_GRAVITY,
-                        newPopUpPosition,
-                        (y + toolbarHeight).toInt() - 10
-                    )
-                    val testView = popupView.findViewById<TextView>(R.id.test_text_view)
-                    val testViewParams = testView.layoutParams as ConstraintLayout.LayoutParams
-                    testViewParams.rightMargin = leftOverDevicePixel - 115
-                    testView.layoutParams = testViewParams
-                },
-                0,
-            )
+            safeGazeIcon.post {
+                val leftOverDevicePixel = getDeviceWidthInPixels(context) - x
+                val popUpLayingOut = 275.dpToPx(context.resources.displayMetrics) - leftOverDevicePixel
+                val newPopUpPosition = (x - popUpLayingOut) - 50
+                popupWindow.showAtLocation(
+                    safeGazeIcon,
+                    android.view.Gravity.NO_GRAVITY,
+                    newPopUpPosition,
+                    (y + toolbarHeight).toInt() - 25
+                )
+                val pointerArrow =
+                    popupView.findViewById<ImageView>(R.id.pointer_arrow_safe_gaze_image_view)
+                val pointerArrowParams =
+                    pointerArrow.layoutParams as ConstraintLayout.LayoutParams
+                pointerArrowParams.rightMargin = leftOverDevicePixel - 113
+                pointerArrow.layoutParams = pointerArrowParams
+            }
+
             if (store.state.selectedTab?.content?.icon != null){
                 val originalBitmap: Bitmap = store.state.selectedTab?.content?.icon!!
                 val bitmapWithBackgroundRemoved = removeWhiteBackground(originalBitmap)
