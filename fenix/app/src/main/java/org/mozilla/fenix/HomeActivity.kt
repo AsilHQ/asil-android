@@ -35,6 +35,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
@@ -383,10 +384,24 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
             startTimeProfiler,
             "HomeActivity.onCreate",
         )
-
+        handleBottomBarActions()
         components.notificationsDelegate.bindToActivity(this)
-
         StartupTimeline.onActivityCreateEndHome(this) // DO NOT MOVE ANYTHING BELOW HERE.
+    }
+
+    @Suppress("DEPRECATION")
+    private fun handleBottomBarActions(){
+        binding.apply {
+            backButton.setOnClickListener {
+                onBackPressed()
+            }
+            forwardButton.setOnClickListener{
+                components.useCases.sessionUseCases.goForward.invoke(components.core.store.state.selectedTabId, true)
+            }
+            middleHomeButton.setOnClickListener {
+                navHost.navController.navigate(NavGraphDirections.actionStartupHome())
+            }
+        }
     }
 
     /**
