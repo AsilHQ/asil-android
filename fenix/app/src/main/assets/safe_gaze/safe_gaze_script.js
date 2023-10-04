@@ -336,7 +336,7 @@ class RemoteAnalyzer {
       extension = "jpg";
     }
 
-    return `https://cdn.safegaze.com/annotated_image/${relativeFolder}/${filename}.${extension}`;
+    return 'https://cdn.safegaze.com/annotated_image/${relativeFolder}/${filename}.${extension}';
   };
 }
 

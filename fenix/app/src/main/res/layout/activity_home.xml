@@ -72,15 +72,16 @@
             app:layout_constraintEnd_toStartOf="@id/tabs_button"
             app:srcCompat="@drawable/home_middle_button"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <mozilla.components.ui.tabcounter.TabCounter
             android:id="@+id/tabs_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:tabCounterTintColor="#B0B0BB"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/middle_home_button"
-            app:layout_constraintEnd_toStartOf="@id/settings_button"
-            app:srcCompat="@drawable/home_tab_button"/>
+            app:layout_constraintEnd_toStartOf="@id/settings_button" />
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/settings_button"
