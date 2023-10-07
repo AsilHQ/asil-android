@@ -38,7 +38,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import kotlinx.coroutines.CoroutineScope
@@ -46,12 +45,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mozilla.appservices.places.BookmarkRoot
@@ -60,7 +54,6 @@ import mozilla.components.browser.state.action.MediaSessionAction
 import mozilla.components.browser.state.action.SearchAction
 import mozilla.components.browser.state.search.SearchEngine
 import mozilla.components.browser.state.selector.getNormalOrPrivateTabs
-import mozilla.components.browser.state.selector.normalTabs
 import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.browser.state.state.SessionState
 import mozilla.components.browser.state.state.WebExtensionState
@@ -71,7 +64,6 @@ import mozilla.components.feature.contextmenu.DefaultSelectionActionDelegate
 import mozilla.components.feature.media.ext.findActiveMediaTab
 import mozilla.components.feature.privatemode.notification.PrivateNotificationFeature
 import mozilla.components.feature.search.BrowserStoreSearchAdapter
-import mozilla.components.lib.state.ext.consumeFlow
 import mozilla.components.lib.state.ext.flow
 import mozilla.components.service.fxa.sync.SyncReason
 import mozilla.components.support.base.ext.areNotificationsEnabledSafe
@@ -82,7 +74,6 @@ import mozilla.components.support.ktx.android.arch.lifecycle.addObservers
 import mozilla.components.support.ktx.android.content.call
 import mozilla.components.support.ktx.android.content.email
 import mozilla.components.support.ktx.android.content.share
-import mozilla.components.support.ktx.android.view.toScope
 import mozilla.components.support.ktx.kotlin.isUrl
 import mozilla.components.support.ktx.kotlin.toNormalizedUrl
 import mozilla.components.support.locale.LocaleAwareAppCompatActivity
@@ -112,7 +103,6 @@ import org.mozilla.fenix.experiments.ResearchSurfaceDialogFragment
 import org.mozilla.fenix.ext.alreadyOnDestination
 import org.mozilla.fenix.ext.breadcrumb
 import org.mozilla.fenix.ext.components
-import org.mozilla.fenix.ext.getRootView
 import org.mozilla.fenix.ext.hasTopDestination
 import org.mozilla.fenix.ext.nav
 import org.mozilla.fenix.ext.setNavigationIcon
@@ -401,6 +391,18 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
         StartupTimeline.onActivityCreateEndHome(this) // DO NOT MOVE ANYTHING BELOW HERE.
     }
 
+//    private fun hideSystemUI(decorView: View) {
+//        decorView.setSystemUiVisibility(
+//            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+//                    or View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+//                    or View.SYSTEM_UI_FLAG_IMMERSIVE,
+//        )
+//    }
+
+
     @Suppress("DEPRECATION")
     private fun handleBottomBarActions() {
         binding.apply {
@@ -410,7 +412,7 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
             forwardButton.setOnClickListener {
                 components.useCases.sessionUseCases.goForward.invoke(
                     components.core.store.state.selectedTabId,
-                    true
+                    true,
                 )
             }
             middleHomeButton.setOnClickListener {
@@ -418,6 +420,12 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
             }
             tabsButton.setOnClickListener {
                 navHost.navController.navigate(NavGraphDirections.actionGlobalTabsTrayFragment())
+            }
+            settingsButton.setOnClickListener {
+                navHost.navController.nav(
+                    R.id.homeFragment,
+                    HomeFragmentDirections.actionGlobalTabsTrayFragment(),
+                )
             }
             CoroutineScope(IO).launch {
                 components.core.store.flow().collect{
