@@ -167,7 +167,6 @@ class HomeFragment : Fragment() {
         get() = _sessionControlInteractor!!
 
     private var sessionControlView: SessionControlView? = null
-    private var tabCounterView: TabCounterView? = null
     private var toolbarView: ToolbarView? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -498,17 +497,10 @@ class HomeFragment : Fragment() {
             menuButton = WeakReference(binding.menuButton),
         ).also { it.build() }
 
-        tabCounterView = TabCounterView(
-            context = requireContext(),
-            browsingModeManager = browsingModeManager,
-            navController = findNavController(),
-            tabCounter = binding.tabButton,
-        )
 
         toolbarView?.build()
 
         consumeFrom(requireComponents.core.store) {
-            tabCounterView?.update(it)
             showCollectionsPlaceholder(it)
         }
 
@@ -522,7 +514,6 @@ class HomeFragment : Fragment() {
 
         homeViewModel.sessionToDelete = null
 
-        tabCounterView?.update(requireComponents.core.store.state)
 
         if (bundleArgs.getBoolean(FOCUS_ON_ADDRESS_BAR)) {
             sessionControlInteractor.onNavigateSearch()
@@ -654,7 +645,6 @@ class HomeFragment : Fragment() {
         _sessionControlInteractor = null
         homeMenuView = null
         sessionControlView = null
-        tabCounterView = null
         toolbarView = null
         _binding = null
 

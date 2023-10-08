@@ -102,7 +102,7 @@
             android:id="@+id/asil_shield_image_view"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@mipmap/ic_launcher_foreground"
+            app:srcCompat="@mipmap/ic_launcher_foreground"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/asil_safe_gaze_image_view"
@@ -113,19 +113,11 @@
             android:id="@+id/asil_safe_gaze_image_view"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:src="@mipmap/ic_safe_gaze_button_foreground"
+            app:srcCompat="@mipmap/ic_safe_gaze_button_foreground"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tab_button"
+            app:layout_constraintEnd_toStartOf="@id/menuButton"
             app:layout_constraintStart_toEndOf="@id/asil_shield_image_view"/>
-
-        <mozilla.components.ui.tabcounter.TabCounter
-            android:id="@+id/tab_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:layout_constraintTop_toTopOf="@id/bottom_bar"
-            app:layout_constraintBottom_toBottomOf="@id/bottom_bar"
-            app:layout_constraintEnd_toStartOf="@+id/menuButton" />
 
         <mozilla.components.browser.menu.view.MenuButton
             android:id="@+id/menuButton"

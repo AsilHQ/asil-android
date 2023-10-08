@@ -38,7 +38,6 @@ import org.mozilla.fenix.ext.hideToolbar
 import org.mozilla.fenix.ext.requireComponents
 import org.mozilla.fenix.ext.runIfFragmentIsAttached
 import org.mozilla.fenix.home.HomeMenuView
-import org.mozilla.fenix.home.TabCounterView
 import org.mozilla.fenix.home.ToolbarView
 import org.mozilla.fenix.home.privatebrowsing.controller.DefaultPrivateBrowsingController
 import org.mozilla.fenix.home.toolbar.DefaultToolbarController
@@ -77,7 +76,6 @@ class OnboardingFragment : Fragment() {
 
     private var onboardingView: OnboardingView? = null
     private var homeMenuView: HomeMenuView? = null
-    private var tabCounterView: TabCounterView? = null
     private var toolbarView: ToolbarView? = null
 
     private lateinit var onboardingStore: OnboardingStore
@@ -162,17 +160,6 @@ class OnboardingFragment : Fragment() {
             hideOnboardingIfNeeded = { interactor.onFinishOnboarding(focusOnAddressBar = false) },
         ).also { it.build() }
 
-        tabCounterView = TabCounterView(
-            context = requireContext(),
-            browsingModeManager = browsingModeManager,
-            navController = findNavController(),
-            tabCounter = binding.tabButton,
-        )
-
-        consumeFrom(store) {
-            tabCounterView?.update(it)
-        }
-
         toolbarView?.build()
 
 
@@ -238,7 +225,7 @@ class OnboardingFragment : Fragment() {
                                         is WebExtensionPromptRequest.Permissions -> {
                                             promptRequest.onConfirm(true)
                                         }else -> {
-                                        println("Something")
+                                        println("")
                                     }
                                     }
                                 }
@@ -300,7 +287,6 @@ class OnboardingFragment : Fragment() {
 
         onboardingView = null
         homeMenuView = null
-        tabCounterView = null
         toolbarView = null
         _interactor = null
         _binding = null
