@@ -267,7 +267,7 @@ class BrowserToolbar @JvmOverloads constructor(
      * https://developer.mozilla.org/en-US/Add-ons/WebExtensions/user_interface/Browser_action
      */
     override fun addBrowserAction(action: Toolbar.Action) {
-        display.addBrowserAction(action)
+//        display.addBrowserAction(action)
     }
 
     /**
@@ -277,7 +277,7 @@ class BrowserToolbar @JvmOverloads constructor(
      * @param action the action to remove.
      */
     override fun removeBrowserAction(action: Toolbar.Action) {
-        display.removeBrowserAction(action)
+//        display.removeBrowserAction(action)
     }
 
     override fun removePageAction(action: Toolbar.Action) {
@@ -303,7 +303,7 @@ class BrowserToolbar @JvmOverloads constructor(
      * on larger devices for navigation actions like "back" and "forward".
      */
     override fun addNavigationAction(action: Toolbar.Action) {
-        display.addNavigationAction(action)
+//        display.addNavigationAction(action)
     }
 
     /**
@@ -313,7 +313,7 @@ class BrowserToolbar @JvmOverloads constructor(
      * @param action the action to remove.
      */
     override fun removeNavigationAction(action: Toolbar.Action) {
-        display.removeNavigationAction(action)
+//        display.removeNavigationAction(action)
     }
 
     /**

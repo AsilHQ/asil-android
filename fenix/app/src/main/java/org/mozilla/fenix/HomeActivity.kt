@@ -49,6 +49,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mozilla.appservices.places.BookmarkRoot
+import mozilla.components.browser.menu.BrowserMenuBuilder
+import mozilla.components.browser.menu.BrowserMenuItem
+import mozilla.components.browser.menu.ext.getHighlight
+import mozilla.components.browser.menu.item.BrowserMenuImageText
+import mozilla.components.browser.menu.item.SimpleBrowserMenuItem
+import mozilla.components.browser.menu.view.MenuButton
 import mozilla.components.browser.state.action.ContentAction
 import mozilla.components.browser.state.action.MediaSessionAction
 import mozilla.components.browser.state.action.SearchAction
@@ -109,6 +115,7 @@ import org.mozilla.fenix.ext.setNavigationIcon
 import org.mozilla.fenix.ext.settings
 import org.mozilla.fenix.home.HomeFragment
 import org.mozilla.fenix.home.HomeFragmentDirections
+import org.mozilla.fenix.home.HomeMenu
 import org.mozilla.fenix.home.intent.AssistIntentProcessor
 import org.mozilla.fenix.home.intent.CrashReporterIntentProcessor
 import org.mozilla.fenix.home.intent.HomeDeepLinkIntentProcessor
@@ -421,12 +428,13 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
             tabsButton.setOnClickListener {
                 navHost.navController.navigate(NavGraphDirections.actionGlobalTabsTrayFragment())
             }
-            settingsButton.setOnClickListener {
-                navHost.navController.nav(
-                    R.id.homeFragment,
-                    HomeFragmentDirections.actionGlobalTabsTrayFragment(),
-                )
-            }
+            binding.settingsButton.menuBuilder = BrowserMenuBuilder(listOf())
+//            settingsButton.setOnClickListener {
+//                navHost.navController.nav(
+//                    R.id.homeFragment,
+//                    HomeFragmentDirections.actionGlobalTabsTrayFragment(),
+//                )
+//            }
             CoroutineScope(IO).launch {
                 components.core.store.flow().collect{
                     withContext(Main){

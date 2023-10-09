@@ -17,7 +17,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.widget.ImageView
@@ -43,7 +42,6 @@ import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.browser.toolbar.R
-import mozilla.components.browser.toolbar.internal.ActionContainer
 import mozilla.components.concept.engine.webextension.WebExtensionRuntime
 import mozilla.components.concept.menu.MenuController
 import mozilla.components.concept.toolbar.Toolbar
@@ -170,8 +168,6 @@ class DisplayToolbar internal constructor(
     }
 
     internal val views = DisplayToolbarViews(
-        browserActions = rootView.findViewById(R.id.mozac_browser_toolbar_browser_actions),
-        navigationActions = rootView.findViewById(R.id.mozac_browser_toolbar_navigation_actions),
         background = rootView.findViewById(R.id.mozac_browser_toolbar_background),
         separator = rootView.findViewById(R.id.mozac_browser_toolbar_separator),
         emptyIndicator = rootView.findViewById(R.id.mozac_browser_toolbar_empty_indicator),
@@ -907,9 +903,6 @@ class DisplayToolbar internal constructor(
      */
     internal fun invalidateActions() {
         views.menu.invalidateMenu()
-
-        views.browserActions.invalidateActions()
-        views.navigationActions.invalidateActions()
     }
 
     /**
@@ -922,9 +915,6 @@ class DisplayToolbar internal constructor(
      * Related:
      * https://developer.mozilla.org/en-US/Add-ons/WebExtensions/user_interface/Browser_action
      */
-    internal fun addBrowserAction(action: Toolbar.Action) {
-        views.browserActions.addAction(action)
-    }
 
     /**
      * Removes a previously added browser action (see [addBrowserAction]). If the provided
@@ -932,9 +922,6 @@ class DisplayToolbar internal constructor(
      *
      * @param action the action to remove.
      */
-    internal fun removeBrowserAction(action: Toolbar.Action) {
-        views.browserActions.removeAction(action)
-    }
 
     /**
      * Removes a previously added page action (see [addBrowserAction]). If the provided
@@ -954,19 +941,6 @@ class DisplayToolbar internal constructor(
      * Adds an action to be display on the far left side of the toolbar. This area is usually used
      * on larger devices for navigation actions like "back" and "forward".
      */
-    internal fun addNavigationAction(action: Toolbar.Action) {
-        views.navigationActions.addAction(action)
-    }
-
-    /**
-     * Removes a previously added navigation action (see [addNavigationAction]). If the provided
-     * action was never added, this method has no effect.
-     *
-     * @param action the action to remove.
-     */
-    internal fun removeNavigationAction(action: Toolbar.Action) {
-        views.navigationActions.removeAction(action)
-    }
 }
 
 /**
@@ -974,8 +948,6 @@ class DisplayToolbar internal constructor(
  */
 @Suppress("LongParameterList")
 internal class DisplayToolbarViews(
-    val browserActions: ActionContainer,
-    val navigationActions: ActionContainer,
     val background: ImageView,
     val separator: ImageView,
     val emptyIndicator: ImageView,

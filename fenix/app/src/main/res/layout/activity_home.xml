@@ -81,8 +81,7 @@
             app:layout_constraintStart_toEndOf="@id/middle_home_button"
             app:layout_constraintEnd_toStartOf="@id/settings_button" />
 
-
-        <androidx.appcompat.widget.AppCompatImageView
+        <mozilla.components.browser.menu.view.MenuButton
             android:id="@+id/settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,5 +90,14 @@
             app:layout_constraintStart_toEndOf="@id/tabs_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/home_settings_button"/>
+<!--        <androidx.appcompat.widget.AppCompatImageView-->
+<!--            android:id="@+id/settings_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/tabs_button"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:srcCompat="@drawable/home_settings_button"/>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
