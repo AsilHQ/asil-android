@@ -20,6 +20,12 @@
     <string name="pocket_pinned_top_articles" translatable="false">Top Articles</string>
     <!-- Default title for pinned Wikipedia top site that links to Wikipedia home page -->
     <string name="default_top_site_wikipedia" translatable="false">Wikipedia</string>
+    <string name="default_top_site_quran" translatable="false">Quran</string>
+    <string name="default_top_site_iou" translatable="false">IOU</string>
+    <string name="default_top_site_islamqa" translatable="false">Islamqa</string>
+    <string name="default_top_site_youtube" translatable="false">Youtube</string>
+    <string name="default_top_site_rokomari" translatable="false">Rokomari</string>
+    <string name="default_top_site_wafilife" translatable="false">Wafilife</string>
     <!-- Default title for pinned Google top site that links to Google home page  -->
     <string name="default_top_site_google" translatable="false">Google</string>
     <!-- Application Services abbreviation used in AboutFragment -->
