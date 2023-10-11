@@ -24,6 +24,12 @@ object SupportUtils {
     const val RATE_APP_URL = "market://details?id=" + BuildConfig.APPLICATION_ID
     const val POCKET_TRENDING_URL = "https://getpocket.com/fenix-top-articles"
     const val WIKIPEDIA_URL = "https://www.wikipedia.org/"
+    const val QURAN_URL = "https://quran.com/"
+    const val IOU_URL = "https://iou.edu.gm/"
+    const val ISLAMQA_URL = "https://islamqa.info/en"
+    const val YOUTUBE_URL = "https://www.youtube.com/"
+    const val WAFILIFE_URL = "https://www.wafilife.com/"
+    const val ROKOMARI_URL = "https://www.rokomari.com/"
     const val FENIX_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
     const val GOOGLE_URL = "https://www.google.com/"
     const val BAIDU_URL = "https://m.baidu.com/"
