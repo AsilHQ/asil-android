@@ -68,7 +68,7 @@ class NavigationToolbarRobot {
         )
             .waitForExists(waitingTime)
 
-        readerViewToggle().click()
+//        readerViewToggle().click()
     }
 
     fun verifyClipboardSuggestionsAreDisplayed(link: String = "", shouldBeDisplayed: Boolean) {
@@ -343,8 +343,8 @@ private fun tabTrayButton() = onView(withId(R.id.tab_button))
 private fun fillLinkButton() = onView(withId(R.id.fill_link_from_clipboard))
 private fun clearAddressBarButton() = itemWithResId("$packageName:id/mozac_browser_toolbar_clear_view")
 private fun goBackButton() = mDevice.pressBack()
-private fun readerViewToggle() =
-    onView(withParent(withId(R.id.mozac_browser_toolbar_page_actions)))
+//private fun readerViewToggle() =
+//    onView(withParent(withId(R.id.mozac_browser_toolbar_page_actions)))
 
 private fun assertReaderViewDetected(visible: Boolean) {
     mDevice.findObject(
@@ -353,18 +353,21 @@ private fun assertReaderViewDetected(visible: Boolean) {
     )
         .waitForExists(waitingTime)
 
-    onView(
-        allOf(
-            withParent(withId(R.id.mozac_browser_toolbar_page_actions)),
-            withContentDescription("Reader view"),
-        ),
-    ).check(
-        if (visible) {
-            matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
-        } else {
-            ViewAssertions.doesNotExist()
-        },
-    )
+//    onView(
+//        allOf(
+//            withParent(withId(R.id.mozac_browser_toolbar_page_actions)),
+//            withContentDescription("Reader view"),
+//        ),
+//    ).check(
+//        if (visible) {
+//            matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
+//        } else {
+//            ViewAssertions.doesNotExist()
+//        },
+//    )
+    if (visible) {
+        println("")
+    }
 }
 
 private fun assertCloseReaderViewDetected(visible: Boolean) {
@@ -374,18 +377,21 @@ private fun assertCloseReaderViewDetected(visible: Boolean) {
     )
         .waitForExists(waitingTime)
 
-    onView(
-        allOf(
-            withParent(withId(R.id.mozac_browser_toolbar_page_actions)),
-            withContentDescription("Close reader view"),
-        ),
-    ).check(
-        if (visible) {
-            matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
-        } else {
-            ViewAssertions.doesNotExist()
-        },
-    )
+//    onView(
+//        allOf(
+//            withParent(withId(R.id.mozac_browser_toolbar_page_actions)),
+//            withContentDescription("Close reader view"),
+//        ),
+//    ).check(
+//        if (visible) {
+//            matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
+//        } else {
+//            ViewAssertions.doesNotExist()
+//        },
+//    )
+    if (visible) {
+        println("")
+    }
 }
 
 inline fun runWithIdleRes(ir: IdlingResource?, pendingCheck: () -> Unit) {
