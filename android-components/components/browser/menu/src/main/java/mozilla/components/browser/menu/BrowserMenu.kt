@@ -17,6 +17,7 @@ import android.widget.PopupWindow
 import androidx.annotation.VisibleForTesting
 import androidx.cardview.widget.CardView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.marginBottom
 import androidx.core.widget.PopupWindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -68,7 +69,7 @@ open class BrowserMenu internal constructor(
         menuList = view.findViewById<DynamicWidthRecyclerView>(R.id.mozac_browser_menu_recyclerView).apply {
             layoutManager = StickyItemsLinearLayoutManager.get<BrowserMenuAdapter>(
                 anchor.context,
-                StickyItemPlacement.BOTTOM,
+                StickyItemPlacement.TOP,
                 false,
             )
 
@@ -140,33 +141,35 @@ open class BrowserMenu internal constructor(
         endOfMenuAlwaysVisible: Boolean,
     ): ViewGroup {
         // If the menu is placed at the bottom it should start as collapsed.
-        if (menuPositioningData.inferredMenuPlacement is BrowserMenuPlacement.AnchoredToBottom.Dropdown ||
-            menuPositioningData.inferredMenuPlacement is BrowserMenuPlacement.AnchoredToBottom.ManualAnchoring
-        ) {
-            val collapsingMenuIndexLimit = adapter.visibleItems.indexOfFirst { it.isCollapsingMenuLimit }
-            val stickyFooterPosition = adapter.visibleItems.indexOfLast { it.isSticky }
-            if (collapsingMenuIndexLimit > 0) {
-                return ExpandableLayout.wrapContentInExpandableView(
-                    view,
-                    collapsingMenuIndexLimit,
-                    stickyFooterPosition,
-                ) { dismiss() }
-            }
-        } else {
-            // The menu is by default set as a bottom one. Reconfigure it as a top one.
-            menuList?.layoutManager = StickyItemsLinearLayoutManager.get<BrowserMenuAdapter>(
-                view.context,
-                StickyItemPlacement.TOP,
-            )
+//        if (menuPositioningData.inferredMenuPlacement is BrowserMenuPlacement.AnchoredToBottom.Dropdown ||
+//            menuPositioningData.inferredMenuPlacement is BrowserMenuPlacement.AnchoredToBottom.ManualAnchoring
+//        ) {
+//            val collapsingMenuIndexLimit = adapter.visibleItems.indexOfFirst { it.isCollapsingMenuLimit }
+//            val stickyFooterPosition = adapter.visibleItems.indexOfLast { it.isSticky }
+//            if (collapsingMenuIndexLimit > 0) {
+//                return ExpandableLayout.wrapContentInExpandableView(
+//                    view,
+//                    collapsingMenuIndexLimit,
+//                    stickyFooterPosition,
+//                ) { dismiss() }
+//            }
+//        } else {
+//
+//        }
 
-            // By default the menu is laid out from and scrolled to top - showing the top most items.
-            // For the top menu it may be desired to initially show the bottom most items.
-            menuList?.let { list ->
-                list.setEndOfMenuAlwaysVisibleCompact(
-                    endOfMenuAlwaysVisible,
-                    list.layoutManager as LinearLayoutManager,
-                )
-            }
+        // The menu is by default set as a bottom one. Reconfigure it as a top one.
+        menuList?.layoutManager = StickyItemsLinearLayoutManager.get<BrowserMenuAdapter>(
+            view.context,
+            StickyItemPlacement.TOP,
+        )
+
+        // By default the menu is laid out from and scrolled to top - showing the top most items.
+        // For the top menu it may be desired to initially show the bottom most items.
+        menuList?.let { list ->
+            list.setEndOfMenuAlwaysVisibleCompact(
+                endOfMenuAlwaysVisible,
+                list.layoutManager as LinearLayoutManager,
+            )
         }
 
         return view

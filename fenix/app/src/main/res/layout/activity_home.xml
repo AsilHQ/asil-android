@@ -79,17 +79,27 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/middle_home_button"
-            app:layout_constraintEnd_toStartOf="@id/settings_button" />
+            app:layout_constraintEnd_toStartOf="@id/home_settings_button" />
 
         <mozilla.components.browser.menu.view.MenuButton
-            android:id="@+id/settings_button"
+            android:id="@+id/home_settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/tabs_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/home_settings_button"/>
+            app:srcCompat="@drawable/home_settings_button" />
+
+        <mozilla.components.browser.menu.view.MenuButton
+            android:id="@+id/browser_settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tabs_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/home_settings_button" />
 <!--        <androidx.appcompat.widget.AppCompatImageView-->
 <!--            android:id="@+id/settings_button"-->
 <!--            android:layout_width="wrap_content"-->
