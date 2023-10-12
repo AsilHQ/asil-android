@@ -36,7 +36,7 @@ android {
         applicationId "org.halalz"
         minSdkVersion config.minSdkVersion
         targetSdkVersion config.targetSdkVersion
-        versionCode 6
+        versionCode 8
         versionName Config.generateDebugVersionName()
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

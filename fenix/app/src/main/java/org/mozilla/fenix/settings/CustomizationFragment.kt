@@ -51,7 +51,6 @@ class CustomizationFragment : PreferenceFragmentCompat() {
         bindLightTheme()
         bindAutoBatteryTheme()
         setupRadioGroups()
-        setupToolbarCategory()
         setupGesturesCategory()
     }
 
@@ -112,32 +111,6 @@ class CustomizationFragment : PreferenceFragmentCompat() {
             engine.settings.preferredColorScheme = getPreferredColorScheme()
         }
         requireComponents.useCases.sessionUseCases.reload.invoke()
-    }
-
-    private fun setupToolbarCategory() {
-        val topPreference = requirePreference<RadioButtonPreference>(R.string.pref_key_toolbar_top)
-        topPreference.onClickListener {
-            ToolbarSettings.changedPosition.record(
-                ToolbarSettings.ChangedPositionExtra(
-                    Position.TOP.name,
-                ),
-            )
-        }
-
-        val bottomPreference = requirePreference<RadioButtonPreference>(R.string.pref_key_toolbar_bottom)
-        bottomPreference.onClickListener {
-            ToolbarSettings.changedPosition.record(
-                ToolbarSettings.ChangedPositionExtra(
-                    Position.BOTTOM.name,
-                ),
-            )
-        }
-
-        val toolbarPosition = requireContext().settings().toolbarPosition
-        topPreference.setCheckedWithoutClickListener(toolbarPosition == ToolbarPosition.TOP)
-        bottomPreference.setCheckedWithoutClickListener(toolbarPosition == ToolbarPosition.BOTTOM)
-
-        addToRadioGroup(topPreference, bottomPreference)
     }
 
     private fun setupGesturesCategory() {
