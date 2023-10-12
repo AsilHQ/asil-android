@@ -91,7 +91,7 @@ class OnboardingFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val activity = activity as HomeActivity
-        handleDefaultAdBlocker()
+
         onboardingAccountObserver = OnboardingAccountObserver(
             context = requireContext(),
             dispatchChanges = ::dispatchOnboardingStateChanges,
@@ -184,6 +184,11 @@ class OnboardingFragment : Fragment() {
         )
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        handleDefaultAdBlocker(context)
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -209,14 +214,14 @@ class OnboardingFragment : Fragment() {
         }
     }
 
-    private fun handleDefaultAdBlocker() {
+    private fun handleDefaultAdBlocker(context: Context) {
         lifecycleScope.launch {
             withContext(Dispatchers.IO){
                 try {
                     val addons = requireContext().components.addonManager.getAddons(true)
                     for (addon in addons){
                         if (addon.translatableName.containsValue("uBlock Origin")){
-                            installAddon(addon)
+                            installAddon(addon, context)
                             store.flowScoped { flow ->
                                 flow.mapNotNull { state ->
                                     state.webExtensionPromptRequest
@@ -266,9 +271,9 @@ class OnboardingFragment : Fragment() {
         store.dispatch(WebExtensionAction.ConsumePromptRequestWebExtensionAction)
     }
 
-    private fun installAddon(addon: Addon) {
+    private fun installAddon(addon: Addon, context: Context) {
         lifecycleScope.launch(Dispatchers.Main) {
-            requireActivity().applicationContext.components.addonManager.installAddon(
+            context.applicationContext.components.addonManager.installAddon(
                 addon,
                 onSuccess = {
                     runIfFragmentIsAttached {
