@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_MAIN
 import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
@@ -403,7 +404,7 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
 
         destinationChangedListener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
-                waitForFragmentToLoad(destination)
+                handleButtonClickables(destination.displayName)
             }
 
         navHost.navController.addOnDestinationChangedListener(destinationChangedListener)
@@ -428,36 +429,14 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
         return menuButton
     }
 
-    private fun waitForFragmentToLoad(destination: NavDestination) {
-        val timer = Timer()
-        val task = object: TimerTask() {
-            override fun run() {
-                val currentFragment = navHost.childFragmentManager.fragments.first()
-                if ((destination.displayName.contains("homeFragment") && currentFragment is HomeFragment)
-                    || (destination.displayName.contains("browserFragment") && currentFragment is BaseBrowserFragment)) {
-                    runOnUiThread {
-                        handleButtonClickables(currentFragment)
-                    }
-                    timer.cancel()
-                }
-            }
-        }
-
-        timer.scheduleAtFixedRate(task, 0, 1000)
-    }
-
-    private fun handleButtonClickables(fragment: Fragment) {
+    private fun handleButtonClickables(displayName: String) {
         binding.apply {
-            if (fragment is HomeFragment) {
-                browserSettingsButton.isEnabled = false
-                browserSettingsButton.isClickable = false
-                homeSettingsButton.isEnabled = true
-                homeSettingsButton.isClickable = true
-            } else if (fragment is BaseBrowserFragment) {
-                homeSettingsButton.isEnabled = false
-                homeSettingsButton.isClickable = false
-                browserSettingsButton.isEnabled = true
-                browserSettingsButton.isClickable = true
+            if (displayName.contains("homeFragment")) {
+                browserSettingsButton.visibility = View.GONE
+                homeSettingsButton.visibility = View.VISIBLE
+            } else if (displayName.contains("browserFragment")) {
+                homeSettingsButton.visibility = View.GONE
+                browserSettingsButton.visibility = View.VISIBLE
             }
         }
     }
@@ -481,7 +460,9 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
                 navHost.navController.navigate(NavGraphDirections.actionGlobalTabsTrayFragment())
             }
             homeSettingsButton.menuIcon.setImageDrawable(ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_settings_button))
+            homeSettingsButton.menuIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this@HomeActivity, R.color.fx_mobile_text_color_secondary))
             browserSettingsButton.menuIcon.setImageDrawable(ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_settings_button))
+            browserSettingsButton.menuIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this@HomeActivity, R.color.fx_mobile_text_color_secondary))
             homeSettingsButton.setOrientation(BrowserMenu.Orientation.UP)
             browserSettingsButton.setOrientation(BrowserMenu.Orientation.UP)
             menuButton = homeSettingsButton

@@ -36,78 +36,80 @@
         android:id="@+id/bottom_bar_container"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#171720"
+        android:background="@drawable/toolbar_background_top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MozMultipleConstraintLayouts">
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/forward_button"
-            app:srcCompat="@drawable/home_back_button"/>
+            android:gravity="center"
+            android:layout_marginHorizontal="20dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/forward_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/back_button"
-            app:layout_constraintEnd_toStartOf="@id/middle_home_button"
-            app:srcCompat="@drawable/home_forward_button"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                app:srcCompat="@drawable/home_back_button"
+                android:tint="@color/fx_mobile_text_color_secondary"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/middle_home_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/forward_button"
-            app:layout_constraintEnd_toStartOf="@id/tabs_button"
-            app:srcCompat="@drawable/home_middle_button"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/forward_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                app:srcCompat="@drawable/home_forward_button"
+                android:tint="@color/fx_mobile_text_color_secondary"/>
 
-        <mozilla.components.ui.tabcounter.TabCounter
-            android:id="@+id/tabs_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:tabCounterTintColor="#B0B0BB"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/middle_home_button"
-            app:layout_constraintEnd_toStartOf="@id/home_settings_button" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/middle_home_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                app:srcCompat="@drawable/home_middle_button"
+                android:tint="@color/fx_mobile_text_color_secondary"/>
 
-        <mozilla.components.browser.menu.view.MenuButton
-            android:id="@+id/home_settings_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tabs_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/home_settings_button" />
+            <mozilla.components.ui.tabcounter.TabCounter
+                android:id="@+id/tabs_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:tabCounterTintColor="@color/fx_mobile_text_color_secondary"
+                android:layout_weight="0.15" />
 
-        <mozilla.components.browser.menu.view.MenuButton
-            android:id="@+id/browser_settings_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tabs_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/home_settings_button" />
-<!--        <androidx.appcompat.widget.AppCompatImageView-->
-<!--            android:id="@+id/settings_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/tabs_button"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:srcCompat="@drawable/home_settings_button"/>-->
+            <mozilla.components.browser.menu.view.MenuButton
+                android:id="@+id/home_settings_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                app:srcCompat="@drawable/home_settings_button"
+                android:tint="@color/fx_mobile_text_color_secondary"/>
+
+            <mozilla.components.browser.menu.view.MenuButton
+                android:id="@+id/browser_settings_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                app:srcCompat="@drawable/home_settings_button"
+                android:visibility="gone"
+                android:tint="@color/fx_mobile_text_color_secondary"/>
+
+            <!--        <androidx.appcompat.widget.AppCompatImageView-->
+            <!--            android:id="@+id/settings_button"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            app:layout_constraintTop_toTopOf="parent"-->
+            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--            app:layout_constraintStart_toEndOf="@id/tabs_button"-->
+            <!--            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--            app:srcCompat="@drawable/home_settings_button"/>-->
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
