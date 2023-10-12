@@ -13,6 +13,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import mozilla.appservices.places.BookmarkRoot
+import mozilla.components.browser.menu.BrowserMenu
 import mozilla.components.browser.menu.view.MenuButton
 import mozilla.components.concept.sync.FxAEntryPoint
 import mozilla.components.service.glean.private.NoExtras
@@ -55,6 +56,7 @@ class HomeMenuView(
     private val menuButton: WeakReference<MenuButton>,
     private val hideOnboardingIfNeeded: () -> Unit = {},
     private val fxaEntrypoint: FxAEntryPoint = FenixFxAEntryPoint.HomeMenu,
+    private val orientation: BrowserMenu.Orientation? = null
 ) {
 
     /**
@@ -75,6 +77,10 @@ class HomeMenuView(
                 ThemeManager.resolveAttribute(R.attr.textPrimary, context),
             ),
         )
+
+        orientation?.let {
+            menuButton.get()?.setOrientation(orientation)
+        }
     }
 
     /**

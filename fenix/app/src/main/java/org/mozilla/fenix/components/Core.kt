@@ -508,28 +508,81 @@ class Core(
                         ),
                     )
                 } else {
-                    defaultTopSites.add(
-                        Pair(
-                            context.getString(R.string.default_top_site_google),
-                            SupportUtils.GOOGLE_URL,
-                        ),
-                    )
+                    if (LocaleManager.getSelectedLocale(context).country.equals("BD")) { //Bangladesh country customization
 
-                    if (LocaleManager.getSelectedLocale(context).language == "en") {
                         defaultTopSites.add(
                             Pair(
-                                context.getString(R.string.pocket_pinned_top_articles),
-                                SupportUtils.POCKET_TRENDING_URL,
+                                context.getString(R.string.default_top_site_rokomari),
+                                SupportUtils.ROKOMARI_URL,
+                            ),
+                        )
+
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_quran),
+                                SupportUtils.QURAN_URL,
+                            ),
+                        )
+
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_iou),
+                                SupportUtils.IOU_URL,
+                            ),
+                        )
+
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_youtube),
+                                SupportUtils.YOUTUBE_URL,
+                            ),
+                        )
+
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_wafilife),
+                                SupportUtils.WAFILIFE_URL,
                             ),
                         )
                     }
+                    else {
 
-                    defaultTopSites.add(
-                        Pair(
-                            context.getString(R.string.default_top_site_wikipedia),
-                            SupportUtils.WIKIPEDIA_URL,
-                        ),
-                    )
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_quran),
+                                SupportUtils.QURAN_URL,
+                            ),
+                        )
+
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_iou),
+                                SupportUtils.IOU_URL,
+                            ),
+                        )
+
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_islamqa),
+                                SupportUtils.ISLAMQA_URL,
+                            ),
+                        )
+
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_youtube),
+                                SupportUtils.YOUTUBE_URL,
+                            ),
+                        )
+
+                        defaultTopSites.add(
+                            Pair(
+                                context.getString(R.string.default_top_site_wikipedia),
+                                SupportUtils.WIKIPEDIA_URL,
+                            ),
+                        )
+
+                    }
                 }
 
                 context.settings().defaultTopSitesAdded = true

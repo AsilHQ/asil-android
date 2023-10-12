@@ -494,7 +494,7 @@ class HomeFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner,
             homeActivity = activity as HomeActivity,
             navController = findNavController(),
-            menuButton = WeakReference(binding.menuButton),
+            menuButton = WeakReference((activity as HomeActivity).getMenuButton()),
         ).also { it.build() }
 
 

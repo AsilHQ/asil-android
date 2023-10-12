@@ -25,9 +25,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import mozilla.components.browser.menu.view.MenuButton
 import mozilla.components.browser.toolbar.behavior.BrowserToolbarBehavior
 import mozilla.components.browser.toolbar.display.DisplayToolbar
 import mozilla.components.browser.toolbar.edit.EditToolbar
+import mozilla.components.browser.toolbar.singleton.MenuButtonHolder
 import mozilla.components.concept.toolbar.AutocompleteDelegate
 import mozilla.components.concept.toolbar.AutocompleteResult
 import mozilla.components.concept.toolbar.Toolbar
@@ -80,6 +82,8 @@ class BrowserToolbar @JvmOverloads constructor(
     /**
      * Toolbar in "display mode".
      */
+    val menuButton = MenuButtonHolder.menuButton
+
     var display = DisplayToolbar(
         context,
         this,
@@ -87,7 +91,8 @@ class BrowserToolbar @JvmOverloads constructor(
             R.layout.mozac_browser_toolbar_displaytoolbar,
             this,
             false,
-        ),
+            ),
+    menuButton ?: MenuButton(context)
     )
         @VisibleForTesting(otherwise = PRIVATE)
         internal set

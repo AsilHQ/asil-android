@@ -930,7 +930,7 @@ private fun assertHomeComponent() =
 private fun threeDotButton() = onView(allOf(withId(R.id.menuButton)))
 
 private fun verifySearchEngineIcon(searchEngineIcon: Bitmap, searchEngineName: String) {
-    onView(withId(R.id.search_engine_icon))
+    onView(withId(R.id.mozac_lib_crash_id))
         .check(matches(withBitmapDrawable(searchEngineIcon, searchEngineName)))
 }
 

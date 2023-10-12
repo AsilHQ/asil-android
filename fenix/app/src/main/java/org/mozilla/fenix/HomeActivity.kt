@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_MAIN
 import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
@@ -19,6 +20,7 @@ import android.text.TextUtils
 import android.text.format.DateUtils
 import android.util.AttributeSet
 import android.view.ActionMode
+import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -33,8 +35,11 @@ import androidx.annotation.VisibleForTesting.Companion.PROTECTED
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
@@ -49,11 +54,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mozilla.appservices.places.BookmarkRoot
-import mozilla.components.browser.menu.BrowserMenuBuilder
-import mozilla.components.browser.menu.BrowserMenuItem
-import mozilla.components.browser.menu.ext.getHighlight
-import mozilla.components.browser.menu.item.BrowserMenuImageText
-import mozilla.components.browser.menu.item.SimpleBrowserMenuItem
+import mozilla.components.browser.menu.BrowserMenu
 import mozilla.components.browser.menu.view.MenuButton
 import mozilla.components.browser.state.action.ContentAction
 import mozilla.components.browser.state.action.MediaSessionAction
@@ -63,6 +64,7 @@ import mozilla.components.browser.state.selector.getNormalOrPrivateTabs
 import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.browser.state.state.SessionState
 import mozilla.components.browser.state.state.WebExtensionState
+import mozilla.components.browser.toolbar.singleton.MenuButtonHolder
 import mozilla.components.concept.engine.EngineSession
 import mozilla.components.concept.engine.EngineView
 import mozilla.components.concept.storage.HistoryMetadataKey
@@ -97,12 +99,14 @@ import org.mozilla.fenix.GleanMetrics.SplashScreen
 import org.mozilla.fenix.GleanMetrics.StartOnHome
 import org.mozilla.fenix.addons.AddonDetailsFragmentDirections
 import org.mozilla.fenix.addons.AddonPermissionsDetailsFragmentDirections
+import org.mozilla.fenix.browser.BaseBrowserFragment
 import org.mozilla.fenix.browser.browsingmode.BrowsingMode
 import org.mozilla.fenix.browser.browsingmode.BrowsingModeManager
 import org.mozilla.fenix.browser.browsingmode.DefaultBrowsingModeManager
 import org.mozilla.fenix.components.appstate.AppAction
 import org.mozilla.fenix.components.metrics.BreadcrumbsRecorder
 import org.mozilla.fenix.components.metrics.GrowthDataWorker
+import org.mozilla.fenix.components.toolbar.ToolbarMenu.Item
 import org.mozilla.fenix.databinding.ActivityHomeBinding
 import org.mozilla.fenix.exceptions.trackingprotection.TrackingProtectionExceptionsFragmentDirections
 import org.mozilla.fenix.experiments.ResearchSurfaceDialogFragment
@@ -115,7 +119,6 @@ import org.mozilla.fenix.ext.setNavigationIcon
 import org.mozilla.fenix.ext.settings
 import org.mozilla.fenix.home.HomeFragment
 import org.mozilla.fenix.home.HomeFragmentDirections
-import org.mozilla.fenix.home.HomeMenu
 import org.mozilla.fenix.home.intent.AssistIntentProcessor
 import org.mozilla.fenix.home.intent.CrashReporterIntentProcessor
 import org.mozilla.fenix.home.intent.HomeDeepLinkIntentProcessor
@@ -169,6 +172,8 @@ import org.mozilla.fenix.trackingprotection.TrackingProtectionPanelDialogFragmen
 import org.mozilla.fenix.utils.Settings
 import java.lang.ref.WeakReference
 import java.util.Locale
+import java.util.Timer
+import java.util.TimerTask
 
 /**
  * The main activity of the application. The application is primarily a single Activity (this one)
@@ -232,6 +237,9 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
 
     private val startupPathProvider = StartupPathProvider()
     private lateinit var startupTypeTelemetry: StartupTypeTelemetry
+
+    private var menuButton: MenuButton? = null
+    private lateinit var destinationChangedListener: NavController.OnDestinationChangedListener
 
     @Suppress("ComplexMethod")
     final override fun onCreate(savedInstanceState: Bundle?) {
@@ -393,6 +401,14 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
             startTimeProfiler,
             "HomeActivity.onCreate",
         )
+
+        destinationChangedListener =
+            NavController.OnDestinationChangedListener { _, destination, _ ->
+                handleButtonClickables(destination.displayName)
+            }
+
+        navHost.navController.addOnDestinationChangedListener(destinationChangedListener)
+
         handleBottomBarActions()
         components.notificationsDelegate.bindToActivity(this)
         StartupTimeline.onActivityCreateEndHome(this) // DO NOT MOVE ANYTHING BELOW HERE.
@@ -409,6 +425,21 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
 //        )
 //    }
 
+    fun getMenuButton(): MenuButton? {
+        return menuButton
+    }
+
+    private fun handleButtonClickables(displayName: String) {
+        binding.apply {
+            if (displayName.contains("homeFragment")) {
+                browserSettingsButton.visibility = View.GONE
+                homeSettingsButton.visibility = View.VISIBLE
+            } else if (displayName.contains("browserFragment")) {
+                homeSettingsButton.visibility = View.GONE
+                browserSettingsButton.visibility = View.VISIBLE
+            }
+        }
+    }
 
     @Suppress("DEPRECATION")
     private fun handleBottomBarActions() {
@@ -428,13 +459,14 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
             tabsButton.setOnClickListener {
                 navHost.navController.navigate(NavGraphDirections.actionGlobalTabsTrayFragment())
             }
-            binding.settingsButton.menuBuilder = BrowserMenuBuilder(listOf())
-//            settingsButton.setOnClickListener {
-//                navHost.navController.nav(
-//                    R.id.homeFragment,
-//                    HomeFragmentDirections.actionGlobalTabsTrayFragment(),
-//                )
-//            }
+            homeSettingsButton.menuIcon.setImageDrawable(ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_settings_button))
+            homeSettingsButton.menuIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this@HomeActivity, R.color.fx_mobile_text_color_secondary))
+            browserSettingsButton.menuIcon.setImageDrawable(ContextCompat.getDrawable(this@HomeActivity, R.drawable.home_settings_button))
+            browserSettingsButton.menuIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this@HomeActivity, R.color.fx_mobile_text_color_secondary))
+            homeSettingsButton.setOrientation(BrowserMenu.Orientation.UP)
+            browserSettingsButton.setOrientation(BrowserMenu.Orientation.UP)
+            menuButton = homeSettingsButton
+            MenuButtonHolder.menuButton = browserSettingsButton
             CoroutineScope(IO).launch {
                 components.core.store.flow().collect{
                     withContext(Main){
@@ -659,6 +691,7 @@ open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
         components.core.pocketStoriesService.stopPeriodicSponsoredStoriesRefresh()
         privateNotificationObserver?.stop()
         components.notificationsDelegate.unBindActivity(this)
+        navHost.navController.removeOnDestinationChangedListener(destinationChangedListener)
         stopMediaSession()
     }
 

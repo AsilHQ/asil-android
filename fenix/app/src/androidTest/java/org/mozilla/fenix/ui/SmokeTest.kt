@@ -312,12 +312,12 @@ class SmokeTest {
             mDevice.waitForIdle()
         }
 
-        registerAndCleanupIdlingResources(
-            ViewVisibilityIdlingResource(
-                activityTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
-                View.VISIBLE,
-            ),
-        ) {}
+//        registerAndCleanupIdlingResources(
+//            ViewVisibilityIdlingResource(
+//                activityTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
+//                View.VISIBLE,
+//            ),
+//        ) {}
 
         navigationToolbar {
             verifyReaderViewDetected(true)

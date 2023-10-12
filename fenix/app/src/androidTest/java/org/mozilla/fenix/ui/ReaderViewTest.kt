@@ -73,12 +73,12 @@ class ReaderViewTest {
             mDevice.waitForIdle()
         }
 
-        registerAndCleanupIdlingResources(
-            ViewVisibilityIdlingResource(
-                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
-                View.VISIBLE,
-            ),
-        ) {}
+//        registerAndCleanupIdlingResources(
+//            ViewVisibilityIdlingResource(
+//                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
+//                View.VISIBLE,
+//            ),
+//        ) {}
 
         navigationToolbar {
             verifyReaderViewDetected(true)
@@ -116,12 +116,12 @@ class ReaderViewTest {
             mDevice.waitForIdle()
         }
 
-        registerAndCleanupIdlingResources(
-            ViewVisibilityIdlingResource(
-                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
-                View.VISIBLE,
-            ),
-        ) {}
+//        registerAndCleanupIdlingResources(
+//            ViewVisibilityIdlingResource(
+//                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
+//                View.VISIBLE,
+//            ),
+//        ) {}
 
         navigationToolbar {
             verifyReaderViewDetected(true)
@@ -154,12 +154,12 @@ class ReaderViewTest {
             mDevice.waitForIdle()
         }
 
-        registerAndCleanupIdlingResources(
-            ViewVisibilityIdlingResource(
-                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
-                View.VISIBLE,
-            ),
-        ) {}
+//        registerAndCleanupIdlingResources(
+//            ViewVisibilityIdlingResource(
+//                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
+//                View.VISIBLE,
+//            ),
+//        ) {}
 
         navigationToolbar {
             verifyReaderViewDetected(true)
@@ -194,12 +194,12 @@ class ReaderViewTest {
             mDevice.waitForIdle()
         }
 
-        registerAndCleanupIdlingResources(
-            ViewVisibilityIdlingResource(
-                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
-                View.VISIBLE,
-            ),
-        ) {}
+//        registerAndCleanupIdlingResources(
+//            ViewVisibilityIdlingResource(
+//                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
+//                View.VISIBLE,
+//            ),
+//        ) {}
 
         navigationToolbar {
             verifyReaderViewDetected(true)
@@ -240,12 +240,12 @@ class ReaderViewTest {
             mDevice.waitForIdle()
         }
 
-        registerAndCleanupIdlingResources(
-            ViewVisibilityIdlingResource(
-                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
-                View.VISIBLE,
-            ),
-        ) {}
+//        registerAndCleanupIdlingResources(
+//            ViewVisibilityIdlingResource(
+//                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
+//                View.VISIBLE,
+//            ),
+//        ) {}
 
         navigationToolbar {
             verifyReaderViewDetected(true)

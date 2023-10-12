@@ -24,6 +24,7 @@ import android.widget.PopupWindow
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.appcompat.widget.AppCompatImageView
@@ -97,6 +98,7 @@ class DisplayToolbar internal constructor(
     private val context: Context,
     private val toolbar: BrowserToolbar,
     internal val rootView: View,
+    private val menuButton: mozilla.components.browser.menu.view.MenuButton
 ) : WebExtensionRuntime {
     /**
      * Enum of indicators that can be displayed in the toolbar.
@@ -167,11 +169,11 @@ class DisplayToolbar internal constructor(
         BOTTOM,
     }
 
-    internal val views = DisplayToolbarViews(
+    internal var views = DisplayToolbarViews(
         background = rootView.findViewById(R.id.mozac_browser_toolbar_background),
         separator = rootView.findViewById(R.id.mozac_browser_toolbar_separator),
         emptyIndicator = rootView.findViewById(R.id.mozac_browser_toolbar_empty_indicator),
-        menu = MenuButton(rootView.findViewById(R.id.mozac_browser_toolbar_menu)),
+        menu = MenuButton(menuButton),
         securityIndicator = rootView.findViewById(R.id.mozac_browser_toolbar_security_indicator),
         trackingProtectionIndicator = rootView.findViewById(
             R.id.mozac_browser_toolbar_tracking_protection_indicator,
@@ -453,7 +455,7 @@ class DisplayToolbar internal constructor(
 
             popupView.findViewById<TextView>(R.id.website_url_text_view).text = store.state.selectedTab?.content?.url
             val sharedPreferences = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
-            val totalCensoredText = "Total ${sharedPreferences.getInt("all_time_censored_count", 0)} Sinful acts avoided since beginning"
+            val totalCensoredText = "Total ${sharedPreferences.getInt("all_time_cencored_count", 0)} Sinful acts avoided since beginning"
             popupView.findViewById<TextView>(R.id.count_text).text = sharedPreferences.getInt("session_cencored_count", 0).toString()
             popupView.findViewById<TextView>(R.id.asil_shield_exp_text).text = buildString {
                 this.append("Sinful acts avoided")

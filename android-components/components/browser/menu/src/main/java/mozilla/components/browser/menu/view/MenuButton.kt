@@ -38,6 +38,7 @@ class MenuButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
+    private var orientation: Orientation? = null
 ) : FrameLayout(context, attrs, defStyleAttr),
     MenuButton,
     View.OnClickListener,
@@ -78,6 +79,10 @@ class MenuButton @JvmOverloads constructor(
         BrowserMenu.determineMenuOrientation(parent as? View?)
     }
 
+    fun setOrientation(orientation: Orientation?) {
+        this.orientation = orientation
+    }
+
     /**
      * Sets a [MenuController] that will be used to create a menu when this button is clicked.
      * If present, [menuBuilder] will be ignored.
@@ -105,7 +110,7 @@ class MenuButton @JvmOverloads constructor(
 
     @VisibleForTesting internal var menu: BrowserMenu? = null
 
-    private val menuIcon: ImageView
+    val menuIcon: ImageView
     private val highlightView: ImageView
     private val notificationIconView: ImageView
 
@@ -145,7 +150,7 @@ class MenuButton @JvmOverloads constructor(
             val endAlwaysVisible = menuBuilder?.endOfMenuAlwaysVisible ?: false
             menu?.show(
                 anchor = this,
-                orientation = getOrientation(),
+                orientation = orientation ?: run{ getOrientation() } ,
                 endOfMenuAlwaysVisible = endAlwaysVisible,
             ) {
                 menu = null
@@ -204,4 +209,6 @@ class MenuButton @JvmOverloads constructor(
     fun invalidateBrowserMenu() {
         menu?.invalidate()
     }
+
+
 }
