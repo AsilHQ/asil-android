@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapNotNull
@@ -91,7 +92,7 @@ class OnboardingFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val activity = activity as HomeActivity
-
+        binding.sessionControlRecyclerView.visibility = View.INVISIBLE
         onboardingAccountObserver = OnboardingAccountObserver(
             context = requireContext(),
             dispatchChanges = ::dispatchOnboardingStateChanges,
@@ -260,7 +261,15 @@ class OnboardingFragment : Fragment() {
                 addon = addon,
                 allowed = true,
                 onSuccess = { updatedAddon ->
-                    println("Success and add-on is -> $updatedAddon")
+                    CoroutineScope(Dispatchers.Main).launch{
+                        binding.sessionControlRecyclerView.visibility = View.VISIBLE
+                    }
+                    println("Success -> $updatedAddon")
+                },
+                onError = {
+                    CoroutineScope(Dispatchers.Main).launch{
+                        binding.sessionControlRecyclerView.visibility = View.VISIBLE
+                    }
                 },
             )
         }
