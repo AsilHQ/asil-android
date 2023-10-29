@@ -74,7 +74,7 @@ import java.lang.ref.WeakReference
  */
 @Suppress("LargeClass", "TooManyFunctions")
 class GeckoEngine(
-    context: Context,
+    private val context: Context,
     private val defaultSettings: Settings? = null,
     private val runtime: GeckoRuntime = GeckoRuntime.getDefault(context),
     executorProvider: () -> GeckoWebExecutor = { GeckoWebExecutor(runtime) },
@@ -101,6 +101,7 @@ class GeckoEngine(
                 GeckoEngineSession(
                     runtime,
                     defaultSettings = defaultSettings,
+                    generalContext = context
                 ),
                 action,
             )
@@ -175,7 +176,7 @@ class GeckoEngine(
     override fun createSession(private: Boolean, contextId: String?): EngineSession {
         ThreadUtils.assertOnUiThread()
         val speculativeSession = speculativeConnectionFactory.get(private, contextId)
-        return speculativeSession ?: GeckoEngineSession(runtime, private, defaultSettings, contextId)
+        return speculativeSession ?: GeckoEngineSession(runtime, private, defaultSettings, contextId, generalContext = context)
     }
 
     /**

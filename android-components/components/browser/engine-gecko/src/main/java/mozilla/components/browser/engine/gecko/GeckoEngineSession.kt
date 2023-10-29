@@ -5,8 +5,10 @@
 package mozilla.components.browser.engine.gecko
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.util.Base64
 import android.view.WindowManager
 import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +22,6 @@ import mozilla.components.browser.engine.gecko.media.GeckoMediaDelegate
 import mozilla.components.browser.engine.gecko.mediasession.GeckoMediaSessionDelegate
 import mozilla.components.browser.engine.gecko.permission.GeckoPermissionRequest
 import mozilla.components.browser.engine.gecko.prompt.GeckoPromptDelegate
-import mozilla.components.browser.engine.gecko.webextension.GeckoWebExtension
 import mozilla.components.browser.engine.gecko.window.GeckoWindowRequest
 import mozilla.components.browser.errorpages.ErrorType
 import mozilla.components.concept.engine.EngineSession
@@ -69,9 +70,11 @@ import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSession.PermissionDelegate.ContentPermission
 import org.mozilla.geckoview.GeckoSessionSettings
-import org.mozilla.geckoview.WebExtension
 import org.mozilla.geckoview.WebRequestError
 import org.mozilla.geckoview.WebResponse
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 
@@ -93,7 +96,58 @@ class GeckoEngineSession(
     },
     private val context: CoroutineContext = Dispatchers.IO,
     openGeckoSession: Boolean = true,
+    private val generalContext: Context? = null,
 ) : CoroutineScope, EngineSession() {
+
+    private val errorHtml = "<!DOCTYPE html>\n" +
+        "<html>\n" +
+        "<head>\n" +
+        "    <style>\n" +
+        "        body {\n" +
+        "            display: flex;\n" +
+        "            flex-direction: column;\n" +
+        "            justify-content: center;\n" +
+        "            align-items: center;\n" +
+        "            height: 100vh;\n" +
+        "            margin: 0;\n" +
+        "        }\n" +
+        "        img {\n" +
+        "            max-width: 100%;\n" +
+        "            max-height: 80%;\n" +
+        "        }\n" +
+        "        .quran-verses {\n" +
+        "            color: #000;\n" +
+        "            text-align: center;\n" +
+        "            font-family: Zilla Slab;\n" +
+        "            font-size: 31px;\n" +
+        "            font-style: normal;\n" +
+        "            font-weight: 500;\n" +
+        "            line-height: normal;\n" +
+        "            padding-top: 40px;\n" +
+        "            padding-left: 60px;\n" +
+        "            padding-right: 60px;\n" +
+        "        }\n" +
+        "        .place {\n" +
+        "            color: #000;\n" +
+        "            font-family: Zilla Slab;\n" +
+        "            font-size: 18px;\n" +
+        "            font-style: normal;\n" +
+        "            font-weight: 400;\n" +
+        "            line-height: normal;\n" +
+        "            padding-top: 40px;\n" +
+        "        }\n" +
+        "    </style>\n" +
+        "</head>\n" +
+        "<body>\n" +
+        "    <img src=\"https://storage.asil.co/403Restricted.png\" alt=\"Image\" isSent=\"true\" />\n" +
+        "    <div class=\"quran-verses\">\n" +
+        "        \"Tell the believing men that they should lower their gaze and guard their modesty; that will make for greater purity for them; And Allah is well acquainted with all that they do. And tell the believing women that they should lower their gaze and guard their modesty…\".\n" +
+        "    </div>\n" +
+        "    <div class=\"place\">\n" +
+        "        (Quran 24:30-31)\n" +
+        "    </div>\n" +
+        "</body>\n" +
+        "</html>\n"
 
     // This logger is temporary and parsed by FNPRMS for performance measurements. It can be
     // removed once FNPRMS is replaced: https://github.com/mozilla-mobile/android-components/issues/8662
@@ -203,6 +257,36 @@ class GeckoEngineSession(
             Action.IMPLEMENTATION_DETAIL,
             "GeckoSession.load",
         ).collect()
+    }
+
+    private fun shouldBlockHost(url: String?): Boolean {
+        try {
+            val path = "hosts.txt"
+            val host = url?.let { URL(it).host }
+            val inputStream = generalContext?.assets?.open(path)
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            var line: String?
+
+            while (reader.readLine().also { line = it } != null) {
+                if (line?.contains("#") == true || line?.isEmpty() == true) {
+                    continue
+                }
+                val components = line?.split("\\s+".toRegex())
+                if (components != null) {
+                    if (components.size >= 2) {
+                        val domain = components[1]
+                        if (host?.endsWith(domain) == true) {
+                            return true
+                        }
+                    }
+                }
+            }
+
+            return false
+        } catch (e: Exception) {
+            println("Error reading hosts.txt: ${e.message}")
+            return false
+        }
     }
 
     private fun shouldLoadJSSchemes(
@@ -465,7 +549,10 @@ class GeckoEngineSession(
             if (overrideUrl == null) {
                 this.reload()
             } else {
-                loadUrl(overrideUrl, flags = LoadUrlFlags.select(LoadUrlFlags.LOAD_FLAGS_REPLACE_HISTORY))
+                loadUrl(
+                    overrideUrl,
+                    flags = LoadUrlFlags.select(LoadUrlFlags.LOAD_FLAGS_REPLACE_HISTORY),
+                )
             }
         }
     }
@@ -683,7 +770,6 @@ class GeckoEngineSession(
             if (url == null) {
                 return // ¯\_(ツ)_/¯
             }
-
             // Ignore initial loads of about:blank, see:
             // https://github.com/mozilla-mobile/android-components/issues/403
             // https://github.com/mozilla-mobile/android-components/issues/6832
@@ -728,8 +814,10 @@ class GeckoEngineSession(
             return when {
                 maybeInterceptRequest(request, false) != null ->
                     GeckoResult.fromValue(AllowOrDeny.DENY)
+
                 request.target == NavigationDelegate.TARGET_WINDOW_NEW ->
-                    GeckoResult.fromValue(AllowOrDeny.ALLOW)
+                    handleBlockHost(request)
+
                 else -> {
                     notifyObservers {
                         onLoadRequest(
@@ -738,9 +826,23 @@ class GeckoEngineSession(
                             triggeredByWebContent = request.hasUserGesture,
                         )
                     }
-
-                    GeckoResult.fromValue(AllowOrDeny.ALLOW)
+                    handleBlockHost(request)
                 }
+            }
+        }
+
+        private fun handleBlockHost(request: NavigationDelegate.LoadRequest): GeckoResult<AllowOrDeny>{
+            if(shouldBlockHost(request.uri)){
+                val dataUri = "data:text/html;charset=utf-8;base64," + Base64.encodeToString(
+                    errorHtml.toByteArray(),
+                    Base64.NO_PADDING,
+                )
+                val loader = GeckoSession.Loader()
+                    .uri(dataUri)
+                geckoSession.load(loader)
+                return GeckoResult.fromValue(AllowOrDeny.DENY)
+            }else{
+                return GeckoResult.fromValue(AllowOrDeny.ALLOW)
             }
         }
 
@@ -749,7 +851,7 @@ class GeckoEngineSession(
             request: NavigationDelegate.LoadRequest,
         ): GeckoResult<AllowOrDeny> {
             if (request.target == NavigationDelegate.TARGET_WINDOW_NEW) {
-                return GeckoResult.fromValue(AllowOrDeny.ALLOW)
+                return handleBlockHost(request)
             }
 
             return if (maybeInterceptRequest(request, true) != null) {
@@ -757,7 +859,7 @@ class GeckoEngineSession(
             } else {
                 // Not notifying session observer because of performance concern and currently there
                 // is no use case.
-                GeckoResult.fromValue(AllowOrDeny.ALLOW)
+                handleBlockHost(request)
             }
         }
 
@@ -825,14 +927,19 @@ class GeckoEngineSession(
                         is InterceptionResponse.Content -> loadData(data, mimeType, encoding)
                         is InterceptionResponse.Url -> loadUrl(
                             url = url,
-                            flags = LoadUrlFlags.select(EXTERNAL, LOAD_FLAGS_BYPASS_LOAD_URI_DELEGATE),
+                            flags = LoadUrlFlags.select(
+                                EXTERNAL,
+                                LOAD_FLAGS_BYPASS_LOAD_URI_DELEGATE,
+                            ),
                         )
+
                         is InterceptionResponse.AppIntent -> {
                             appRedirectUrl = lastLoadRequestUri
                             notifyObservers {
                                 onLaunchIntentRequest(url = url, appIntent = appIntent)
                             }
                         }
+
                         else -> {
                             // no-op
                         }
@@ -882,7 +989,6 @@ class GeckoEngineSession(
             // This log statement is temporary and parsed by FNPRMS for performance measurements. It can be
             // removed once FNPRMS is replaced: https://github.com/mozilla-mobile/android-components/issues/8662
             fnprmsLogger.info("handleMessage GeckoView:PageStart uri=") // uri intentionally blank
-
             pageLoadingUrl = url
 
             // Ignore initial load of about:blank (see https://github.com/mozilla-mobile/android-components/issues/403)
@@ -915,7 +1021,10 @@ class GeckoEngineSession(
             }
         }
 
-        override fun onSessionStateChange(session: GeckoSession, sessionState: GeckoSession.SessionState) {
+        override fun onSessionStateChange(
+            session: GeckoSession,
+            sessionState: GeckoSession.SessionState,
+        ) {
             notifyObservers {
                 onStateUpdated(GeckoEngineSessionState(sessionState))
             }
@@ -974,15 +1083,19 @@ class GeckoEngineSession(
                 isReload -> VisitType.RELOAD
                 flags and GeckoSession.HistoryDelegate.VISIT_REDIRECT_SOURCE_PERMANENT != 0 ->
                     VisitType.REDIRECT_PERMANENT
+
                 flags and GeckoSession.HistoryDelegate.VISIT_REDIRECT_SOURCE != 0 ->
                     VisitType.REDIRECT_TEMPORARY
+
                 else -> VisitType.LINK
             }
             val redirectSource = when {
                 flags and GeckoSession.HistoryDelegate.VISIT_REDIRECT_SOURCE_PERMANENT != 0 ->
                     RedirectSource.PERMANENT
+
                 flags and GeckoSession.HistoryDelegate.VISIT_REDIRECT_SOURCE != 0 ->
                     RedirectSource.TEMPORARY
+
                 else -> null
             }
 
@@ -1051,7 +1164,8 @@ class GeckoEngineSession(
             screenY: Int,
             element: GeckoSession.ContentDelegate.ContextElement,
         ) {
-            val hitResult = handleLongClick(element.srcUri, element.type, element.linkUri, element.title)
+            val hitResult =
+                handleLongClick(element.srcUri, element.type, element.linkUri, element.title)
             hitResult?.let {
                 notifyObservers { onLongPress(it) }
             }
@@ -1271,7 +1385,8 @@ class GeckoEngineSession(
             val geckoResult = GeckoResult<Int>()
             val uri = geckoContentPermission.uri
             val type = geckoContentPermission.permission
-            val request = GeckoPermissionRequest.Content(uri, type, geckoContentPermission, geckoResult)
+            val request =
+                GeckoPermissionRequest.Content(uri, type, geckoContentPermission, geckoResult)
             notifyObservers { onContentPermissionRequest(request) }
             return geckoResult
         }
@@ -1313,25 +1428,35 @@ class GeckoEngineSession(
     }
 
     @Suppress("ComplexMethod")
-    fun handleLongClick(elementSrc: String?, elementType: Int, uri: String? = null, title: String? = null): HitResult? {
+    fun handleLongClick(
+        elementSrc: String?,
+        elementType: Int,
+        uri: String? = null,
+        title: String? = null,
+    ): HitResult? {
         return when (elementType) {
             GeckoSession.ContentDelegate.ContextElement.TYPE_AUDIO ->
                 elementSrc?.let {
                     HitResult.AUDIO(it, title)
                 }
+
             GeckoSession.ContentDelegate.ContextElement.TYPE_VIDEO ->
                 elementSrc?.let {
                     HitResult.VIDEO(it, title)
                 }
+
             GeckoSession.ContentDelegate.ContextElement.TYPE_IMAGE -> {
                 when {
                     elementSrc != null && uri != null ->
                         HitResult.IMAGE_SRC(elementSrc, uri)
+
                     elementSrc != null ->
                         HitResult.IMAGE(elementSrc, title)
+
                     else -> HitResult.UNKNOWN("")
                 }
             }
+
             GeckoSession.ContentDelegate.ContextElement.TYPE_NONE -> {
                 elementSrc?.let {
                     when {
@@ -1344,6 +1469,7 @@ class GeckoEngineSession(
                     HitResult.UNKNOWN(it)
                 }
             }
+
             else -> HitResult.UNKNOWN("")
         }
     }
@@ -1366,19 +1492,6 @@ class GeckoEngineSession(
         if (shouldOpen) {
             geckoSession.open(runtime)
         }
-//        runtime.webExtensionController.ensureBuiltIn("resource://android/assets/safe_gaze/", "safe_gaze").apply {
-//            then(
-//                {
-//                    println("Succ that")
-//                    println("WebExtention is -> $it")
-//                    GeckoResult<Void>()
-//                },
-//                { throwable ->
-//                    println("Error is that -> ${throwable.localizedMessage}")
-//                    GeckoResult<Void>()
-//                },
-//            )
-//        }
         geckoSession.navigationDelegate = createNavigationDelegate()
         geckoSession.progressDelegate = createProgressDelegate()
         geckoSession.contentDelegate = createContentDelegate()
