@@ -16,12 +16,14 @@
         android:id="@+id/favicon_card"
         style="@style/TopSite.FaviconCard"
         android:importantForAccessibility="noHideDescendants"
+        app:cardCornerRadius="60dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/favicon_image"
+            app:cardCornerRadius="60dp"
             style="@style/topSiteFavicon" />
     </com.google.android.material.card.MaterialCardView>
 

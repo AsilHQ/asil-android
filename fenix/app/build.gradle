@@ -620,6 +620,8 @@ dependencies {
 
     implementation FenixDependencies.google_ads_id // Required for the Google Advertising ID
 
+    implementation "androidx.work:work-runtime:2.7.0"
+
     // Required for in-app reviews
     implementation FenixDependencies.google_play_review
     implementation FenixDependencies.google_play_review_ktx

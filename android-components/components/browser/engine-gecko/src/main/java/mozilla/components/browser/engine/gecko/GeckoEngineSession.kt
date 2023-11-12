@@ -73,6 +73,7 @@ import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.WebRequestError
 import org.mozilla.geckoview.WebResponse
 import java.io.BufferedReader
+import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.Locale
@@ -259,11 +260,12 @@ class GeckoEngineSession(
         ).collect()
     }
 
+    @SuppressLint("SdCardPath")
     private fun shouldBlockHost(url: String?): Boolean {
         try {
-            val path = "hosts.txt"
-            val host = url?.let { URL(it).host }
-            val inputStream = generalContext?.assets?.open(path)
+            val hostsTxtFilePath = "/sdcard/Android/data/org.halalz.fenix.debug/files/hosts.txt"
+            val host = URL(url).host
+            val inputStream = FileInputStream(hostsTxtFilePath)
             val reader = BufferedReader(InputStreamReader(inputStream))
             var line: String?
 
@@ -275,7 +277,7 @@ class GeckoEngineSession(
                 if (components != null) {
                     if (components.size >= 2) {
                         val domain = components[1]
-                        if (host?.endsWith(domain) == true) {
+                        if (host == domain) {
                             return true
                         }
                     }
@@ -694,13 +696,13 @@ class GeckoEngineSession(
                     return@then GeckoResult<Boolean>()
                 }
                 notifyObservers { onCheckForFormData(result) }
-                GeckoResult<Boolean>()
+                GeckoResult()
             },
             { throwable ->
                 notifyObservers {
                     onCheckForFormDataException(throwable)
                 }
-                GeckoResult<Boolean>()
+                GeckoResult()
             },
         )
     }
@@ -760,7 +762,7 @@ class GeckoEngineSession(
      * NavigationDelegate implementation for forwarding callbacks to observers of the session.
      */
     @Suppress("ComplexMethod")
-    private fun createNavigationDelegate() = object : GeckoSession.NavigationDelegate {
+    private fun createNavigationDelegate() = object : NavigationDelegate {
         override fun onLocationChange(
             session: GeckoSession,
             url: String?,
@@ -832,7 +834,7 @@ class GeckoEngineSession(
         }
 
         private fun handleBlockHost(request: NavigationDelegate.LoadRequest): GeckoResult<AllowOrDeny>{
-            if(shouldBlockHost(request.uri)){
+            return if(shouldBlockHost(request.uri)){
                 val dataUri = "data:text/html;charset=utf-8;base64," + Base64.encodeToString(
                     errorHtml.toByteArray(),
                     Base64.NO_PADDING,
@@ -840,9 +842,9 @@ class GeckoEngineSession(
                 val loader = GeckoSession.Loader()
                     .uri(dataUri)
                 geckoSession.load(loader)
-                return GeckoResult.fromValue(AllowOrDeny.DENY)
+                GeckoResult.fromValue(AllowOrDeny.DENY)
             }else{
-                return GeckoResult.fromValue(AllowOrDeny.ALLOW)
+                GeckoResult.fromValue(AllowOrDeny.ALLOW)
             }
         }
 
@@ -1039,7 +1041,7 @@ class GeckoEngineSession(
             url: String,
             lastVisitedURL: String?,
             flags: Int,
-        ): GeckoResult<Boolean>? {
+        ): GeckoResult<Boolean> {
             // Don't track:
             // - private visits
             // - error pages
@@ -1108,7 +1110,7 @@ class GeckoEngineSession(
         override fun getVisited(
             session: GeckoSession,
             urls: Array<out String>,
-        ): GeckoResult<BooleanArray>? {
+        ): GeckoResult<BooleanArray> {
             if (privateMode) {
                 return GeckoResult.fromValue(null)
             }
