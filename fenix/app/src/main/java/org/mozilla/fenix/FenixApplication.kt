@@ -20,6 +20,10 @@ import androidx.core.content.getSystemService
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.work.Configuration.Builder
 import androidx.work.Configuration.Provider
+import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -97,6 +101,7 @@ import org.mozilla.fenix.ext.isCustomEngine
 import org.mozilla.fenix.ext.isKnownSearchDomain
 import org.mozilla.fenix.ext.setCustomEndpointIfAvailable
 import org.mozilla.fenix.ext.settings
+import org.mozilla.fenix.host_blocker.HostBlockerWorker
 import org.mozilla.fenix.lifecycle.StoreLifecycleObserver
 import org.mozilla.fenix.nimbus.FxNimbus
 import org.mozilla.fenix.onboarding.MARKETING_CHANNEL_ID
@@ -148,9 +153,36 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
             // is accepted by the user.
             return
         }
-
+        scheduleTasks()
         initialize()
     }
+
+    private fun scheduleTasks() {
+        val initialWorkRequest = OneTimeWorkRequest.Builder(HostBlockerWorker::class.java).build()
+        val periodicWorkRequest = PeriodicWorkRequest.Builder(
+            HostBlockerWorker::class.java, 7, TimeUnit.DAYS
+        ).build()
+
+        val workManager = WorkManager.getInstance(this)
+        workManager.enqueue(initialWorkRequest)
+        workManager.enqueue(periodicWorkRequest)
+
+        val initialWorkRequestStatus = workManager.getWorkInfoById(initialWorkRequest.id).get()
+        val periodicWorkRequestStatus = workManager.getWorkInfoById(periodicWorkRequest.id).get()
+
+        if (initialWorkRequestStatus.state == WorkInfo.State.SUCCEEDED) {
+            println("Initial worked")
+        } else if (initialWorkRequestStatus.state == WorkInfo.State.FAILED) {
+            println("Initial failed")
+        }
+
+        if (periodicWorkRequestStatus.state == WorkInfo.State.SUCCEEDED) {
+            println("periodicWorkRequestStatus worked")
+        } else if (periodicWorkRequestStatus.state == WorkInfo.State.FAILED) {
+            println("periodicWorkRequestStatus failed")
+        }
+    }
+
 
     /**
      * Initializes Fenix and all required subsystems such as Nimbus, Glean and Gecko.
