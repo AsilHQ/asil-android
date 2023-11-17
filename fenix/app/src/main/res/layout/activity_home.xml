@@ -48,8 +48,8 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:gravity="center"
-            android:layout_marginHorizontal="20dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/back_button"
