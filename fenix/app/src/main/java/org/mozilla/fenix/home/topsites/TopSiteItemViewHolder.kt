@@ -138,8 +138,8 @@ class TopSiteItemViewHolder(
         binding.topSiteTitle.text = topSite.title
 
         if (topSite is TopSite.Pinned || topSite is TopSite.Default) {
-            val pinIndicator = getDrawable(itemView.context, R.drawable.ic_new_pin)
-            binding.topSiteTitle.setCompoundDrawablesWithIntrinsicBounds(pinIndicator, null, null, null)
+            //val pinIndicator = getDrawable(itemView.context, R.drawable.ic_new_pin)
+            binding.topSiteTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
         } else {
             binding.topSiteTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
         }
@@ -212,6 +212,7 @@ class TopSiteItemViewHolder(
     }
 
     companion object {
+        @SuppressLint("NonConstantResourceId")
         const val LAYOUT_ID = R.layout.top_site_item
     }
 }
