@@ -82,8 +82,10 @@ import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.WebRequestError
 import org.mozilla.geckoview.WebResponse
 import java.io.BufferedReader
+import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
+import java.net.URI
 import java.net.URL
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
@@ -278,9 +280,16 @@ class GeckoEngineSession(
     @SuppressLint("SdCardPath")
     private fun shouldBlockHost(url: String?): Boolean {
         try {
-            val hostsTxtFilePath = "/sdcard/Android/data/org.halalz.fenix.debug/files/hosts.txt"
-            val host = URL(url).host
-            val inputStream = FileInputStream(hostsTxtFilePath)
+            val hostsTxtFilePath = "${Constants.context?.filesDir}/hosts.txt"
+            val host = extractHost(url)
+
+            val file = File(hostsTxtFilePath)
+            if (!file.exists()) {
+                println("Hosts file not found at path: $hostsTxtFilePath")
+                return false
+            }
+
+            val inputStream = FileInputStream(file)
             val reader = BufferedReader(InputStreamReader(inputStream))
             var line: String?
 
@@ -305,6 +314,18 @@ class GeckoEngineSession(
             return false
         }
     }
+
+    private fun extractHost(url: String?): String {
+        return try {
+            val uri = URI(url)
+            uri.host ?: ""
+        } catch (e: Exception) {
+            println("Error extracting host: ${e.message}")
+            ""
+        }
+    }
+
+
 
     private fun shouldLoadJSSchemes(
         scheme: String?,

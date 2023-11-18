@@ -32,6 +32,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import mozilla.appservices.Megazord
+import mozilla.components.browser.engine.gecko.Constants
 import mozilla.appservices.autofill.AutofillApiException
 import mozilla.components.browser.state.action.SystemAction
 import mozilla.components.browser.state.selector.selectedTab
@@ -147,7 +148,7 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
 
     override fun onCreate() {
         super.onCreate()
-
+        Constants.context = applicationContext
         if (shouldShowPrivacyNotice()) {
             // For Mozilla Online build: Delay initialization on first run until privacy notice
             // is accepted by the user.
@@ -211,7 +212,7 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
 
         // We avoid blocking the main thread on startup by calling into Glean on the background thread.
         @OptIn(DelicateCoroutinesApi::class)
-        GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(IO) {
             PerfStartup.applicationOnCreate.accumulateSamples(listOf(durationMillis))
         }
     }
@@ -251,7 +252,7 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
 
         // We avoid blocking the main thread on startup by setting startup metrics on the background thread.
         val store = components.core.store
-        GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(IO) {
             setStartupMetrics(store, settings())
         }
     }
@@ -368,7 +369,7 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
         @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
         fun queueInitStorageAndServices() {
             components.performance.visualCompletenessQueue.queue.runIfReadyOrQueue {
-                GlobalScope.launch(Dispatchers.IO) {
+                GlobalScope.launch(IO) {
                     logger.info("Running post-visual completeness tasks...")
                     logElapsedTime(logger, "Storage initialization") {
                         components.core.historyStorage.warmUp()
@@ -434,7 +435,7 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
 
         @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
         fun queueReviewPrompt() {
-            GlobalScope.launch(Dispatchers.IO) {
+            GlobalScope.launch(IO) {
                 components.reviewPromptController.trackApplicationLaunch()
             }
         }
@@ -442,7 +443,7 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
         @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
         fun queueRestoreLocale() {
             components.performance.visualCompletenessQueue.queue.runIfReadyOrQueue {
-                GlobalScope.launch(Dispatchers.IO) {
+                GlobalScope.launch(IO) {
                     components.useCases.localeUseCases.restore()
                 }
             }
@@ -461,7 +462,7 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
         @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
         fun queueNimbusFetchInForeground() {
             queue.runIfReadyOrQueue {
-                GlobalScope.launch(Dispatchers.IO) {
+                GlobalScope.launch(IO) {
                     components.analytics.experiments.maybeFetchExperiments(
                         context = this@FenixApplication,
                     )
@@ -562,7 +563,7 @@ open class FenixApplication : LocaleAwareApplication(), Provider {
 
     @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
     private fun finishSetupMegazord(): Deferred<Unit> {
-        return GlobalScope.async(Dispatchers.IO) {
+        return GlobalScope.async(IO) {
             if (Config.channel.isDebug) {
                 RustHttpConfig.allowEmulatorLoopback()
             }
