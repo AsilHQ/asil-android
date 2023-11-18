@@ -34,7 +34,6 @@
         android:maxWidth="84dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/top_sites_text_margin_top"
-        android:drawablePadding="2dp"
         android:gravity="center"
         android:textAlignment="center"
         android:singleLine="true"
