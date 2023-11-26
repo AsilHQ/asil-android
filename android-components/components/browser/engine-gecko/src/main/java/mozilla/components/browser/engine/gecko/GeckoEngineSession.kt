@@ -25,6 +25,7 @@ import mozilla.components.browser.engine.gecko.prompt.GeckoPromptDelegate
 import mozilla.components.browser.engine.gecko.translate.GeckoTranslateSessionDelegate
 import mozilla.components.browser.engine.gecko.window.GeckoWindowRequest
 import mozilla.components.browser.errorpages.ErrorType
+import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.concept.engine.EngineSession
 import mozilla.components.concept.engine.EngineSession.LoadUrlFlags.Companion.ALLOW_ADDITIONAL_HEADERS
 import mozilla.components.concept.engine.EngineSession.LoadUrlFlags.Companion.ALLOW_JAVASCRIPT_URL
@@ -55,6 +56,7 @@ import mozilla.components.concept.fetch.Response
 import mozilla.components.concept.storage.PageVisit
 import mozilla.components.concept.storage.RedirectSource
 import mozilla.components.concept.storage.VisitType
+import mozilla.components.feature.addons.AddonManager
 import mozilla.components.support.base.Component
 import mozilla.components.support.base.facts.Action
 import mozilla.components.support.base.facts.Fact
@@ -277,12 +279,88 @@ class GeckoEngineSession(
         ).collect()
     }
 
+    private fun disableSafeGaze() {
+        val store = Constants.store
+        val addonManager = Constants.addonManager
+        val safeGazeExtension = store?.state?.extensionInstances?.get("safegaze@mozac.org")
+        safeGazeExtension?.let {
+            addonManager?.getRuntime()?.disableWebExtension(
+                extension = it,
+                onSuccess = { result ->
+                    store.state.extensionInstances["safegaze@mozac.org"] = result
+                    println("extension disabled")
+                },
+                onError = { throwable ->
+                    println("extension disable fail: $throwable")
+                },
+            )
+        }
+    }
+
+    private fun enableSafeGaze() {
+        val store = Constants.store
+        val addonManager = Constants.addonManager
+        val safeGazeExtension = store?.state?.extensionInstances?.get("safegaze@mozac.org")
+        safeGazeExtension?.let {
+            addonManager?.getRuntime()?.enableWebExtension(
+                extension = it,
+                onSuccess = { result ->
+                    store.state.extensionInstances["safegaze@mozac.org"] = result
+                    val sharedPref =
+                        Constants.context?.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
+                    val editor = sharedPref?.edit()
+                    editor?.putInt("session_cencored_count", 0)
+                    editor?.apply()
+                },
+                onError = { throwable ->
+                    println("extension enabled fail: $throwable")
+                },
+            )
+        }
+    }
+
+    @SuppressLint("SdCardPath")
+    private fun shouldBlockSafeGaze(url: String?): Boolean {
+        try {
+            val safeGazeTxtFilePath = "${Constants.context?.filesDir}/safe_gaze.txt"
+            val host = extractHost(url)
+            val file = File(safeGazeTxtFilePath)
+            if (!file.exists()) {
+                println("Hosts file not found at path: $safeGazeTxtFilePath")
+                return false
+            }
+
+            val inputStream = FileInputStream(file)
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            var line: String?
+
+            while (reader.readLine().also { line = it } != null) {
+                if (line?.contains("#") == true || line?.isEmpty() == true) {
+                    continue
+                }
+                val components = line?.split("\\s+".toRegex())
+                println("Components -> $components")
+                println("Components Size -> ${components?.size}")
+                println("Url -> $url")
+                if (components != null) {
+                    val domain = components[0]
+                    if (host.contains(domain)) {
+                        return true
+                    }
+                }
+            }
+            return false
+        } catch (e: Exception) {
+            println("Error reading safe_gaze.txt: ${e.message}")
+            return false
+        }
+    }
+
     @SuppressLint("SdCardPath")
     private fun shouldBlockHost(url: String?): Boolean {
         try {
             val hostsTxtFilePath = "${Constants.context?.filesDir}/hosts.txt"
             val host = extractHost(url)
-
             val file = File(hostsTxtFilePath)
             if (!file.exists()) {
                 println("Hosts file not found at path: $hostsTxtFilePath")
@@ -1208,9 +1286,10 @@ class GeckoEngineSession(
                 maybeInterceptRequest(request, false) != null ->
                     GeckoResult.fromValue(AllowOrDeny.DENY)
 
-                request.target == NavigationDelegate.TARGET_WINDOW_NEW ->
+                request.target == NavigationDelegate.TARGET_WINDOW_NEW ->{
+                    handleBlockSafeGaze(request)
                     handleBlockHost(request)
-
+                }
                 else -> {
                     notifyObservers {
                         onLoadRequest(
@@ -1219,7 +1298,21 @@ class GeckoEngineSession(
                             triggeredByWebContent = request.hasUserGesture,
                         )
                     }
+                    handleBlockSafeGaze(request)
                     handleBlockHost(request)
+                }
+            }
+        }
+
+        private fun handleBlockSafeGaze(request: NavigationDelegate.LoadRequest){
+            val sharedPref = Constants.context?.getSharedPreferences("safe_gaze_active", Context.MODE_PRIVATE)
+            if (shouldBlockSafeGaze(request.uri)){
+                println("Block")
+                disableSafeGaze()
+            }else{
+                println("Not")
+                if (sharedPref?.getBoolean("safe_gaze_active", true) == true){
+                    enableSafeGaze()
                 }
             }
         }
@@ -1230,6 +1323,7 @@ class GeckoEngineSession(
                     errorHtml.toByteArray(),
                     Base64.NO_PADDING,
                 )
+
                 val loader = GeckoSession.Loader()
                     .uri(dataUri)
                 geckoSession.load(loader)
@@ -1244,14 +1338,15 @@ class GeckoEngineSession(
             request: NavigationDelegate.LoadRequest,
         ): GeckoResult<AllowOrDeny> {
             if (request.target == NavigationDelegate.TARGET_WINDOW_NEW) {
+                handleBlockSafeGaze(request)
                 return handleBlockHost(request)
             }
-
             return if (maybeInterceptRequest(request, true) != null) {
                 GeckoResult.fromValue(AllowOrDeny.DENY)
             } else {
                 // Not notifying session observer because of performance concern and currently there
                 // is no use case.
+                handleBlockSafeGaze(request)
                 handleBlockHost(request)
             }
         }

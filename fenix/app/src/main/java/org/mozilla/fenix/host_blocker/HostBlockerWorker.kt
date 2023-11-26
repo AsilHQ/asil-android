@@ -11,6 +11,7 @@ import androidx.work.WorkerParameters
 class HostBlockerWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
     override fun doWork(): Result {
         HostBlockerManager.fetchAndOverwriteHostFile(applicationContext)
+        SafeGazeBlockListManager.fetchAndOverwriteHostFile(applicationContext)
         return Result.success()
     }
 }
