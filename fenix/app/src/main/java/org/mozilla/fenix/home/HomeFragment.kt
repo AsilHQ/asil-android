@@ -32,18 +32,22 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mozilla.components.browser.state.selector.findTab
 import mozilla.components.browser.state.selector.normalTabs
 import mozilla.components.browser.state.selector.privateTabs
 import mozilla.components.browser.state.state.BrowserState
 import mozilla.components.browser.state.state.TabSessionState
+import mozilla.components.browser.state.state.extension.WebExtensionPromptRequest
 import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.concept.storage.FrecencyThresholdOption
 import mozilla.components.concept.sync.AccountObserver
 import mozilla.components.concept.sync.AuthType
 import mozilla.components.concept.sync.OAuthAccount
+import mozilla.components.feature.addons.Addon
 import mozilla.components.feature.tab.collections.TabCollection
 import mozilla.components.feature.top.sites.TopSite
 import mozilla.components.feature.top.sites.TopSitesConfig
@@ -52,6 +56,7 @@ import mozilla.components.feature.top.sites.TopSitesFrecencyConfig
 import mozilla.components.feature.top.sites.TopSitesProviderConfig
 import mozilla.components.lib.state.ext.consumeFlow
 import mozilla.components.lib.state.ext.consumeFrom
+import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import org.mozilla.fenix.GleanMetrics.HomeScreen
@@ -68,6 +73,7 @@ import org.mozilla.fenix.ext.containsQueryParameters
 import org.mozilla.fenix.ext.hideToolbar
 import org.mozilla.fenix.ext.nav
 import org.mozilla.fenix.ext.requireComponents
+import org.mozilla.fenix.ext.runIfFragmentIsAttached
 import org.mozilla.fenix.ext.settings
 import org.mozilla.fenix.home.pocket.DefaultPocketStoriesController
 import org.mozilla.fenix.home.pocket.PocketRecommendedStoriesCategory
@@ -216,7 +222,7 @@ class HomeFragment : Fragment() {
 
 
         components.appStore.dispatch(AppAction.ModeChange(browsingModeManager.mode))
-
+        handleDefaultAdBlocker()
         lifecycleScope.launch(IO) {
             if (requireContext().settings().showPocketRecommendationsFeature) {
                 val categories = components.core.pocketStoriesService.getStories()
@@ -410,12 +416,57 @@ class HomeFragment : Fragment() {
         )
         return binding.root
     }
+    private fun handleDefaultAdBlocker() {
+        lifecycleScope.launch {
+            withContext(IO){
+                try {
+                    val addons = requireContext().components.addonManager.getAddons(true)
+                    for (addon in addons){
+                        if (addon.translatableName.containsValue("uBlock Origin")){
+                            installAddon(addon)
+                            store.flowScoped { flow ->
+                                flow.mapNotNull { state ->
+                                    state.webExtensionPromptRequest
+                                }.distinctUntilChanged().collect { promptRequest ->
+                                    when (promptRequest) {
+                                        is WebExtensionPromptRequest.AfterInstallation -> {
+
+                                        }else -> {
+                                        println("Something")
+                                    }
+                                    }
+                                }
+                            }
+                            break
+                        }
+                    }
+                }catch (e: Exception){
+                    println("Exception is ${e.localizedMessage}")
+                }
+            }
+        }
+    }
+
+    private fun installAddon(addon: Addon) {
+        lifecycleScope.launch(Main) {
+            requireContext().components.addonManager.installAddon(
+                addon.downloadUrl,
+                onSuccess = {
+                    runIfFragmentIsAttached {
+                        println("suc")
+                    }
+                },
+                onError = { _->
+                    println("OnErr")
+                },
+            )
+        }
+    }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
         homeMenuView?.dismissMenu()
-
     }
 
     /**
