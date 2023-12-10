@@ -218,7 +218,7 @@ class BrowserIcons constructor(
                 editor.putInt("session_cencored_count", 0)
                 editor.apply()
             },
-            onError = {  throwable ->
+            onError = { throwable ->
                 println("extension load error, ${throwable.message}")
                 Logger.error("Could not install browser-icons extension", throwable)
             },
