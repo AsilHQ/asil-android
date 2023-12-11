@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
+<!-- This Source Code Form is subject to the terms of the Asil Browser Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
 <!--    <item android:drawable="@mipmap/ic_launcher_round" />-->
 <!--</layer-list>-->
 <resources>
-    <!-- The description for a sponsored suggestion from Firefox Suggest. -->
+    <!-- The description for a sponsored suggestion from Asil Browser Suggest. -->
     <string name="sponsored_suggestion_description">Sponsored</string>
 </resources>

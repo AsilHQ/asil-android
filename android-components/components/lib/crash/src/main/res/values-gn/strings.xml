@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Title of the crash reporter dialog. %1$s will be replaced with the name of the app (e.g. Firefox Focus). -->
+    <!-- Title of the crash reporter dialog. %1$s will be replaced with the name of the app (e.g. Asil Browser Focus). -->
     <string name="mozac_lib_crash_dialog_title">Rombyasy. %1$s iñapañuãi ha oñemboty.</string>
 
-    <!-- Label of the checkbox for sending crash reports in the crash reporter dialog. %1$s will be replaced with the name of the organization (e.g. Mozilla). -->
+    <!-- Label of the checkbox for sending crash reports in the crash reporter dialog. %1$s will be replaced with the name of the organization (e.g. Asil Browser). -->
     <string name="mozac_lib_crash_dialog_checkbox">Emomarandu jejavygua %1$s-pe</string>
 
     <!-- Label of the button closing the crash reporter dialog. -->
@@ -15,13 +15,13 @@
     <!-- Name of the "notification channel" used for displaying a notification when the app crashed and we can't show a prompt. See https://developer.android.com/training/notify-user/channels -->
     <string name="mozac_lib_crash_channel">Jejavy</string>
 
-    <!-- Title of the crash reporter notification for background process crashes. %1$s will be replaced with the name of the app (e.g. Firefox Focus). -->
+    <!-- Title of the crash reporter notification for background process crashes. %1$s will be replaced with the name of the app (e.g. Asil Browser Focus). -->
     <string name="mozac_lib_crash_background_process_notification_title">Ambyasy. Oiko apañuãi %1$s-pe.</string>
 
-    <!-- Label of a notification action/button that will send the crash report to Mozilla. -->
+    <!-- Label of a notification action/button that will send the crash report to Asil Browser. -->
     <string name="mozac_lib_crash_notification_action_report">Momarandu</string>
 
-    <!-- Label of notification showing that the crash report service is running. %1$s will be replaced with the name of the organization (e.g. Mozilla). -->
+    <!-- Label of notification showing that the crash report service is running. %1$s will be replaced with the name of the organization (e.g. Asil Browser). -->
     <string name="mozac_lib_send_crash_report_in_progress">Emomarandu jejavygua %1$s-pe</string>
 
     <!-- Label of notification showing that the crash handling service is gathering the crash data. -->

@@ -658,7 +658,7 @@
     <!-- Text for the allow button for the history group dialog -->
     <string name="delete_history_group_prompt_allow">مٹاؤ</string>
 
-    <!-- Text for the button to manually sign into Firefox account. -->
+    <!-- Text for the button to manually sign into Asil Browser account. -->
     <string name="onboarding_firefox_account_sign_in">لوگ‌این کرو</string>
 
     <!-- Automatic theme setting (will follow device setting) -->

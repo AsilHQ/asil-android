@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
+<!-- This Source Code Form is subject to the terms of the Asil Browser Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
@@ -59,17 +59,17 @@
     <!-- Preference to override the Push server -->
     <string name="preferences_override_push_server">Custom Push server</string>
     <!-- Quit app button title for the Sync Debug preferences -->
-    <string name="preferences_sync_debug_quit_button_title">Stop Firefox</string>
+    <string name="preferences_sync_debug_quit_button_title">Stop Asil Browser</string>
     <!-- Quit app button summary for the Sync Debug preferences -->
-    <string name="preferences_sync_debug_quit_button_summary">Custom server changes will take effect on the next Firefox run.</string>
+    <string name="preferences_sync_debug_quit_button_summary">Custom server changes will take effect on the next Asil Browser run.</string>
     <!-- Label for enabling the Tabs Tray to Compose changes -->
     <string name="preferences_debug_settings_tabs_tray_to_compose" translatable="false">Enable Tabs Tray to Compose rewrite</string>
     <!-- Label for enabling the Compose Top Sites -->
     <string name="preferences_debug_settings_compose_top_sites" translatable="false">Enable Compose Top Sites</string>
     <!-- Label for enabling translations -->
-    <string name="preferences_debug_settings_translations" translatable="false">Enable Firefox Translations</string>
-    <!-- Label for enabling Firefox Suggest -->
-    <string name="preferences_debug_settings_fxsuggest" translatable="false">Enable Firefox Suggest</string>
+    <string name="preferences_debug_settings_translations" translatable="false">Enable Asil Browser Translations</string>
+    <!-- Label for enabling Asil Browser Suggest -->
+    <string name="preferences_debug_settings_fxsuggest" translatable="false">Enable Asil Browser Suggest</string>
     <!-- Label for enabling Toolbar Redesign incomplete portions -->
     <string name="preferences_debug_settings_toolbar_redesign" translatable="false">Enable Toolbar Redesign incomplete portions</string>
     <!-- Label for enabling Felt Privacy -->
@@ -92,13 +92,13 @@
     <string name="profiler_settings_title">Profiler Settings</string>
     <string name="profiler_filter_firefox">Asil Browser</string>
     <string name="profiler_running">Profiler is currently running</string>
-    <string name="profiler_filter_firefox_explain">Recommended preset for profiling Firefox</string>
+    <string name="profiler_filter_firefox_explain">Recommended preset for profiling Asil Browser</string>
     <string name="profiler_filter_graphics">Graphics</string>
-    <string name="profiler_filter_graphics_explain">Preset for investigating graphics bugs in Firefox</string>
+    <string name="profiler_filter_graphics_explain">Preset for investigating graphics bugs in Asil Browser</string>
     <string name="profiler_filter_media">Media</string>
-    <string name="profiler_filter_media_explain">Preset for investigating audio and video bugs in Firefox</string>
+    <string name="profiler_filter_media_explain">Preset for investigating audio and video bugs in Asil Browser</string>
     <string name="profiler_filter_networking">Networking</string>
-    <string name="profiler_filter_networking_explain">Preset for investigating networking bugs in Firefox</string>
+    <string name="profiler_filter_networking_explain">Preset for investigating networking bugs in Asil Browser</string>
 
     <string name="profiler_start_dialog_started">Profiler started</string>
 
