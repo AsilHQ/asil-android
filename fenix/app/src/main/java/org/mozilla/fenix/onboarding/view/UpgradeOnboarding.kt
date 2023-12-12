@@ -39,8 +39,7 @@ import org.mozilla.fenix.GleanMetrics.Onboarding as OnboardingMetrics
  * Enum that represents the onboarding screen that is displayed.
  */
 private enum class UpgradeOnboardingState {
-    Welcome,
-    SyncSignIn,
+    Welcome
 }
 
 /**
@@ -54,7 +53,6 @@ private enum class UpgradeOnboardingState {
 fun UpgradeOnboarding(
     isSyncSignIn: Boolean,
     onDismiss: () -> Unit,
-    onSignInButtonClick: () -> Unit,
 ) {
     var onboardingState by remember { mutableStateOf(UpgradeOnboardingState.Welcome) }
 
@@ -69,51 +67,24 @@ fun UpgradeOnboarding(
         OnboardingPage(
             pageState = when (onboardingState) {
                 UpgradeOnboardingState.Welcome -> OnboardingPageState(
-                    imageRes = R.drawable.ic_onboarding_welcome,
+                    imageRes = R.mipmap.ic_launcher,
                     title = stringResource(id = R.string.onboarding_home_welcome_title_2),
                     description = stringResource(id = R.string.onboarding_home_welcome_description),
                     primaryButton = Action(
                         text = stringResource(id = R.string.onboarding_home_get_started_button),
                         onClick = {
                             OnboardingMetrics.welcomeGetStartedClicked.record(NoExtras())
-                            if (isSyncSignIn) {
-                                onDismiss()
-                            } else {
-                                onboardingState = UpgradeOnboardingState.SyncSignIn
-                            }
+                            onDismiss()
                         },
                     ),
                     onRecordImpressionEvent = {
                         OnboardingMetrics.welcomeCardImpression.record(NoExtras())
                     },
                 )
-                UpgradeOnboardingState.SyncSignIn -> OnboardingPageState(
-                    imageRes = R.drawable.ic_onboarding_sync,
-                    title = stringResource(id = R.string.onboarding_home_sync_title_3),
-                    description = stringResource(id = R.string.onboarding_home_sync_description),
-                    primaryButton = Action(
-                        text = stringResource(id = R.string.onboarding_home_sign_in_button),
-                        onClick = {
-                            OnboardingMetrics.syncSignInClicked.record(NoExtras())
-                            onSignInButtonClick()
-                        },
-                    ),
-                    secondaryButton = Action(
-                        text = stringResource(id = R.string.onboarding_home_skip_button),
-                        onClick = {
-                            OnboardingMetrics.syncSkipClicked.record(NoExtras())
-                            onDismiss()
-                        },
-                    ),
-                    onRecordImpressionEvent = {
-                        OnboardingMetrics.syncCardImpression.record(NoExtras())
-                    },
-                )
             },
             onDismiss = {
                 when (onboardingState) {
                     UpgradeOnboardingState.Welcome -> OnboardingMetrics.welcomeCloseClicked.record(NoExtras())
-                    UpgradeOnboardingState.SyncSignIn -> OnboardingMetrics.syncCloseClicked.record(NoExtras())
                 }
                 onDismiss()
             },
@@ -147,11 +118,7 @@ private fun Indicators(
         Spacer(modifier = Modifier.width(8.dp))
 
         Indicator(
-            color = if (onboardingState == UpgradeOnboardingState.SyncSignIn) {
-                FirefoxTheme.colors.indicatorActive
-            } else {
-                FirefoxTheme.colors.indicatorInactive
-            },
+            color = FirefoxTheme.colors.indicatorActive
         )
     }
 }
@@ -172,8 +139,7 @@ private fun OnboardingPreview() {
     FirefoxTheme {
         UpgradeOnboarding(
             isSyncSignIn = false,
-            onDismiss = {},
-            onSignInButtonClick = {},
+            onDismiss = {}
         )
     }
 }

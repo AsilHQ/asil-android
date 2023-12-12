@@ -4,7 +4,6 @@
 
 package org.mozilla.fenix.ui
 
-import android.view.View
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import okhttp3.mockwebserver.MockWebServer
@@ -12,14 +11,11 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mozilla.fenix.R
 import org.mozilla.fenix.customannotations.SmokeTest
 import org.mozilla.fenix.helpers.AndroidAssetDispatcher
-import org.mozilla.fenix.helpers.AppAndSystemHelper.registerAndCleanupIdlingResources
 import org.mozilla.fenix.helpers.HomeActivityIntentTestRule
 import org.mozilla.fenix.helpers.RetryTestRule
 import org.mozilla.fenix.helpers.TestAssetHelper
-import org.mozilla.fenix.helpers.ViewVisibilityIdlingResource
 import org.mozilla.fenix.ui.robots.browserScreen
 import org.mozilla.fenix.ui.robots.navigationToolbar
 
@@ -77,19 +73,19 @@ class ReaderViewTest {
             mDevice.waitForIdle()
         }
 
-        registerAndCleanupIdlingResources(
-            ViewVisibilityIdlingResource(
-                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
-                View.VISIBLE,
-            ),
-        ) {}
+//        registerAndCleanupIdlingResources(
+//            ViewVisibilityIdlingResource(
+//                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
+//                View.VISIBLE,
+//            ),
+//        ) {}
 
         navigationToolbar {
-            verifyReaderViewDetected(true)
+            verifyReaderViewDetected()
         }.enterURLAndEnterToBrowser(genericPage.url) {
         }
         navigationToolbar {
-            verifyReaderViewDetected(false)
+            verifyReaderViewDetected()
         }
     }
 
@@ -105,15 +101,15 @@ class ReaderViewTest {
             mDevice.waitForIdle()
         }
 
-        registerAndCleanupIdlingResources(
-            ViewVisibilityIdlingResource(
-                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
-                View.VISIBLE,
-            ),
-        ) {}
+//        registerAndCleanupIdlingResources(
+//            ViewVisibilityIdlingResource(
+//                activityIntentTestRule.activity.findViewById(R.id.mozac_browser_toolbar_page_actions),
+//                View.VISIBLE,
+//            ),
+//        ) {}
 
         navigationToolbar {
-            verifyReaderViewDetected(true)
+            verifyReaderViewDetected()
             toggleReaderView()
             mDevice.waitForIdle()
         }
@@ -160,7 +156,7 @@ class ReaderViewTest {
         navigationToolbar {
             toggleReaderView()
             mDevice.waitForIdle()
-            verifyReaderViewDetected(true)
+            verifyReaderViewDetected()
         }.openThreeDotMenu {
             verifyReaderViewAppearance(false)
         }

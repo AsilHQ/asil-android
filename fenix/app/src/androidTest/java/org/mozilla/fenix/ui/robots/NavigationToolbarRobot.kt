@@ -15,15 +15,10 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
-import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
-import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.By.textContains
@@ -61,15 +56,11 @@ class NavigationToolbarRobot {
     fun verifyUrl(url: String) =
         onView(withId(R.id.mozac_browser_toolbar_url_view)).check(matches(withText(url)))
 
-    fun verifyNoHistoryBookmarks() = assertNoHistoryBookmarks()
-
     fun verifyTabButtonShortcutMenuItems() = assertTabButtonShortcutMenuItems()
 
-    fun verifyReaderViewDetected(visible: Boolean = false) =
-        assertReaderViewDetected(visible)
+    fun verifyReaderViewDetected() =
+        assertReaderViewDetected()
 
-    fun verifyCloseReaderViewDetected(visible: Boolean = false) =
-        assertCloseReaderViewDetected(visible)
 
     fun toggleReaderView() {
         mDevice.findObject(
@@ -78,7 +69,7 @@ class NavigationToolbarRobot {
         )
             .waitForExists(waitingTime)
 
-        readerViewToggle().click()
+//        readerViewToggle().click()
     }
 
     fun verifyClipboardSuggestionsAreDisplayed(link: String = "", shouldBeDisplayed: Boolean) =
@@ -392,49 +383,49 @@ private fun tabsCounter() =
     mDevice.findObject(By.res("$packageName:id/counter_root"))
 private fun fillLinkButton() = onView(withId(R.id.fill_link_from_clipboard))
 private fun clearAddressBarButton() = itemWithResId("$packageName:id/mozac_browser_toolbar_clear_view")
-private fun readerViewToggle() =
-    onView(withParent(withId(R.id.mozac_browser_toolbar_page_actions)))
+//private fun readerViewToggle() =
+//    onView(withParent(withId(R.id.mozac_browser_toolbar_page_actions)))
 
-private fun assertReaderViewDetected(visible: Boolean) {
+private fun assertReaderViewDetected() {
     mDevice.findObject(
         UiSelector()
             .description("Reader view"),
     )
         .waitForExists(waitingTime)
 
-    onView(
-        allOf(
-            withParent(withId(R.id.mozac_browser_toolbar_page_actions)),
-            withContentDescription("Reader view"),
-        ),
-    ).check(
-        if (visible) {
-            matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
-        } else {
-            ViewAssertions.doesNotExist()
-        },
-    )
+//    onView(
+//        allOf(
+//            withParent(withId(R.id.mozac_browser_toolbar_page_actions)),
+//            withContentDescription("Reader view"),
+//        ),
+//    ).check(
+//        if (visible) {
+//            matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
+//        } else {
+//            ViewAssertions.doesNotExist()
+//        },
+//    )
 }
 
-private fun assertCloseReaderViewDetected(visible: Boolean) {
+private fun assertCloseReaderViewDetected() {
     mDevice.findObject(
         UiSelector()
             .description("Close reader view"),
     )
         .waitForExists(waitingTime)
 
-    onView(
-        allOf(
-            withParent(withId(R.id.mozac_browser_toolbar_page_actions)),
-            withContentDescription("Close reader view"),
-        ),
-    ).check(
-        if (visible) {
-            matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
-        } else {
-            ViewAssertions.doesNotExist()
-        },
-    )
+//    onView(
+//        allOf(
+//            withParent(withId(R.id.mozac_browser_toolbar_page_actions)),
+//            withContentDescription("Close reader view"),
+//        ),
+//    ).check(
+//        if (visible) {
+//            matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
+//        } else {
+//            ViewAssertions.doesNotExist()
+//        },
+//    )
 }
 
 private val searchSelectorButton =

@@ -60,17 +60,6 @@ class JunoOnboardingTelemetryRecorder {
                 )
             }
 
-            OnboardingPageUiData.Type.SYNC_SIGN_IN -> {
-                Onboarding.signInCard.record(
-                    Onboarding.SignInCardExtra(
-                        action = ACTION_IMPRESSION,
-                        elementType = ET_ONBOARDING_CARD,
-                        sequenceId = sequenceId,
-                        sequencePosition = sequencePosition,
-                    ),
-                )
-            }
-
             OnboardingPageUiData.Type.NOTIFICATION_PERMISSION -> {
                 Onboarding.turnOnNotificationsCard.record(
                     Onboarding.TurnOnNotificationsCardExtra(
@@ -92,22 +81,6 @@ class JunoOnboardingTelemetryRecorder {
     fun onSetToDefaultClick(sequenceId: String, sequencePosition: String) {
         Onboarding.setToDefault.record(
             Onboarding.SetToDefaultExtra(
-                action = ACTION_CLICK,
-                elementType = ET_PRIMARY_BUTTON,
-                sequenceId = sequenceId,
-                sequencePosition = sequencePosition,
-            ),
-        )
-    }
-
-    /**
-     * Records sync sign in click event.
-     * @param sequenceId The identifier of the onboarding sequence shown to the user.
-     * @param sequencePosition The sequence position of the page for which the impression occurred.
-     */
-    fun onSyncSignInClick(sequenceId: String, sequencePosition: String) {
-        Onboarding.signIn.record(
-            Onboarding.SignInExtra(
                 action = ACTION_CLICK,
                 elementType = ET_PRIMARY_BUTTON,
                 sequenceId = sequenceId,

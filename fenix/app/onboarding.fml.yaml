@@ -39,15 +39,6 @@ features:
               primary-button-label: juno_onboarding_add_search_widget_positive_button
               secondary-button-label: juno_onboarding_add_search_widget_negative_button
 
-            sync-sign-in:
-              card-type: sync-sign-in
-              title: juno_onboarding_sign_in_title_2
-              body: juno_onboarding_sign_in_description_2
-              image-res: ic_onboarding_sync
-              ordering: 20
-              primary-button-label: juno_onboarding_sign_in_positive_button
-              secondary-button-label: juno_onboarding_sign_in_negative_button
-
             notification-permission:
               card-type: notification-permission
               title: juno_onboarding_enable_notifications_title_nimbus_2
@@ -130,8 +121,6 @@ enums:
     variants:
       default-browser:
         description: Allows user to set Firefox as the default browser.
-      sync-sign-in:
-        description: Allows user to sync with a Firefox account.
       notification-permission:
         description: Allows user to enable notification permission.
       add-search-widget:

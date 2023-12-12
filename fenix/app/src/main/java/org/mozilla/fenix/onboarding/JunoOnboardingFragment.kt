@@ -98,6 +98,7 @@ class JunoOnboardingFragment : Fragment() {
     @Suppress("LongMethod")
     private fun ScreenContent() {
         val context = LocalContext.current
+        println("Pages to display $pagesToDisplay")
         JunoOnboardingScreen(
             pagesToDisplay = pagesToDisplay,
             onMakeFirefoxDefaultClick = {
@@ -123,24 +124,6 @@ class JunoOnboardingFragment : Fragment() {
                 telemetryRecorder.onPrivacyPolicyClick(
                     pagesToDisplay.telemetrySequenceId(),
                     pagesToDisplay.sequencePosition(OnboardingPageUiData.Type.DEFAULT_BROWSER),
-                )
-            },
-            onSignInButtonClick = {
-                findNavController().nav(
-                    id = R.id.junoOnboardingFragment,
-                    directions = JunoOnboardingFragmentDirections.actionGlobalTurnOnSync(
-                        entrypoint = FenixFxAEntryPoint.NewUserOnboarding,
-                    ),
-                )
-                telemetryRecorder.onSyncSignInClick(
-                    sequenceId = pagesToDisplay.telemetrySequenceId(),
-                    sequencePosition = pagesToDisplay.sequencePosition(OnboardingPageUiData.Type.SYNC_SIGN_IN),
-                )
-            },
-            onSkipSignInClick = {
-                telemetryRecorder.onSkipSignInClick(
-                    pagesToDisplay.telemetrySequenceId(),
-                    pagesToDisplay.sequencePosition(OnboardingPageUiData.Type.SYNC_SIGN_IN),
                 )
             },
             onNotificationPermissionButtonClick = {

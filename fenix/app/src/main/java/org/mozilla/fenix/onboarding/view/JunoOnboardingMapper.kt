@@ -103,7 +103,6 @@ private fun OnboardingCardData.toPageUiData() = OnboardingPageUiData(
 
 private fun OnboardingCardType.toPageUiDataType() = when (this) {
     OnboardingCardType.DEFAULT_BROWSER -> OnboardingPageUiData.Type.DEFAULT_BROWSER
-    OnboardingCardType.SYNC_SIGN_IN -> OnboardingPageUiData.Type.SYNC_SIGN_IN
     OnboardingCardType.NOTIFICATION_PERMISSION -> OnboardingPageUiData.Type.NOTIFICATION_PERMISSION
     OnboardingCardType.ADD_SEARCH_WIDGET -> OnboardingPageUiData.Type.ADD_SEARCH_WIDGET
 }
@@ -118,8 +117,6 @@ internal fun mapToOnboardingPageState(
     onMakeFirefoxDefaultClick: () -> Unit,
     onMakeFirefoxDefaultSkipClick: () -> Unit,
     onPrivacyPolicyClick: (String) -> Unit,
-    onSignInButtonClick: () -> Unit,
-    onSignInSkipClick: () -> Unit,
     onNotificationPermissionButtonClick: () -> Unit,
     onNotificationPermissionSkipClick: () -> Unit,
     onAddFirefoxWidgetClick: () -> Unit,
@@ -137,12 +134,6 @@ internal fun mapToOnboardingPageState(
         onPositiveButtonClick = onAddFirefoxWidgetClick,
         onNegativeButtonClick = onAddFirefoxWidgetSkipClick,
         onUrlClick = onPrivacyPolicyClick,
-    )
-
-    OnboardingPageUiData.Type.SYNC_SIGN_IN -> createOnboardingPageState(
-        onboardingPageUiData = onboardingPageUiData,
-        onPositiveButtonClick = onSignInButtonClick,
-        onNegativeButtonClick = onSignInSkipClick,
     )
 
     OnboardingPageUiData.Type.NOTIFICATION_PERMISSION -> createOnboardingPageState(

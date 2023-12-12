@@ -30,9 +30,6 @@ data class OnboardingPageUiData(
         DEFAULT_BROWSER(
             telemetryId = "default",
         ),
-        SYNC_SIGN_IN(
-            telemetryId = "sync",
-        ),
         ADD_SEARCH_WIDGET(
             telemetryId = "search_widget",
         ),

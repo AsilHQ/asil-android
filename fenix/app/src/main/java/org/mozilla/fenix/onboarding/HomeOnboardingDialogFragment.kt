@@ -51,15 +51,6 @@ class HomeOnboardingDialogFragment : DialogFragment() {
                 UpgradeOnboarding(
                     isSyncSignIn = account.value != null,
                     onDismiss = ::onDismiss,
-                    onSignInButtonClick = {
-                        findNavController().nav(
-                            R.id.homeOnboardingDialogFragment,
-                            HomeOnboardingDialogFragmentDirections.actionGlobalTurnOnSync(
-                                entrypoint = FenixFxAEntryPoint.HomeOnboardingDialog,
-                            ),
-                        )
-                        onDismiss()
-                    },
                 )
             }
         }

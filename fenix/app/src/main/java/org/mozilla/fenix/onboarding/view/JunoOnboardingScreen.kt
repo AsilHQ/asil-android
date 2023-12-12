@@ -59,6 +59,7 @@ import org.mozilla.fenix.theme.FirefoxTheme
  * @param onFinish Invoked when the onboarding is completed.
  * @param onImpression Invoked when a page in the pager is displayed.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 @Suppress("LongParameterList", "LongMethod")
 fun JunoOnboardingScreen(
@@ -66,8 +67,6 @@ fun JunoOnboardingScreen(
     onMakeFirefoxDefaultClick: () -> Unit,
     onSkipDefaultClick: () -> Unit,
     onPrivacyPolicyClick: (url: String) -> Unit,
-    onSignInButtonClick: () -> Unit,
-    onSkipSignInClick: () -> Unit,
     onNotificationPermissionButtonClick: () -> Unit,
     onSkipNotificationClick: () -> Unit,
     onAddFirefoxWidgetClick: () -> Unit,
@@ -130,14 +129,6 @@ fun JunoOnboardingScreen(
         onPrivacyPolicyClick = {
             onPrivacyPolicyClick(it)
         },
-        onSignInButtonClick = {
-            onSignInButtonClick()
-            scrollToNextPageOrDismiss()
-        },
-        onSignInSkipClick = {
-            scrollToNextPageOrDismiss()
-            onSkipSignInClick()
-        },
         onNotificationPermissionButtonClick = {
             scrollToNextPageOrDismiss()
             onNotificationPermissionButtonClick()
@@ -168,8 +159,6 @@ private fun JunoOnboardingContent(
     onMakeFirefoxDefaultClick: () -> Unit,
     onMakeFirefoxDefaultSkipClick: () -> Unit,
     onPrivacyPolicyClick: (String) -> Unit,
-    onSignInButtonClick: () -> Unit,
-    onSignInSkipClick: () -> Unit,
     onNotificationPermissionButtonClick: () -> Unit,
     onNotificationPermissionSkipClick: () -> Unit,
     onAddFirefoxWidgetClick: () -> Unit,
@@ -196,8 +185,6 @@ private fun JunoOnboardingContent(
                 onMakeFirefoxDefaultClick = onMakeFirefoxDefaultClick,
                 onMakeFirefoxDefaultSkipClick = onMakeFirefoxDefaultSkipClick,
                 onPrivacyPolicyClick = onPrivacyPolicyClick,
-                onSignInButtonClick = onSignInButtonClick,
-                onSignInSkipClick = onSignInSkipClick,
                 onNotificationPermissionButtonClick = onNotificationPermissionButtonClick,
                 onNotificationPermissionSkipClick = onNotificationPermissionSkipClick,
                 onAddFirefoxWidgetClick = onAddFirefoxWidgetClick,
@@ -238,55 +225,3 @@ private class DisableForwardSwipeNestedScrollConnection(
             }
         }
 }
-
-@LightDarkPreview
-@Composable
-private fun JunoOnboardingScreenPreview() {
-    val pageCount = defaultPreviewPages().size
-    FirefoxTheme {
-        JunoOnboardingContent(
-            pagesToDisplay = defaultPreviewPages(),
-            pagerState = rememberPagerState(initialPage = 0) {
-                pageCount
-            },
-            onMakeFirefoxDefaultClick = {},
-            onMakeFirefoxDefaultSkipClick = {},
-            onPrivacyPolicyClick = {},
-            onSignInButtonClick = {},
-            onSignInSkipClick = {},
-            onNotificationPermissionButtonClick = {},
-            onNotificationPermissionSkipClick = {},
-            onAddFirefoxWidgetClick = {},
-            onSkipFirefoxWidgetClick = {},
-        )
-    }
-}
-
-@Composable
-private fun defaultPreviewPages() = listOf(
-    OnboardingPageUiData(
-        type = OnboardingPageUiData.Type.DEFAULT_BROWSER,
-        imageRes = R.drawable.ic_onboarding_welcome,
-        title = stringResource(R.string.juno_onboarding_default_browser_title_nimbus_2),
-        description = stringResource(R.string.juno_onboarding_default_browser_description_nimbus_2),
-        linkText = stringResource(R.string.juno_onboarding_default_browser_description_link_text),
-        primaryButtonLabel = stringResource(R.string.juno_onboarding_default_browser_positive_button),
-        secondaryButtonLabel = stringResource(R.string.juno_onboarding_default_browser_negative_button),
-    ),
-    OnboardingPageUiData(
-        type = OnboardingPageUiData.Type.SYNC_SIGN_IN,
-        imageRes = R.drawable.ic_onboarding_sync,
-        title = stringResource(R.string.juno_onboarding_sign_in_title_2),
-        description = stringResource(R.string.juno_onboarding_sign_in_description_2),
-        primaryButtonLabel = stringResource(R.string.juno_onboarding_sign_in_positive_button),
-        secondaryButtonLabel = stringResource(R.string.juno_onboarding_sign_in_negative_button),
-    ),
-    OnboardingPageUiData(
-        type = OnboardingPageUiData.Type.NOTIFICATION_PERMISSION,
-        imageRes = R.drawable.ic_notification_permission,
-        title = stringResource(R.string.juno_onboarding_enable_notifications_title_nimbus_2),
-        description = stringResource(R.string.juno_onboarding_enable_notifications_description_nimbus_2),
-        primaryButtonLabel = stringResource(R.string.juno_onboarding_enable_notifications_positive_button),
-        secondaryButtonLabel = stringResource(R.string.juno_onboarding_enable_notifications_negative_button),
-    ),
-)

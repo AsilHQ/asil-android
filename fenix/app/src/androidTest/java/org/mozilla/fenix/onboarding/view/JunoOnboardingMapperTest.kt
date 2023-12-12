@@ -45,7 +45,7 @@ class JunoOnboardingMapperTest {
 
     @Test
     fun showNotificationTrue_showAddWidgetFalse_pagesToDisplay_returnsSortedListOfAllConvertedPages_withoutAddWidgetPage() {
-        val expected = listOf(defaultBrowserPageUiData, syncPageUiData, notificationPageUiData)
+        val expected = listOf(defaultBrowserPageUiData, notificationPageUiData)
         assertEquals(
             expected,
             unsortedAllKnownCardData.toPageUiData(
@@ -59,7 +59,7 @@ class JunoOnboardingMapperTest {
 
     @Test
     fun showNotificationFalse_showAddWidgetFalse_pagesToDisplay_returnsSortedListOfConvertedPages_withoutNotificationPage_and_addWidgetPage() {
-        val expected = listOf(defaultBrowserPageUiData, syncPageUiData)
+        val expected = listOf(defaultBrowserPageUiData)
         assertEquals(
             expected,
             unsortedAllKnownCardData.toPageUiData(
@@ -73,7 +73,7 @@ class JunoOnboardingMapperTest {
 
     @Test
     fun showNotificationFalse_showAddWidgetTrue_pagesToDisplay_returnsSortedListOfAllConvertedPages_withoutNotificationPage() {
-        val expected = listOf(defaultBrowserPageUiData, addSearchWidgetPageUiData, syncPageUiData)
+        val expected = listOf(defaultBrowserPageUiData, addSearchWidgetPageUiData)
         assertEquals(
             expected,
             unsortedAllKnownCardData.toPageUiData(
@@ -90,7 +90,6 @@ class JunoOnboardingMapperTest {
         val expected = listOf(
             defaultBrowserPageUiData,
             addSearchWidgetPageUiData,
-            syncPageUiData,
             notificationPageUiData,
         )
         assertEquals(
@@ -217,22 +216,6 @@ class JunoOnboardingMapperTest {
     }
 
     @Test
-    fun disqualifiersMatchJexlConditions_shouldDisplayCard_returnsConvertedPage() {
-        val jexlConditions = mapOf("NEVER" to "false")
-        val expected = listOf(syncPageUiData)
-
-        assertEquals(
-            expected,
-            listOf(syncCardData).toPageUiData(
-                showNotificationPage = false,
-                showAddWidgetPage = false,
-                jexlConditions = jexlConditions,
-                func = evalFunction,
-            ),
-        )
-    }
-
-    @Test
     fun disqualifiersDontMatchJexlConditions_shouldDisplayCard_returnsNoPage() {
         val jexlConditions = mapOf("NEVER" to "false")
         val expected = listOf<OnboardingPageUiData>()
@@ -248,26 +231,11 @@ class JunoOnboardingMapperTest {
         )
     }
 
-    @Test
-    fun noPrerequisites_shouldDisplayCard_returnsConvertedPage() {
-        val jexlConditions = mapOf("ALWAYS" to "true", "NEVER" to "false")
-        val expected = listOf(syncPageUiData)
-
-        assertEquals(
-            expected,
-            listOf(syncCardData).toPageUiData(
-                showNotificationPage = false,
-                showAddWidgetPage = false,
-                jexlConditions = jexlConditions,
-                func = evalFunction,
-            ),
-        )
-    }
 }
 
 private val defaultBrowserPageUiData = OnboardingPageUiData(
     type = OnboardingPageUiData.Type.DEFAULT_BROWSER,
-    imageRes = R.drawable.ic_onboarding_welcome,
+    imageRes = R.drawable.color_picker_checkmark,
     title = "default browser title",
     description = "default browser body with link text",
     linkText = "link text",
@@ -276,24 +244,16 @@ private val defaultBrowserPageUiData = OnboardingPageUiData(
 )
 private val addSearchWidgetPageUiData = OnboardingPageUiData(
     type = OnboardingPageUiData.Type.ADD_SEARCH_WIDGET,
-    imageRes = R.drawable.ic_onboarding_search_widget,
+    imageRes = R.drawable.color_picker_checkmark,
     title = "add search widget title",
     description = "add search widget body with link text",
     linkText = "link text",
     primaryButtonLabel = "add search widget primary button text",
     secondaryButtonLabel = "add search widget secondary button text",
 )
-private val syncPageUiData = OnboardingPageUiData(
-    type = OnboardingPageUiData.Type.SYNC_SIGN_IN,
-    imageRes = R.drawable.ic_onboarding_sync,
-    title = "sync title",
-    description = "sync body",
-    primaryButtonLabel = "sync primary button text",
-    secondaryButtonLabel = "sync secondary button text",
-)
 private val notificationPageUiData = OnboardingPageUiData(
     type = OnboardingPageUiData.Type.NOTIFICATION_PERMISSION,
-    imageRes = R.drawable.ic_notification_permission,
+    imageRes = R.drawable.color_picker_checkmark,
     title = "notification title",
     description = "notification body",
     primaryButtonLabel = "notification primary button text",
@@ -302,7 +262,7 @@ private val notificationPageUiData = OnboardingPageUiData(
 
 private val defaultBrowserCardData = OnboardingCardData(
     cardType = OnboardingCardType.DEFAULT_BROWSER,
-    imageRes = R.drawable.ic_onboarding_welcome,
+    imageRes = R.drawable.color_picker_checkmark,
     title = StringHolder(null, "default browser title"),
     body = StringHolder(null, "default browser body with link text"),
     linkText = StringHolder(null, "link text"),
@@ -315,7 +275,7 @@ private val defaultBrowserCardData = OnboardingCardData(
 
 private val defaultBrowserCardDataNoDisqualifiers = OnboardingCardData(
     cardType = OnboardingCardType.DEFAULT_BROWSER,
-    imageRes = R.drawable.ic_onboarding_welcome,
+    imageRes = R.drawable.color_picker_checkmark,
     title = StringHolder(null, "default browser title"),
     body = StringHolder(null, "default browser body with link text"),
     linkText = StringHolder(null, "link text"),
@@ -328,7 +288,7 @@ private val defaultBrowserCardDataNoDisqualifiers = OnboardingCardData(
 
 private val addSearchWidgetCardDataNoConditions = OnboardingCardData(
     cardType = OnboardingCardType.ADD_SEARCH_WIDGET,
-    imageRes = R.drawable.ic_onboarding_search_widget,
+    imageRes = R.drawable.color_picker_checkmark,
     title = StringHolder(null, "add search widget title"),
     body = StringHolder(null, "add search widget body with link text"),
     linkText = StringHolder(null, "link text"),
@@ -341,7 +301,7 @@ private val addSearchWidgetCardDataNoConditions = OnboardingCardData(
 
 private val addSearchWidgetCardData = OnboardingCardData(
     cardType = OnboardingCardType.ADD_SEARCH_WIDGET,
-    imageRes = R.drawable.ic_onboarding_search_widget,
+    imageRes = R.drawable.color_picker_checkmark,
     title = StringHolder(null, "add search widget title"),
     body = StringHolder(null, "add search widget body with link text"),
     linkText = StringHolder(null, "link text"),
@@ -350,21 +310,9 @@ private val addSearchWidgetCardData = OnboardingCardData(
     ordering = 15,
 )
 
-private val syncCardData = OnboardingCardData(
-    cardType = OnboardingCardType.SYNC_SIGN_IN,
-    imageRes = R.drawable.ic_onboarding_sync,
-    title = StringHolder(null, "sync title"),
-    body = StringHolder(null, "sync body"),
-    primaryButtonLabel = StringHolder(null, "sync primary button text"),
-    secondaryButtonLabel = StringHolder(null, "sync secondary button text"),
-    ordering = 20,
-    prerequisites = listOf(),
-    disqualifiers = listOf("NEVER"),
-)
-
 private val notificationCardData = OnboardingCardData(
     cardType = OnboardingCardType.NOTIFICATION_PERMISSION,
-    imageRes = R.drawable.ic_notification_permission,
+    imageRes = R.drawable.color_picker_checkmark,
     title = StringHolder(null, "notification title"),
     body = StringHolder(null, "notification body"),
     primaryButtonLabel = StringHolder(null, "notification primary button text"),
@@ -375,7 +323,6 @@ private val notificationCardData = OnboardingCardData(
 )
 
 private val unsortedAllKnownCardData = listOf(
-    syncCardData,
     notificationCardData,
     defaultBrowserCardData,
     addSearchWidgetCardData,
