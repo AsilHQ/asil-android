@@ -31,7 +31,7 @@ internal const val NOTIFY_ERROR_MESSAGE = "Using Android NOTIFY instead of base 
 class NotificationManagerChecks : Detector(), Detector.UastScanner {
     private val componentPackages =
         listOf("mozilla.components", "org.mozilla.telemetry", "org.mozilla.samples")
-    private val appPackages = listOf("org.mozilla.fenix", "org.mozilla.focus")
+    private val appPackages = listOf("org.halalz.fenix", "org.mozilla.focus")
 
     override fun getApplicableMethodNames() = listOf("notify")
 

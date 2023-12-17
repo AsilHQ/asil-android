@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package org.mozilla.fenix.lintrules
+package org.halalz.fenix.lintrules
 
 import com.android.SdkConstants.ATTR_DRAWABLE_BOTTOM
 import com.android.SdkConstants.ATTR_DRAWABLE_END

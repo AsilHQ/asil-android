@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package org.mozilla.fenix.benchmark
+package org.halalz.fenix.benchmark
 
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
@@ -11,7 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mozilla.fenix.benchmark.utils.measureRepeatedDefault
+import org.halalz.fenix.benchmark.utils.measureRepeatedDefault
 
 /**
  * This is a startup benchmark.

@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package org.mozilla.fenix.lintrules
+package org.halalz.fenix.lintrules
 
 import com.android.tools.lint.checks.infrastructure.LintDetectorTest
 import com.android.tools.lint.checks.infrastructure.TestFiles
@@ -12,9 +12,9 @@ import com.android.tools.lint.detector.api.Issue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mozilla.fenix.lintrules.LicenseCommentChecker.Companion.ValidLicenseForKotlinFiles
-import org.mozilla.fenix.lintrules.LicenseDetector.Companion.ISSUE_INVALID_LICENSE_FORMAT
-import org.mozilla.fenix.lintrules.LicenseDetector.Companion.ISSUE_MISSING_LICENSE
+import org.halalz.fenix.lintrules.LicenseCommentChecker.Companion.ValidLicenseForKotlinFiles
+import org.halalz.fenix.lintrules.LicenseDetector.Companion.ISSUE_INVALID_LICENSE_FORMAT
+import org.halalz.fenix.lintrules.LicenseDetector.Companion.ISSUE_MISSING_LICENSE
 
 @RunWith(JUnit4::class)
 class LicenseDetectorTest : LintDetectorTest() {

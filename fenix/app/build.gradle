@@ -265,7 +265,7 @@ android {
         kotlinCompilerExtensionVersion = Versions.compose_compiler
     }
 
-    namespace 'org.mozilla.fenix'
+    namespace 'org.halalz.fenix'
 }
 
 android.applicationVariants.configureEach { variant ->

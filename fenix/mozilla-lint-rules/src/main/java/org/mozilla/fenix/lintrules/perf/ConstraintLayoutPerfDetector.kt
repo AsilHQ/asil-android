@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package org.mozilla.fenix.lintrules.perf
+package org.halalz.fenix.lintrules.perf
 
 import com.android.resources.ResourceFolderType
 import com.android.tools.lint.detector.api.Category
@@ -23,7 +23,7 @@ private val FRAMEWORK_ELEMENTS = setOf(
 )
 private val FRAMEWORK_ELEMENTS_BULLETED_LIST = FRAMEWORK_ELEMENTS.map { "- `$it`" }.joinToString("\n")
 
-private const val FENIX_PREFIX = "org.mozilla.fenix"
+private const val FENIX_PREFIX = "org.halalz.fenix"
 private const val AC_PREFIX = "mozilla.components"
 
 /**

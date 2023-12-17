@@ -18,7 +18,7 @@ import mozilla.components.service.nimbus.GleanMetrics.Messaging as GleanMessagin
 
 /**
  * This ID must match the name given in the `nimbus.fml.yaml` file, which
- * itself generates the classname for [org.mozilla.fenix.nimbus.Messaging].
+ * itself generates the classname for [org.halalz.fenix.nimbus.Messaging].
  *
  * If that ever changes, it should also change here.
  *

@@ -1,7 +1,7 @@
 {
   "data": [{
           "slug": "feature-text-variables-validation-android",
-          "appId": "org.mozilla.fenix",
+          "appId": "org.halalz.fenix",
           "appName": "fenix",
           "channel": "nightly",
           "branches": [

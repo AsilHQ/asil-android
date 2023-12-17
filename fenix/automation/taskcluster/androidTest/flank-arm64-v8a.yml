@@ -19,9 +19,9 @@ gcloud:
   performance-metrics: true
 
   test-targets:
-    - notPackage org.mozilla.fenix.screenshots
-    - notPackage org.mozilla.fenix.syncintegration
-    - notPackage org.mozilla.fenix.experimentintegration
+    - notPackage org.halalz.fenix.screenshots
+    - notPackage org.halalz.fenix.syncintegration
+    - notPackage org.halalz.fenix.experimentintegration
 
   device:
     - model: Pixel2.arm

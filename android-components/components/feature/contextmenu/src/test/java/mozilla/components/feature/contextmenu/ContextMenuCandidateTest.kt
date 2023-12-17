@@ -1605,7 +1605,7 @@ class ContextMenuCandidateTest {
 
         doReturn(
             AppLinkRedirect(null, null, mock()),
-        ).`when`(getAppLinkRedirectMock).invoke(eq("intent:www.example.com#Intent;scheme=https;package=org.mozilla.fenix;end"))
+        ).`when`(getAppLinkRedirectMock).invoke(eq("intent:www.example.com#Intent;scheme=https;package=org.halalz.fenix;end"))
 
         doReturn(
             AppLinkRedirect(null, null, null),
@@ -1635,7 +1635,7 @@ class ContextMenuCandidateTest {
         assertTrue(
             openLinkInExternalApp.showFor(
                 tab,
-                HitResult.UNKNOWN("intent:www.example.com#Intent;scheme=https;package=org.mozilla.fenix;end"),
+                HitResult.UNKNOWN("intent:www.example.com#Intent;scheme=https;package=org.halalz.fenix;end"),
             ),
         )
 
@@ -1683,7 +1683,7 @@ class ContextMenuCandidateTest {
 
         openLinkInExternalApp.action.invoke(
             tab,
-            HitResult.UNKNOWN("intent:www.example.com#Intent;scheme=https;package=org.mozilla.fenix;end"),
+            HitResult.UNKNOWN("intent:www.example.com#Intent;scheme=https;package=org.halalz.fenix;end"),
         )
 
         openLinkInExternalApp.action.invoke(
@@ -1703,7 +1703,7 @@ class ContextMenuCandidateTest {
         ).`when`(getAppLinkRedirectMock).invoke(eq("https://www.example.com"))
         doReturn(
             AppLinkRedirect(null, null, mock()),
-        ).`when`(getAppLinkRedirectMock).invoke(eq("intent:www.example.com#Intent;scheme=https;package=org.mozilla.fenix;end"))
+        ).`when`(getAppLinkRedirectMock).invoke(eq("intent:www.example.com#Intent;scheme=https;package=org.halalz.fenix;end"))
         val openAppLinkRedirectMock: AppLinksUseCases.OpenAppLinkRedirect = mock()
         val appLinksUseCasesMock: AppLinksUseCases = mock()
         doReturn(getAppLinkRedirectMock).`when`(appLinksUseCasesMock).appLinkRedirectIncludeInstall
@@ -1727,7 +1727,7 @@ class ContextMenuCandidateTest {
         assertFalse(
             openLinkInExternalApp.showFor(
                 tab,
-                HitResult.UNKNOWN("intent:www.example.com#Intent;scheme=https;package=org.mozilla.fenix;end"),
+                HitResult.UNKNOWN("intent:www.example.com#Intent;scheme=https;package=org.halalz.fenix;end"),
             ),
         )
 

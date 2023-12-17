@@ -2,12 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package org.mozilla.fenix.lintrules
+package org.halalz.fenix.lintrules
 
 import com.android.tools.lint.client.api.IssueRegistry
 import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.Issue
-import org.mozilla.fenix.lintrules.perf.ConstraintLayoutPerfDetector
+import org.halalz.fenix.lintrules.perf.ConstraintLayoutPerfDetector
 
 /**
  * Registry which provides a list of our custom lint checks to be performed on an Android project.

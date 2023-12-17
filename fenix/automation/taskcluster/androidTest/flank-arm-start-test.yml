@@ -20,11 +20,11 @@ gcloud:
   performance-metrics: true
 
   test-targets:
-   - class org.mozilla.fenix.ui.HistoryTest#verifyHistoryMenuWithHistoryItemsTest
-   - class org.mozilla.fenix.ui.SettingsSearchTest#verifyShowSearchSuggestionsToggleTest
-   - class org.mozilla.fenix.ui.CollectionTest#deleteCollectionTest
-   - class org.mozilla.fenix.ui.HistoryTest#noHistoryInPrivateBrowsingTest
-   - class org.mozilla.fenix.ui.NoNetworkAccessStartupTests#noNetworkConnectionStartupTest
+   - class org.halalz.fenix.ui.HistoryTest#verifyHistoryMenuWithHistoryItemsTest
+   - class org.halalz.fenix.ui.SettingsSearchTest#verifyShowSearchSuggestionsToggleTest
+   - class org.halalz.fenix.ui.CollectionTest#deleteCollectionTest
+   - class org.halalz.fenix.ui.HistoryTest#noHistoryInPrivateBrowsingTest
+   - class org.halalz.fenix.ui.NoNetworkAccessStartupTests#noNetworkConnectionStartupTest
 
   device:
    - model: Pixel2.arm

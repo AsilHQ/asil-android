@@ -50,8 +50,8 @@ class Browsers private constructor(
 
         FIREFOX_LITE("org.mozilla.rocket"),
 
-        FIREFOX_NIGHTLY("org.mozilla.fenix"),
-        FENIX_DEBUG("org.mozilla.fenix.debug"),
+        FIREFOX_NIGHTLY("org.halalz.fenix"),
+        FENIX_DEBUG("org.halalz.fenix.debug"),
 
         FIREFOX_FOCUS_DEBUG("org.mozilla.focus.debug"),
         FIREFOX_FOCUS_NIGHTLY("org.mozilla.focus.nightly"),

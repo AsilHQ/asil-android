@@ -1,4 +1,4 @@
-2023-08-02 15:56:27.285 13900-14038 E AndroidRuntime: 	at org.mozilla.fenix.perf.ThreadPenaltyDeathWithIgnoresListener.onThreadViolation(ThreadPenaltyDeathWithIgnoresListener.kt:40)
+2023-08-02 15:56:27.285 13900-14038 E AndroidRuntime: 	at org.halalz.fenix.perf.ThreadPenaltyDeathWithIgnoresListener.onThreadViolation(ThreadPenaltyDeathWithIgnoresListener.kt:40)
 2023-08-02 15:56:27.285 13900-14038 E AndroidRuntime: 	at android.os.StrictMode$AndroidBlockGuardPolicy.lambda$onThreadPolicyViolation$1(StrictMode.java:1889)
 2023-08-02 15:56:27.285 13900-14038 E AndroidRuntime: 	at android.os.StrictMode$AndroidBlockGuardPolicy$$ExternalSyntheticLambda0.run(Unknown Source:4)
 2023-08-02 15:56:27.285 13900-14038 E AndroidRuntime: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1137)

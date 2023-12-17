@@ -63,7 +63,7 @@ For testing purposes, create a collection with an id of `nimbus-mobile-experimen
       ],
       "probeSets": [],
       "startDate": null,
-      "application": "org.mozilla.fenix",
+      "application": "org.halalz.fenix",
       "bucketConfig": {
         "count": 100,
         "start": 0,
@@ -195,7 +195,7 @@ For testing purposes, create a collection with an id of `nimbus-mobile-experimen
       "description": "This is the application to target",
       "default": "",
       "examples": [
-        "org.mozilla.fenix",
+        "org.halalz.fenix",
         "org.mozilla.firefox",
         "org.mozilla.ios.firefox"
       ]

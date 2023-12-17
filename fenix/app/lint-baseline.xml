@@ -268,7 +268,7 @@
     <issue
         id="MissingLicense"
         message="The file must start with a comment containing the license"
-        errorLine1="package org.mozilla.fenix.ext"
+        errorLine1="package org.halalz.fenix.ext"
         errorLine2="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/java/org/mozilla/fenix/ext/Bitmap.kt"
@@ -576,7 +576,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="    &lt;org.mozilla.fenix.library.LibrarySiteItemView"
+        errorLine1="    &lt;org.halalz.fenix.library.LibrarySiteItemView"
         errorLine2="     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/component_recently_closed.xml"
@@ -609,7 +609,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="            &lt;org.mozilla.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
+        errorLine1="            &lt;org.halalz.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_delete_browsing_data.xml"
@@ -620,7 +620,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="            &lt;org.mozilla.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
+        errorLine1="            &lt;org.halalz.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_delete_browsing_data.xml"
@@ -631,7 +631,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="            &lt;org.mozilla.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
+        errorLine1="            &lt;org.halalz.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_delete_browsing_data.xml"
@@ -642,7 +642,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="            &lt;org.mozilla.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
+        errorLine1="            &lt;org.halalz.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_delete_browsing_data.xml"
@@ -653,7 +653,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="            &lt;org.mozilla.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
+        errorLine1="            &lt;org.halalz.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_delete_browsing_data.xml"
@@ -664,7 +664,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="            &lt;org.mozilla.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
+        errorLine1="            &lt;org.halalz.fenix.settings.deletebrowsingdata.DeleteBrowsingDataItem"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_delete_browsing_data.xml"
@@ -675,7 +675,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="        &lt;org.mozilla.fenix.trackingprotection.TrackingProtectionCategoryItem"
+        errorLine1="        &lt;org.halalz.fenix.trackingprotection.TrackingProtectionCategoryItem"
         errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_tracking_protection_blocking.xml"
@@ -686,7 +686,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="        &lt;org.mozilla.fenix.trackingprotection.TrackingProtectionCategoryItem"
+        errorLine1="        &lt;org.halalz.fenix.trackingprotection.TrackingProtectionCategoryItem"
         errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_tracking_protection_blocking.xml"
@@ -697,7 +697,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="        &lt;org.mozilla.fenix.trackingprotection.TrackingProtectionCategoryItem"
+        errorLine1="        &lt;org.halalz.fenix.trackingprotection.TrackingProtectionCategoryItem"
         errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_tracking_protection_blocking.xml"
@@ -708,7 +708,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="        &lt;org.mozilla.fenix.trackingprotection.TrackingProtectionCategoryItem"
+        errorLine1="        &lt;org.halalz.fenix.trackingprotection.TrackingProtectionCategoryItem"
         errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_tracking_protection_blocking.xml"
@@ -719,7 +719,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="        &lt;org.mozilla.fenix.trackingprotection.TrackingProtectionCategoryItem"
+        errorLine1="        &lt;org.halalz.fenix.trackingprotection.TrackingProtectionCategoryItem"
         errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/fragment_tracking_protection_blocking.xml"
@@ -730,7 +730,7 @@
     <issue
         id="MozMultipleConstraintLayoutsAndCustomViews"
         message="Custom views extending `ConstraintLayout` are less efficient because they cannot share other `ConstraintLayout` defined in file."
-        errorLine1="    &lt;org.mozilla.fenix.trackingprotection.SwitchWithDescription"
+        errorLine1="    &lt;org.halalz.fenix.trackingprotection.SwitchWithDescription"
         errorLine2="     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/quicksettings_tracking_protection.xml"

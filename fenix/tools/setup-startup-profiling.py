@@ -99,8 +99,8 @@ def convert_channel_to_id(product, channel):
         mapping = {
             "release": "org.mozilla.firefox",
             "beta": "org.mozilla.firefox_beta",
-            "nightly": "org.mozilla.fenix",
-            "debug": "org.mozilla.fenix.debug",
+            "nightly": "org.halalz.fenix",
+            "debug": "org.halalz.fenix.debug",
         }
         return mapping[channel]
     elif product == PROD_GVE:

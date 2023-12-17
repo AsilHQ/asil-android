@@ -26,7 +26,7 @@ diff --git a/fenix/build.gradle b/fenix/build.gradle
 index 6a635a4818..4c8cc28995 100644
 --- a/fenix/build.gradle
 +++ b/fenix/build.gradle
-@@ -5,6 +5,7 @@ import org.mozilla.fenix.gradle.tasks.GithubDetailsTask
+@@ -5,6 +5,7 @@ import org.halalz.fenix.gradle.tasks.GithubDetailsTask
  buildscript {
      // This logic is duplicated in the allprojects block: I don't know how to fix that.
      repositories {

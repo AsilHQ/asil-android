@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace 'org.mozilla.fenix.benchmark'
+    namespace 'org.halalz.fenix.benchmark'
     compileSdk config.compileSdkVersion
 
     compileOptions {

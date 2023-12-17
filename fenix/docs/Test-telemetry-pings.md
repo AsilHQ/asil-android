@@ -64,7 +64,7 @@ index c38ebb62d..3ae102d97 100644
 2. Trigger your pings.
 3. Sends the ping sing this command:
 ```
-adb shell am start -n org.mozilla.fenix.debug/mozilla.telemetry.glean.debug.GleanDebugActivity \
+adb shell am start -n org.halalz.fenix.debug/mozilla.telemetry.glean.debug.GleanDebugActivity \
  --ez logPings true \
  --es sendPing metrics \
  --es debugViewTag test-metrics-ping

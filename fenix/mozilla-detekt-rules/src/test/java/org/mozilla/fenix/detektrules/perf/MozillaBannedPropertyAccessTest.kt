@@ -4,7 +4,7 @@
 
 @file:Suppress("Deprecation")
 
-package org.mozilla.fenix.detektrules.perf
+package org.halalz.fenix.detektrules.perf
 
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.test.lint

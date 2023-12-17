@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package org.mozilla.fenix.lintrules.perf
+package org.halalz.fenix.lintrules.perf
 
 import com.android.resources.ResourceFolderType
 import com.android.tools.lint.checks.infrastructure.TestFiles
@@ -15,7 +15,7 @@ import org.junit.Test
 
 // FQCN = fully qualified class name
 private const val FQCN_CONSTRAINT_LAYOUT = "androidx.constraintlayout.widget.ConstraintLayout"
-private const val FQCN_CUSTOM_VIEW = "org.mozilla.fenix.library.LibrarySiteItemView" // chosen arbitrarily
+private const val FQCN_CUSTOM_VIEW = "org.halalz.fenix.library.LibrarySiteItemView" // chosen arbitrarily
 
 private val ALL_ISSUES = ConstraintLayoutPerfDetector.ISSUES.toTypedArray()
 

@@ -105,7 +105,7 @@ Sentry collects basic information about the Firefox for Android app.
 
 ```
     "app":{
-        "app_identifier":"org.mozilla.fenix",
+        "app_identifier":"org.halalz.fenix",
         "app_name":"Firefox Preview",
         "app_start_time":"2019-09-23T21:00:05Z",
         "app_version":"1.4.1",

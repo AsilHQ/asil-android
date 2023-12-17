@@ -20,7 +20,7 @@ gcloud:
   performance-metrics: true
 
   test-targets:
-   - package org.mozilla.fenix.screenshots
+   - package org.halalz.fenix.screenshots
 
   device:
    - model: Pixel2.arm

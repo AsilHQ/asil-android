@@ -231,7 +231,7 @@ abstract class AbstractPrivateNotificationService(
         // List of Intent components classes that will get ignored when they are in the root intent
         // that gets passed to onTaskRemoved().
         private val ignoreTaskComponentClasses = listOf(
-            "org.mozilla.fenix.customtabs.ExternalAppBrowserActivity",
+            "org.halalz.fenix.customtabs.ExternalAppBrowserActivity",
         )
     }
 }

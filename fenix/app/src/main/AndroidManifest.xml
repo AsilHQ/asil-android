@@ -348,7 +348,7 @@
         <receiver android:name=".onboarding.WidgetPinnedReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="org.mozilla.fenix.onboarding.WidgetPinnedReceiver.widgetPinned"/>
+                <action android:name="org.halalz.fenix.onboarding.WidgetPinnedReceiver.widgetPinned"/>
             </intent-filter>
         </receiver>
 
