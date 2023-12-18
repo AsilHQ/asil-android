@@ -6,6 +6,16 @@
 function sendMessage(message) {
     console.log(message);
     try {
+        if (message.startsWith("replaced") || message.startsWith("page_refresh")) {
+            let newMessage = {
+                'message': message
+            }
+
+            browser.runtime.sendNativeMessage("MozacSafeGaze", newMessage);
+        }
+    } catch {}
+
+    try {
         window.__firefox__.execute(function($) {
             let postMessage = $(function(message) {
                 $.postNativeMessage('$<message_handler>', {
@@ -264,6 +274,7 @@ async function replaceImagesWithApiResults(apiUrl = 'https://api.safegaze.com/ap
   };
   fetchNewImages();
   window.addEventListener('scroll', fetchNewImages);
+  window.addEventListener('unload', sendMessage("page_refresh"));
 }
 
 class RemoteAnalyzer {
@@ -336,7 +347,7 @@ class RemoteAnalyzer {
       extension = "jpg";
     }
 
-    return `https://cdn.safegaze.com/annotated_image/${relativeFolder}/${filename}.${extension}`;
+    return 'https://cdn.safegaze.com/annotated_image/${relativeFolder}/${filename}.${extension}';
   };
 }
 
