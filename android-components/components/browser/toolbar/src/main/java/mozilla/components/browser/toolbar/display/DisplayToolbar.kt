@@ -457,7 +457,7 @@ class DisplayToolbar internal constructor(
 
             popupView.findViewById<TextView>(R.id.website_url_text_view).text = store.state.selectedTab?.content?.url
             val sharedPreferences = context.getSharedPreferences("safe_gaze_preferences", Context.MODE_PRIVATE)
-            val totalCensoredText = "Total ${sharedPreferences.getInt("all_time_censored_count", 0)} Sinful acts avoided since beginning"
+            val totalCensoredText = "Total ${sharedPreferences.getInt("all_time_cencored_count", 0)} Sinful acts avoided since beginning"
             popupView.findViewById<TextView>(R.id.count_text).text = sharedPreferences.getInt("session_cencored_count", 0).toString()
             popupView.findViewById<TextView>(R.id.asil_shield_exp_text).text = buildString {
                 this.append("Sinful acts avoided")
